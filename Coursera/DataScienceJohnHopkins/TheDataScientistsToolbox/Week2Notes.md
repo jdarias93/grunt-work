@@ -24,6 +24,3 @@
 ** First argument is the file you want to move, second argument is the directory you want to move your file to
 * echo will print whatever arguments you provide
 * date will print today’s date
-
-
-
