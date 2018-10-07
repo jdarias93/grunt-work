@@ -22,3 +22,11 @@ install_from_swirl("R Programming")
 # file.copy(from,to)
 
 # file.path(file), gives the path to a file
+
+## Swirl Lesson 4: Vectors
+# paste(x,collapse=" ") collapses character vectors delimiting them by a single space: " ".
+
+## Swirl Lesson 5: Missing Values
+# is.na(X) gives you a Boolean for NA. X == NA will NOT give you a boolean.
+
+## Swirl Lesson 6: Subsetting Vectors
