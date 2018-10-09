@@ -30,3 +30,35 @@ install_from_swirl("R Programming")
 # is.na(X) gives you a Boolean for NA. X == NA will NOT give you a boolean.
 
 ## Swirl Lesson 6: Subsetting Vectors
+# Three types of index vectors: logical, positive, negative, and named.
+
+# Not only can you call a subset vector with x[1:10], but you can also make a conditional statement, such as:
+# x[!is.na(x) & x>0] which will give a subset vector of positive numbers that are not NA in x.
+
+# It can also be a combine vector: x[c(1,3,5)] for the 1st, 3rd, and 5th numbers in vector x.
+
+# To exclude specific point in the index, we can use negative indices, like so:
+# x[-c(2,10)] which prints x except the 2nd and 10th index numbers
+
+# To "name" indices, we can do this:
+# x <- c(foo=11,bar=2,norf=NA)
+
+# Name indices after the fact with the names() function
+
+# Check for identity using indentical() function
+
+## Swirl Lesson 7: Matrices and Data Frames
+# Setting a "vector's" dimension:
+# dim(x) <- c(5,4) to give "x" 4 rows and 5 columns. So we've made it a matrix!
+
+# Combining matrices columnally:
+# cbind(matrix1, matrix2), but remember that matrices can only contain ONE class of data (e.g., strings)
+# data.frame allows us to COMBINE DIFFERENT CLASSES OF DATA intoone matrix
+
+# Specifying column names:
+# colnames(data frame) <- string vector
+# rownames() for rows
+
+
+
+
