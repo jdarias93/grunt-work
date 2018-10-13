@@ -122,3 +122,55 @@ as.logical(x) # And again.
 x <- list(1,"a","b", T, 1 + 4i)
 x
 ### Double brackets demark different classes
+
+## Matrices
+### Matrices are vectors with a dimension attribute which can be checked with dim(matrixobject)
+### Matrices are constructed column-wise (lists of data fill up an entire column before moving to the next)
+### You can turn a vector into a matrix using the dim() function
+m <- 1:10
+dim(m) <-c(2,5)
+m
+### You can combine two vectors into a single matrix using cbind() or rbind()
+x <- 1:3
+y <- 10:12
+cbind(x,y)
+rbind(x,y)
+
+## Factors
+### Used to represent categorical data
+### Can by ordered or unordered; an integer vector where each integer has a label
+### Treated specially using modelling functions like lm() and glm()
+x <- factor(c("yes","yes","no","yes","no"))
+x
+### Two levels in the above factor vector
+table(x) # Shows how many of each factor in a factor vector
+unclass(x) # Brings the vector down to an integer vector, "n" comes before "y" in the alphabet, so "no" is factor 1 and "yes" is factor 2
+x <- factor(c("yes","yes","no","yes","no"), levels = c("yes","no")) # Ordering factors manually using argument "levels"
+
+## Missing Values
+z <- c(NA,NaN, NA, NA, NaN, NaN)
+is.na(z) # Used to test objects if they are NA
+is.nan(z) # Used to test for NaNs
+### NA values have classes also, so there are integer NAs, character NA, etc.
+### A NaN value is also NA, but NA is NOT an NaN!!!
+
+## Data Frames
+### Used to store tabular data
+### Represented as a special list where every element has same length
+### Each element of list can be though of as a column and the length of each element is the number of rows
+### Data frames can store different classes of objects in each column (unlike matrices/vectors)
+### Data frames have special attributes, like row.names and col.names
+### Created by calling read.table() or read.csv()
+### Can be converted to a matrix by calling data.matrix()
+a <- data.frame(foo = 1:4, bar = c(T,T,F,F))
+nrow(a) # Counts rows in data frame
+ncol(a) # Counts columns in data frame
+
+## The Names Attribute
+### Objects can have names which is useful for writing readable code and self-describing objects
+b <- 1:3
+names(b) <- c("foo","bar","norf") # Gives name to each index in object b
+### Lists and matrices can also have names
+c <- list(a=1,b=2,c=3)
+d <- matrix(1:4,nrow=2,ncol=2)
+dimnames(d) <- list(c("a","b"),c("c","d"))
