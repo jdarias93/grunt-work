@@ -174,3 +174,45 @@ names(b) <- c("foo","bar","norf") # Gives name to each index in object b
 c <- list(a=1,b=2,c=3)
 d <- matrix(1:4,nrow=2,ncol=2)
 dimnames(d) <- list(c("a","b"),c("c","d"))
+
+## Summary
+### Atomic Classes: Numeric, Logical, Character, Integer, Complex
+### Vectors and Lists
+### Factors
+### Missing Values
+### Data Frames
+### Names
+
+# Reading Tabular Data
+
+## read.table() and read.csv() for reading tabular data; for writing: write.table(); arguments:
+### file = name of file
+### header = logical indicating header line for file
+### sep = string indicating how columns are separated
+### colClasses = Character vector indicating class of each column in dataset
+### comment.char = character string indicating comment character
+### skip = number of lines to skip from the beginning
+### stringsAsFactors = which character variables should be coded as factors
+### Typically figures out everything for yourself
+
+## readLines() for reading lines of a text file; for writing: writeLines
+## source() for reading in R code files; inverse of dump()
+## dget for reading in R code files
+## load for reading in saved workspaces
+## unserialize for reading single R objects in binary form
+
+# Reading in Larger Datasets with read.table()
+## Optimize read.table() by checking out the help page for it
+## If your dataset is larger than the amount of RAM on your computer, you can probably stop right there
+## colClasses allows you to tell R what type of data is in each column
+### if all numeric, you can just set colClasses = "numeric"
+### A quick, dirty way to figure out all classes of a datatable:
+initial <- read.table("datatable.txt", nrows = 100) # Only reads first 100 rows of a big table to initial
+classes <- sapply(initial,class) # Reads a vector of classes to object "classes"
+tabAll <- read.table("datatable.txt",colClasses=classes) # Now you can tell read.table() which classes are in which columns
+
+## Calculating Memory Requirements
+### Rows x Columns x 8 bytes/character = # Bytes
+### Bytes/(2^20 Bytes/Megabyte) = # Megabytes
+### MB/1000 = # Gigabytes of Memory Required
+### Rule of Thumb: 2*GB = # Gigabytes ACTUALLY Required
