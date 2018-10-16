@@ -216,3 +216,49 @@ tabAll <- read.table("datatable.txt",colClasses=classes) # Now you can tell read
 ### Bytes/(2^20 Bytes/Megabyte) = # Megabytes
 ### MB/1000 = # Gigabytes of Memory Required
 ### Rule of Thumb: 2*GB = # Gigabytes ACTUALLY Required
+
+# Textual Data Formats
+## Dumping and dputing are useful because resulting format is editable
+## Unlike writing out a table/csv, dump() and dput() perserve metadata
+## Textual formats can work much better with version control programs like subversion or git 
+##  which can only track changes meaningfully in text files
+## They can also be longer-lived, with easily-identifiable corruption
+e <- data.frame(a=1,b="a")
+dput(e) # Makes R code to make your data frame "e" reproducible.
+dput(e,file="e.R")
+new.e <- dget("e.R") # dget() allows you reconstruct an object made reporducible with dput()
+new.e
+
+## Dumping Objects (dput() but for multiple objects)
+f <- "foo" 
+dump(c("e","f"),file="data.R") # Dumps your objects into data.R file
+rm(e,f) # Removes e and f (to show you that your data is reproducible)
+source("data.R") # Sources your dump and reads them back to your global environment
+e # Ta
+f # Da
+
+# Interfaces to the Outside World
+## Data can be read in using connection interfaces, which can be made to file or more exotic things (websites)
+## Can be useful when you want to read parts of a file
+g <- gzfile("words.gz") # "Opens" words.gz to to g
+h <- readLines(g,10) # Reads only the first 10 lines from words.gz
+## You can read lines from a webpage using url()
+i <- url("https://www.jhsph.edu","r") # Connect to this site using url() and feed to object i
+j <- readLines(i) # Read lines from connnection i to object j
+head(j) # See the first few lines of j
+
+# Subsetting
+## Basics
+### [ ] always returns object of the same class as the original; can be used to select more than one element
+### [[]] is used to extract elements of a list or a data frame; it can only be used to extract a single
+###  element and the class of the returned object will not necessarily be a list/data frame
+### $ is used to extract element of a list/data frame by name
+k <- c("a","b","c","c","d","a")
+k[1] # Extracts first element in the vector k: "a"
+k[1:4] # Extracts first FOUR elements in the vector k
+k[k > "a"] # Subsetting with a logical index (returns only letters after "a")
+l <- k > "a" # Creates logical vector
+l
+k[l] # Subsets according to your logical vector (F T T T T F)
+
+## Lists
