@@ -262,3 +262,62 @@ l
 k[l] # Subsets according to your logical vector (F T T T T F)
 
 ## Lists
+### You can subset according to an element's name, which can be useful when you don't remember where it is.
+m <- list(foo = 1:4, bar = 0.6) # A main difference between a list and a vector...
+m[1] # ...is indexing, where m[1] calls the entire first element "foo" (a vector), rather than just the # 1.
+m[[1]] # Double bracket gives you just the object contents 
+m$bar == m[["bar"]]
+m$bar == m["bar"] # The single bracket returns the name of the list
+
+### The [[]] operator can be used with COMPUTED indices; $ can only be used with LITERAL names
+n <- list(foo=1:4,bar=0.6,baz="hello")
+n[c(1,3)] # Calls the name and contents of the first and third elements (foo and baz) of the list
+name <- "foo"
+n[[name]] # Computed index for "foo"
+n$name # Element "name" doesn't exist
+n$foo # Element "foo", however, does exist
+
+### You can subset nested list elements with [[]] operator
+o <- list(a=list(10,12,14),b=c(3.14,2.81)) # First element in list o is list a (which has three elements itself)
+o[[c(1,3)]] # Calls third element of list "a" in the first element of list "o"!
+o[[c(1,3)]] == o[[1]][[3]]
+o[[c(2,1)]] # Calls FIRST element of vector "b" in the second element of list "o"
+
+## Matrices
+### Can be subsetted in the usual way with (i,j) type indices
+p <- matrix(1:6,2,3)
+p[1,2] # Calls element in row 1 and column 2
+p[2,1] # Calls element in row 2 and column 1
+p[1, ] # Calls entire row 1.
+p[ ,2] # Calls entire column 2; note how it is returned as a VECTOR of length 1
+### By default, when a single element of a matrix is retrieved, it is returned as a vector of length 1 rather
+#### than a 1x1 matrix. You can toggle this with drop=FALSE
+p[1,2,drop=F] ## Returns element in row 1 and column 2 but as a 1x1 matrix!
+p[1, , drop=F] ## Returns entire row 1, but as a 1x3 matrix (retaining original dimension)
+
+## Partial Matching
+### Allowed with [[]] and $
+q <- list(aardvark = 1:5) # Typing out aardvark is a pain, so we can just shorten it to "a" when calling
+q$a # Looks for element that starts with "a", or aardvark
+q[["a"]] # Double bracket DOESN'T do partial matching, but you can pass argument exact to toggle this
+q[["a", exact=F]] # It works!
+
+## Removing missing values
+### Common task is to remove missing values (NAs)
+r <- c(1,2,NA,4,NA,5)
+bad <- is.na(r) # Identifies all NAs in vector "r"
+r[!bad] # Subset using logical vector by asking only for FALSE elements (non-NA elements)
+
+### What there are multiple things and you want to take the subset with no missing values?
+s <- c("a","b",NA,"d",NA,"f")
+good <- complete.cases(r,s) # Creates logical vector of non-NA elements in both argument objects
+t <- c("a","b","c","d","e","f")
+good1 <- complete.cases(r,t) # Only indices that contain a non-NA element will be marked as TRUE
+r[good] # Then we can call according to the complete.cases() logical vector
+s[good]
+
+### Also works for data frames
+airquality # Commonwealth R file with lots of NAs
+goodcases <- complete.cases(airquality) # Creates logical vector based on NA elements in matrix,
+#### Each row with an NA will return a FALSE for that row's index in the logical vector
+airquality[goodcases, ] # We've removed all rows with NA!
