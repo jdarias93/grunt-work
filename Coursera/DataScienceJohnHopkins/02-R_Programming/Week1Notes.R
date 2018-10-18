@@ -321,3 +321,15 @@ airquality # Commonwealth R file with lots of NAs
 goodcases <- complete.cases(airquality) # Creates logical vector based on NA elements in matrix,
 #### Each row with an NA will return a FALSE for that row's index in the logical vector
 airquality[goodcases, ] # We've removed all rows with NA!
+
+# Vectorized Operations
+t <- 1:4; u <- 6:9 # Vectors interact parallely
+t + u # This adds the first elements of vectors t and u, the second elements of vectors t and u, and so on.
+## The benefit is that you don't need to write a loop for this kind of operation
+
+## Matrix Operations
+v <- matrix(1:4,2,2); w <- matrix(rep(10,4),2,2)
+v * w # Element-wise multiplication; NOT TRUE matrix multiplication
+v %*% w # THIS is true matrix multiplication.
+
+# END OF WEEK 1
