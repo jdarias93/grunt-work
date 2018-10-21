@@ -119,6 +119,80 @@ for(i in 1:100) {
 
 ## Argument Matching: When an argument is matched by name, it is "taken out" of the argument list and 
 ## the remaining unnamed arguments are matched in the order they are listed in the function definition.
+
 ### Named arguments are helpful when you have a long argument list and you want to use the defaults
 ### for everything except an argument near the end of the list (like in plotting functions)
-### They can also be PARTIALLY matched
+
+### They can also be PARTIALLY matched, meaning you don't need to type the entire argument out
+
+## Defining a Function
+g <- function(a, b=1, c=2, d=NULL) {
+  # You can set a default argument to NULL, meaning no argument
+}
+
+## Lazy Evalutation: Argument to functions are evaluated lazily, so ONLY as needed
+h <- function(a,b) { # Argument "b" isn't needed so h(2) won't produce an error, because 2 just becomes "a"
+  a^2
+}
+h(2) 
+# This next function produces an error because argument "b" is missing, but it still prints "a"!
+j <- function(a,b) {
+  print(a)
+  print(b)
+}
+j(45)
+
+## The "..." Argument: ... indicates a variable number of arguments usually passed on to OTHER functions
+## ... is often used when extending another function and you don't want to copy the entire arugment list
+
+myplot <- function(x,y,type="l",...) { # Here, we pass on arguments to function "plot"
+  plot(x,y,type = type, ...)
+}
+
+## ... is also necessary when the number of arguments passed to the function can't be known in advance
+args(paste) # You could be dealing with many strings: they take the place of the ...
+args(cat)
+## One catch with ... is that any arguments that appear AFTER ... must be named explicitly and CAN'T be partially matched
+
+
+# Scoping Rules
+## How does R know which value to assign to which symbol? When you type
+lm <- function(x) {x*x} # effectively defining another function for lm (already a function in the stats package)
+## ... how does R know which lm() to use?
+
+## Binding Values to Symbol
+### When R tries binding a value to a symbol, it search through a series of environments to find the apropos value
+### The order is roughly: (1) search global environment for symbol name and (2) search namespaces of packages
+search() # Allows us to see the hierarchy of how R will match symbols
+### Global Enviornment is always number 1 and last is the BASE packages
+### When you load a package with library, THE NAMESPACE OF THAT PACKAGE IS PUT IN POSITION 2 OF THE SEARCH LIST
+### Everything else is shifted DOWN
+
+## Scoping rules are the main feature making R different from S; they determine how a value is associated with a free
+## variable in a function
+
+## R uses LEXICAL or STATIC SCOPING (alt: dynamic scoping)
+### Lexical scoping is useful for simplifying statistical computation
+
+## Lexical Scoping
+k <- function(x,y) {
+  x^2 + y / z
+}
+### This function has 2 formal args (x,y); z is a FREE VARIABLE
+### Scoping rules determine how values are assigned to FREE VARIABLES, which are NOT formal args or local variables
+### ***The values of free variables are searched for in the environment in which the function was defined***
+
+## Environments
+### An environment is a collection of (symbol,value) pairs (e.g., x = symbol and 3.14 = value)
+### Every environment has a parent environment; each environment can have multiple children
+### Only enviornment without a parent is the empty environment
+### Function + Environment = A FUNCTION CLOSURE
+
+## Searching for FREE VARIABLE value
+### If value of a symbol IS NOT found in the environment in which a function was defined, then the search is continued
+### in the PARENT ENVIRONMENT.
+
+### Search continues down the sequence of parent environments until we hit the TOP-LEVEL ENVIRONMENT
+### After the top-level environment, search continues down the search list until we hit the EMPTY ENVIRONMENT
+### If R can't find the FREE VARIABLE value before this happens, we encounter an error.
+### FREE VARIABLE? -> PARENT ENV -> TOP-LEVEL ENV -> EMPTY ENV
