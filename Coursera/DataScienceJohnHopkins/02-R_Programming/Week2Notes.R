@@ -196,3 +196,67 @@ k <- function(x,y) {
 ### After the top-level environment, search continues down the search list until we hit the EMPTY ENVIRONMENT
 ### If R can't find the FREE VARIABLE value before this happens, we encounter an error.
 ### FREE VARIABLE? -> PARENT ENV -> TOP-LEVEL ENV -> EMPTY ENV
+
+## Why does it matter?
+### Typically, functions are defined in global env, so values of free variables are found in user's workspace
+### R allows you to have functions defined INSIDE other function; other languages like C don't let you do this
+### Let's try a function within a function:
+
+make.power <- function(n) { # Main function
+  pow <- function(x) { # Nested function
+    x^n
+  }
+  pow
+}
+
+cube <- make.power(3) # We first "make" the function by setting the power (n). Cube is now the new function
+cube(3) # We've set n to 3, so now we choose 3 again for cubing
+square <- make.power(2) # Another example: making a function square() that allows us to square values
+square(3) # Returns 9, because 3^2 = 9
+
+## Exploring a Function Closure: How to find out what is in a function's environment
+ls(environment(cube)) # Checks for environment variables
+get("n",environment(cube)) ## Closure environment in which n has been previously set to 3
+ls(environment(square))
+get("n", environment(square))
+
+## Lexical vs. Dynamic Scoping
+y <- 10
+f <- function(x) { # In this function, y and g are free variables
+  y <-2
+  y^2 + g(x)
+}
+
+g <- function(x) { # In this function, y is the only free variable
+  x*y
+}
+f(3) # == 34. What???
+
+### With Lexical Scoping, y in function g is looked up in the environment in which the function was defined (global env)
+### So for g alone, y = 10.
+### Once we go into function f, y is REDEFINED to 2, but ONLY IN THAT ENVIRONMENT; Outside the function env, y is still 10.
+### With Dynamic scoping, y is looked up in the env from which the func was CALLED (the CALLING ENV == PARENT FRAME)
+
+### When a func is defined in global env and is then called from the global env, then the defining env == calling env.
+### This sometimes gives the appearance of dynamic scoping:
+rm(y)
+g <- function(x) {
+  a <-3 # Defined within func env; dynamically scoped
+  x+a+y # y is free variable, previous undefined
+}
+g(2) # Error?! y was not found.
+y <- 3 # Make R happy by giving it y, but now y is in the global environment (instead of defined in func)
+g(2) # All good(?). Not really, we've just switched to lexical scoping
+
+## Consequences of Lexical Scoping
+### All objects must be stored in memory
+### All functions must carry a pointer to their respective defining environments, which could be anywhere
+### In S-PLUS, free variables are always looked up in global workspace, so everything can be stored on the disk
+### because the defining env of all functions is THE SAME
+
+## Optimization Example
+### Optimization routines in R like optim, nlm, and optimize require you to pass a function whose argument is a 
+### vector of parameters (e.g., a log-likelihood)
+
+### But, an object function might depend on other things besides its parameters
+### When writing software that does optimization, it may be desirable to allow the user to fix certain parameters
