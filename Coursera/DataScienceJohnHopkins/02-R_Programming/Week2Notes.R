@@ -260,3 +260,92 @@ g(2) # All good(?). Not really, we've just switched to lexical scoping
 
 ### But, an object function might depend on other things besides its parameters
 ### When writing software that does optimization, it may be desirable to allow the user to fix certain parameters
+
+## Maximizing a Normal Likelihood
+### Write a "constructor" function: a negative log-likelihood function
+make.NegLogLike <- function(data,fixed=c(F,F)) { # Second argument = logical vector determines whether or not to fix params
+  params <- fixed
+  function(p) { # p is the parameter vector that we want to optimize over
+    params[!fixed] <- p
+    mu <- params[1] # Log-likelihood param
+    sigma <- params[2] # Log-likelihood param
+    a <- -0.5*length(data)*log(2*pi*sigma^2) # Defining the log-likelihood function
+    b <- -0.5*sum((data-mu)^2) / (sigma^2)
+    -(a+b) # Returns log-likelihood
+  }
+}
+### Simulate data for the constructor function
+set.seed(1) # Sets random number seed
+normals <- rnorm(100,1,2) # Generate normalized numbers
+nLL <- make.NegLogLike(normals) # Constructs function based on object normals
+nLL # Gives hexademical vale of the address of where the defining environment is located in memory
+ls(environment(nLL)) # Calls environment of nLL, which calls the free variables data, params, and fixed
+optim(c(mu=0,sigma=1),nLL)$par # Now we can optimize the data according to function nLL()
+#### This gives us values that are close to the true mean (1) and true SD (2)
+
+### We don't need to estimate mean or sigma, we could also just give make.NegLogLike() the true mean and/or SD:
+nLL <- make.NegLogLike(normals,c(FALSE,2)) # Let mu be free
+optimize(nLL,c(-1,3))$minimum # Which gives the min value of the mean, vector c(-1,3) is the range in which the min is searched for
+#### optim() != optimize(); optimize() gives the estimated value for ONE parameter, optim() for both
+nLL <- make.NegLogLike(normals, c(1,F)) # Let sigma be free this time
+optimize(nLL,c(1e-6,10))$min
+
+## Plotting the Likelihood!
+nLL <- make.NegLogLike(normals, c(1,FALSE))
+x <- seq(1,4,len=100) # Vector of independent numbers
+y <- sapply(x,nLL)
+plot(x,exp(-(y-min(y))),type="l") # Creates a nLL function of SD
+
+nLL <- make.NegLogLike(normals, c(FALSE,2))
+x <- seq(0.5,1.5,len=100)
+y <- sapply(x,nLL)
+plot(x,exp(-(y-min(y))),type="l") # Creates a nLL function of the mean
+
+## Lexical Scoping Summary
+### Objective functions can be built which contain all necessary data for evaluating the function
+### NO need to carry around long argument lists -- useful for interactive and exploratory work
+### Code can be simplified and cleaned up
+
+# Coding Standards for R
+## Always use text files/editors
+## Indent your code (About 4-8 spaces) and limit the width of your code to 80 columns
+## Force yourself to think about writing your code aesthetically
+
+# Dates and Times in R
+## R has developed a special representation of dates and times
+## Dates are represented by the "Date" class
+## Time by the POSIXct or POSIXlt class
+
+## Date class can be coerced from a character string using as.Date()
+z <- as.Date("1970-01-01") # Here we coerce the string in the parantheses to the data January 1, 1970, which is day "0" in R time.
+unclass(z) # Therefore, when you unclass this, it becomes the number zero!
+unclass(as.Date("1970-01-02")) # In like manner, one day AHEAD of January 1, 1970 should be (and is) the number 1.
+unclass(as.Date("2018-10-24"))
+
+## Times are represented using the POSIXct or lt classes
+### POSIXct just a very large integer under the hood; useful class when you want to store times in a data frame
+### POSIXlt is a list underneath and stores a bunch of useful info like the day of the week, day of the year, etc.
+### Some generic functions that work on dates and times
+### Can also be coerced from character string
+a <- Sys.time() # Sys.time() gives you the POSIXct vector of the current time
+p <- as.POSIXlt(a) # Coercing to POSIXlt gives you a list of useful information about your current time
+names(unclass(p)) # Gives you a vector of the contents
+p$sec # The number of seconds in the (previously) current time, for instance
+unclass(a) # Given a is already in POSIXct format, when we unclass it gives the number of seconds since January 1, 1970
+### In order to get the list elements of a time, you should first coerce POSIXct to POSIXlt
+
+## strptime() allows you to create a POSIXlt list from a human-readable date
+datestring <- c("January 10, 2012 10:40", "December 9, 2011 9:10")
+j <- strptime(datestring, "%B %d, %Y %H:%M") # The percent signs (formatting string) tell strptime what each item in the string is, delimited by a space
+class(j) # A class of two POSIXlt lists.
+
+## You can use mathematical operations on dates and times (+ and -) to find out, for example, how many days are between the two dates
+k <- as.Date("2012-01-01")
+l <- strptime("9 Jan 2011 11:34:21", "%d %b %Y %H:%M:%S")
+k <- as.POSIXlt(k) # Need to change k to POSIXlt before subtraction
+k-l # Time difference of 356.51 days
+## POSIX also handles things like leap years, daylight savings, and time zones
+m <- as.POSIXct("2012-10-25 01:00:00")
+n <- as.POSIXct("2012-10-25 06:00:00", tz = "GMT")
+m-n
+arguments(as.POSIXct)
