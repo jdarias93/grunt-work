@@ -55,5 +55,16 @@ install_from_swirl("R Programming")
 
 ## Swirl Lesson 9: Functions
 # Sys.Date() returns a Date class object (today's actual date)
-
+# When you explicitly designate argument values by name, the ordering of arguments becomes unimportant
+# args() will tell you the accepted arguments of a function
+# You can pass functions AS arguments to other functions in a function
+# When you use the ... argument in a function, it is a list that must be "unpacked" within the function, like so:
+mad_libs <- function(...){
+  # Do your argument unpacking here!
+  args <- list(...)
+  place <- args[["place"]]
+  adjective <- args[["adjective"]]
+  noun <- args[["noun"]]
+  paste("News from", place, "today where", adjective, "students took to the streets in protest of the new", noun, "being installed on campus.")
+}
 
