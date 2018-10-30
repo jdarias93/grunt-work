@@ -1,5 +1,5 @@
 ---
-title: "Week 1 Notes"
+title: "R Programming: Week 1 Notes"
 output: html_notebook
 ---
 # Background Material
@@ -197,161 +197,225 @@ d <- matrix(1:4,nrow=2,ncol=2)
 dimnames(d) <- list(c("a","b"),c("c","d"))
 ```
 
-## Summary
-### Atomic Classes: Numeric, Logical, Character, Integer, Complex
-### Vectors and Lists
-### Factors
-### Missing Values
-### Data Frames
-### Names
+# Summary
+* Atomic Classes: Numeric, Logical, Character, Integer, Complex
+* Vectors and Lists
+* Factors
+* Missing Values
+* Data Frames
+* Names
 
 # Reading Tabular Data
-
-## read.table() and read.csv() for reading tabular data; for writing: write.table(); arguments:
-### file = name of file
-### header = logical indicating header line for file
-### sep = string indicating how columns are separated
-### colClasses = Character vector indicating class of each column in dataset
-### comment.char = character string indicating comment character
-### skip = number of lines to skip from the beginning
-### stringsAsFactors = which character variables should be coded as factors
-### Typically figures out everything for yourself
-
-## readLines() for reading lines of a text file; for writing: writeLines
-## source() for reading in R code files; inverse of dump()
-## dget for reading in R code files
-## load for reading in saved workspaces
-## unserialize for reading single R objects in binary form
+* read.table() and read.csv() for reading tabular data; for writing: write.table(); 
+  arguments:
+  - file = name of file
+  - header = logical indicating header line for file
+  - sep = string indicating how columns are separated
+  - colClasses = Character vector indicating class of each column in dataset
+  - comment.char = character string indicating comment character
+  - skip = number of lines to skip from the beginning
+  - stringsAsFactors = which character variables should be coded as factors
+  - Typically figures out everything for yourself
+* readLines() for reading lines of a text file; for writing: writeLines
+* source() for reading in R code files; inverse of dump()
+* dget() for reading in R code files
+* load() for reading in saved workspaces
+* unserialize() for reading single R objects in binary form
 
 # Reading in Larger Datasets with read.table()
-## Optimize read.table() by checking out the help page for it
-## If your dataset is larger than the amount of RAM on your computer, you can probably stop right there
-## colClasses allows you to tell R what type of data is in each column
-### if all numeric, you can just set colClasses = "numeric"
-### A quick, dirty way to figure out all classes of a datatable:
-initial <- read.table("datatable.txt", nrows = 100) # Only reads first 100 rows of a big table to initial
-classes <- sapply(initial,class) # Reads a vector of classes to object "classes"
-tabAll <- read.table("datatable.txt",colClasses=classes) # Now you can tell read.table() which classes are in which columns
+* Optimize read.table() by checking out the help page for it
+* If your dataset is larger than the amount of RAM on your computer, you can probably stop
+  right there
+* colClasses allows you to tell R what type of data is in each column
+* if all numeric, you can just set colClasses = "numeric"
+```{r}
+  # A quick, dirty way to figure out all classes of a datatable:
+  initial <- read.table("datatable.txt", nrows = 100) 
+  # Only reads first 100 rows of a big table to initial
+  classes <- sapply(initial,class) 
+  # Reads a vector of classes to object "classes"
+  tabAll <- read.table("datatable.txt",colClasses=classes) 
+  # Now you can tell read.table() which classes are in which columns
+```
 
-## Calculating Memory Requirements
-### Rows x Columns x 8 bytes/character = # Bytes
-### Bytes/(2^20 Bytes/Megabyte) = # Megabytes
-### MB/1000 = # Gigabytes of Memory Required
-### Rule of Thumb: 2*GB = # Gigabytes ACTUALLY Required
+# Calculating Memory Requirements
+* Rows x Columns x 8 bytes/character = # Bytes
+* Bytes/(2^20 Bytes/Megabyte) = # Megabytes
+* MB/1000 = # Gigabytes of Memory Required
+* Rule of Thumb: 2*GB = # Gigabytes ACTUALLY Required
 
 # Textual Data Formats
-## Dumping and dputing are useful because resulting format is editable
-## Unlike writing out a table/csv, dump() and dput() perserve metadata
-## Textual formats can work much better with version control programs like subversion or git 
-##  which can only track changes meaningfully in text files
-## They can also be longer-lived, with easily-identifiable corruption
-e <- data.frame(a=1,b="a")
-dput(e) # Makes R code to make your data frame "e" reproducible.
-dput(e,file="e.R")
-new.e <- dget("e.R") # dget() allows you reconstruct an object made reporducible with dput()
-new.e
+* Dumping and dputing are useful because resulting format is editable
+* Unlike writing out a table/csv, dump() and dput() perserve metadata
+* Textual formats can work much better with version control programs like subversion or 
+  git which can only track changes meaningfully in text files
+* They can also be longer-lived, with easily-identifiable corruption
+```{r}
+  e <- data.frame(a=1,b="a")
+  dput(e) # Makes R code to make your data frame "e" reproducible.
+  dput(e,file="e.R")
+  new.e <- dget("e.R") 
+  # dget() allows you reconstruct an object made reporducible with dput()
+  new.e
+```
 
-## Dumping Objects (dput() but for multiple objects)
+# Dumping Objects (dput() but for multiple objects)
+```{r}
 f <- "foo" 
 dump(c("e","f"),file="data.R") # Dumps your objects into data.R file
 rm(e,f) # Removes e and f (to show you that your data is reproducible)
 source("data.R") # Sources your dump and reads them back to your global environment
 e # Ta
 f # Da
+```
 
 # Interfaces to the Outside World
-## Data can be read in using connection interfaces, which can be made to file or more exotic things (websites)
-## Can be useful when you want to read parts of a file
-g <- gzfile("words.gz") # "Opens" words.gz to to g
-h <- readLines(g,10) # Reads only the first 10 lines from words.gz
-## You can read lines from a webpage using url()
-i <- url("https://www.jhsph.edu","r") # Connect to this site using url() and feed to object i
+* Data can be read in using connection interfaces, which can be made to file or more 
+  exotic things (websites)
+  * Can be useful when you want to read parts of a file
+```{r}
+  g <- gzfile("words.gz") # "Opens" words.gz to to g
+  h <- readLines(g,10) # Reads only the first 10 lines from words.gz
+```
+* You can read lines from a webpage using url()
+```{r}
+i <- url("https://www.jhsph.edu","r") 
+# Connect to this site using url() and feed to object i
 j <- readLines(i) # Read lines from connnection i to object j
 head(j) # See the first few lines of j
+```
 
 # Subsetting
-## Basics
-### [ ] always returns object of the same class as the original; can be used to select more than one element
-### [[]] is used to extract elements of a list or a data frame; it can only be used to extract a single
-###  element and the class of the returned object will not necessarily be a list/data frame
-### $ is used to extract element of a list/data frame by name
-k <- c("a","b","c","c","d","a")
-k[1] # Extracts first element in the vector k: "a"
-k[1:4] # Extracts first FOUR elements in the vector k
-k[k > "a"] # Subsetting with a logical index (returns only letters after "a")
-l <- k > "a" # Creates logical vector
-l
-k[l] # Subsets according to your logical vector (F T T T T F)
+  # Basics
+  * [ ] always returns object of the same class as the original; can be used to select 
+    more than one element
+  * [[]] is used to extract elements of a list or a data frame; it can only be used to 
+    extract a single element and the class of the returned object will not necessarily be 
+    a list/data frame
+  * $ is used to extract element of a list/data frame by name
+```{r}
+    k <- c("a","b","c","c","d","a")
+    k[1] # Extracts first element in the vector k: "a"
+    k[1:4] # Extracts first FOUR elements in the vector k
+    k[k > "a"] # Subsetting with a logical index (returns only letters after "a")
+    l <- k > "a" # Creates logical vector
+    l
+    k[l] # Subsets according to your logical vector (F T T T T F)
+```
 
-## Lists
-### You can subset according to an element's name, which can be useful when you don't remember where it is.
-m <- list(foo = 1:4, bar = 0.6) # A main difference between a list and a vector...
-m[1] # ...is indexing, where m[1] calls the entire first element "foo" (a vector), rather than just the # 1.
-m[[1]] # Double bracket gives you just the object contents 
-m$bar == m[["bar"]]
-m$bar == m["bar"] # The single bracket returns the name of the list
+  # Lists
+  * You can subset according to an element's name, which can be useful when you don't 
+    remember where it is.
+```{r}
+    m <- list(foo = 1:4, bar = 0.6) # A main difference between a list and a vector...
+    m[1] 
+    # ...is indexing, where m[1] calls the entire first element "foo" (a vector), rather 
+    # than just the # 1.
+    m[[1]] # Double bracket gives you just the object contents 
+    m$bar == m[["bar"]]
+    m$bar == m["bar"] # The single bracket returns the name of the list
+```
 
-### The [[]] operator can be used with COMPUTED indices; $ can only be used with LITERAL names
-n <- list(foo=1:4,bar=0.6,baz="hello")
-n[c(1,3)] # Calls the name and contents of the first and third elements (foo and baz) of the list
-name <- "foo"
-n[[name]] # Computed index for "foo"
-n$name # Element "name" doesn't exist
-n$foo # Element "foo", however, does exist
+  * The [[]] operator can be used with COMPUTED indices; $ can only be used with LITERAL 
+    names
+```{r}
+    n <- list(foo=1:4,bar=0.6,baz="hello")
+    n[c(1,3)] 
+    # Calls the name and contents of the first and third elements (foo and baz) 
+    # of the list
+    name <- "foo"
+    n[[name]] # Computed index for "foo"
+    n$name # Element "name" doesn't exist
+    n$foo # Element "foo", however, does exist
+```
 
-### You can subset nested list elements with [[]] operator
-o <- list(a=list(10,12,14),b=c(3.14,2.81)) # First element in list o is list a (which has three elements itself)
-o[[c(1,3)]] # Calls third element of list "a" in the first element of list "o"!
-o[[c(1,3)]] == o[[1]][[3]]
-o[[c(2,1)]] # Calls FIRST element of vector "b" in the second element of list "o"
 
-## Matrices
-### Can be subsetted in the usual way with (i,j) type indices
-p <- matrix(1:6,2,3)
-p[1,2] # Calls element in row 1 and column 2
-p[2,1] # Calls element in row 2 and column 1
-p[1, ] # Calls entire row 1.
-p[ ,2] # Calls entire column 2; note how it is returned as a VECTOR of length 1
-### By default, when a single element of a matrix is retrieved, it is returned as a vector of length 1 rather
-#### than a 1x1 matrix. You can toggle this with drop=FALSE
-p[1,2,drop=F] ## Returns element in row 1 and column 2 but as a 1x1 matrix!
-p[1, , drop=F] ## Returns entire row 1, but as a 1x3 matrix (retaining original dimension)
+  * You can subset nested list elements with [[]] operator
+```{r}
+    o <- list(a=list(10,12,14),b=c(3.14,2.81)) 
+    # First element in list o is list a (which has three elements itself)
+    o[[c(1,3)]] 
+    # Calls third element of list "a" in the first element of list "o"!
+    o[[c(1,3)]] == o[[1]][[3]]
+    o[[c(2,1)]] 
+    # Calls FIRST element of vector "b" in the second element of list "o"
+```
 
-## Partial Matching
-### Allowed with [[]] and $
-q <- list(aardvark = 1:5) # Typing out aardvark is a pain, so we can just shorten it to "a" when calling
-q$a # Looks for element that starts with "a", or aardvark
-q[["a"]] # Double bracket DOESN'T do partial matching, but you can pass argument exact to toggle this
-q[["a", exact=F]] # It works!
+  # Matrices
+  * Can be subsetted in the usual way with (i,j) type indices
+```{r}
+    p <- matrix(1:6,2,3)
+    p[1,2] # Calls element in row 1 and column 2
+    p[2,1] # Calls element in row 2 and column 1
+    p[1, ] # Calls entire row 1.
+    p[ ,2] # Calls entire column 2; note how it is returned as a VECTOR of length 1
+```
+  * By default, when a single element of a matrix is retrieved, it is returned as a vector
+    of length 1 rather than a 1x1 matrix. You can toggle this with drop=FALSE
+```{r}
+    p[1,2,drop=F] 
+    ## Returns element in row 1 and column 2 but as a 1x1 matrix!
+    p[1, , drop=F] 
+    ## Returns entire row 1, but as a 1x3 matrix (retaining original dimension)
+```
 
-## Removing missing values
-### Common task is to remove missing values (NAs)
-r <- c(1,2,NA,4,NA,5)
-bad <- is.na(r) # Identifies all NAs in vector "r"
-r[!bad] # Subset using logical vector by asking only for FALSE elements (non-NA elements)
+  # Partial Matching
+  * Allowed with [[]] and $
+```{r}
+    q <- list(aardvark = 1:5) 
+    # Typing out aardvark is a pain, so we can just shorten it to "a" when calling
+    q$a # Looks for element that starts with "a", or aardvark
+    q[["a"]] 
+    # Double bracket DOESN'T do partial matching, but you can pass argument exact to 
+    # toggle this
+    q[["a", exact=F]] # It works!
+```
 
-### What there are multiple things and you want to take the subset with no missing values?
-s <- c("a","b",NA,"d",NA,"f")
-good <- complete.cases(r,s) # Creates logical vector of non-NA elements in both argument objects
-t <- c("a","b","c","d","e","f")
-good1 <- complete.cases(r,t) # Only indices that contain a non-NA element will be marked as TRUE
-r[good] # Then we can call according to the complete.cases() logical vector
-s[good]
+  # Removing missing values
+  * Common task is to remove missing values (NAs)
+```{r}
+    r <- c(1,2,NA,4,NA,5)
+    bad <- is.na(r) # Identifies all NAs in vector "r"
+    r[!bad] 
+    # Subset using logical vector by asking only for FALSE elements (non-NA elements)
+```
 
-### Also works for data frames
-airquality # Commonwealth R file with lots of NAs
-goodcases <- complete.cases(airquality) # Creates logical vector based on NA elements in matrix,
-#### Each row with an NA will return a FALSE for that row's index in the logical vector
-airquality[goodcases, ] # We've removed all rows with NA!
+  * What if there are multiple things and you want to take the subset with no missing 
+    values?
+```{r}
+    s <- c("a","b",NA,"d",NA,"f")
+    good <- complete.cases(r,s) 
+    # Creates logical vector of non-NA elements in both argument objects
+    t <- c("a","b","c","d","e","f")
+    good1 <- complete.cases(r,t) 
+    # Only indices that contain a non-NA element will be marked as TRUE
+    r[good] # Then we can call according to the complete.cases() logical vector
+    s[good]
+```
+
+  * Also works for data frames
+```{r}
+    airquality # Commonwealth R file with lots of NAs
+    goodcases <- complete.cases(airquality) 
+    # Creates logical vector based on NA elements in matrix,
+    # Each row with an NA will return a FALSE for that row's index in the logical vector
+    airquality[goodcases, ] # We've removed all rows with NA!
+```
 
 # Vectorized Operations
-t <- 1:4; u <- 6:9 # Vectors interact parallely
-t + u # This adds the first elements of vectors t and u, the second elements of vectors t and u, and so on.
-## The benefit is that you don't need to write a loop for this kind of operation
+```{r}
+  t <- 1:4; u <- 6:9 # Vectors interact parallely
+  t + u 
+  # This adds the first elements of vectors t and u, the second elements of vectors t and 
+  # u, and so on.
+```
+* The benefit is that you don't need to write a loop for this kind of operation
 
-## Matrix Operations
+# Matrix Operations
+```{r}
 v <- matrix(1:4,2,2); w <- matrix(rep(10,4),2,2)
 v * w # Element-wise multiplication; NOT TRUE matrix multiplication
 v %*% w # THIS is true matrix multiplication.
+```
 
 # END OF WEEK 1
