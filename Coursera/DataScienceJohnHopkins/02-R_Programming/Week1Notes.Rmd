@@ -286,7 +286,7 @@ head(j) # See the first few lines of j
 ```
 
 # Subsetting
-  # Basics
+## Basics
   * [ ] always returns object of the same class as the original; can be used to select 
     more than one element
   * [[]] is used to extract elements of a list or a data frame; it can only be used to 
@@ -303,7 +303,7 @@ head(j) # See the first few lines of j
     k[l] # Subsets according to your logical vector (F T T T T F)
 ```
 
-  # Lists
+## Lists
   * You can subset according to an element's name, which can be useful when you don't 
     remember where it is.
 ```{r}
@@ -341,7 +341,7 @@ head(j) # See the first few lines of j
     # Calls FIRST element of vector "b" in the second element of list "o"
 ```
 
-  # Matrices
+## Matrices
   * Can be subsetted in the usual way with (i,j) type indices
 ```{r}
     p <- matrix(1:6,2,3)
@@ -359,7 +359,7 @@ head(j) # See the first few lines of j
     ## Returns entire row 1, but as a 1x3 matrix (retaining original dimension)
 ```
 
-  # Partial Matching
+## Partial Matching
   * Allowed with [[]] and $
 ```{r}
     q <- list(aardvark = 1:5) 
@@ -371,7 +371,7 @@ head(j) # See the first few lines of j
     q[["a", exact=F]] # It works!
 ```
 
-  # Removing missing values
+## Removing missing values
   * Common task is to remove missing values (NAs)
 ```{r}
     r <- c(1,2,NA,4,NA,5)

@@ -362,285 +362,419 @@ repeat{
 <h1>Functions</h1>
 <ul>
 <li>Functions are created using the function() directive and are stored as R object like anything else; they are of class “function”</li>
+<li>Functions can be passed as arguments to other functions</li>
+<li>Functions can be nested so you can define a function inside another one</li>
+<li>Functions have NAMED ARGUMENTS which potentially have default values</li>
+<li>FORMAL ARGUMENTS are included in function definition; sometimes they aren’t ALL used - formals() returs a list of all formal arguments of function - Can be missing or might have default values</li>
+<li>ARGUMENT MATCHING: When an argument is matched by name, it is “taken out” of the<br />
+argument list and the remaining unnamed arguments are matched in the order they are listed in the function definition.</li>
+<li>Named arguments are helpful when you have a long argument list and you want to use the defaults for everything except an argument near the end of the list (like in plotting functions) -They can also be PARTIALLY matched, meaning you don’t need to type the entire argument out</li>
 </ul>
-<p>LEFT OFF HERE</p>
-<div id="functions-can-be-passed-as-arguments-to-other-functions" class="section level2">
-<h2>Functions can be passed as arguments to other functions</h2>
 </div>
-<div id="functions-can-be-nested-so-you-can-define-a-function-inside-another-one" class="section level2">
-<h2>Functions can be nested so you can define a function inside another one</h2>
+<div id="defining-a-function" class="section level1">
+<h1>Defining a Function</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZyA8LSBmdW5jdGlvbihhLCBiPTEsIGM9MiwgZD1OVUxMKSB7XG4gICMgWW91IGNhbiBzZXQgYSBkZWZhdWx0IGFyZ3VtZW50IHRvIE5VTEwsIG1lYW5pbmcgbm8gYXJndW1lbnRcbn1cbmBgYCJ9 -->
+<pre class="r"><code>g &lt;- function(a, b=1, c=2, d=NULL) {
+  # You can set a default argument to NULL, meaning no argument
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Lazy Evaluation: Argument to functions are evaluated lazily, so ONLY as needed</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaCA8LSBmdW5jdGlvbihhLGIpIHsgIyBBcmd1bWVudCBcImJcIiBpc24ndCBuZWVkZWQgc28gaCgyKSB3b24ndCBwcm9kdWNlIGFuIGVycm9yLCBiZWNhdXNlIDIganVzdCBiZWNvbWVzIFwiYVwiXG4gIGFeMlxufVxuaCgyKSBcbmBgYCJ9 -->
+<pre class="r"><code>h &lt;- function(a,b) { # Argument &quot;b&quot; isn't needed so h(2) won't produce an error, because 2 just becomes &quot;a&quot;
+  a^2
+}
+h(2) </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>This next function produces an error because argument “b” is missing, but it still prints “a”!</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
-<div id="functions-have-named-arguments-which-potentially-have-default-values" class="section level2">
-<h2>Functions have NAMED ARGUMENTS which potentially have default values</h2>
-</div>
-<div id="formal-arguments-are-included-in-function-definition-sometimes-they-arent-all-used" class="section level2">
-<h2>FORMAL ARGUMENTS are included in function definition; sometimes they aren’t ALL used</h2>
-<div id="formals-returs-a-list-of-all-formal-arguments-of-function" class="section level3">
-<h3>formals() returs a list of all formal arguments of function</h3>
-</div>
-<div id="can-be-missing-or-might-have-default-values" class="section level3">
-<h3>Can be missing or might have default values</h3>
-</div>
-</div>
-<div id="argument-matching-when-an-argument-is-matched-by-name-it-is-taken-out-of-the-argument-list-and" class="section level2">
-<h2>Argument Matching: When an argument is matched by name, it is “taken out” of the argument list and</h2>
-</div>
-<div id="the-remaining-unnamed-arguments-are-matched-in-the-order-they-are-listed-in-the-function-definition." class="section level2">
-<h2>the remaining unnamed arguments are matched in the order they are listed in the function definition.</h2>
-<div id="named-arguments-are-helpful-when-you-have-a-long-argument-list-and-you-want-to-use-the-defaults" class="section level3">
-<h3>Named arguments are helpful when you have a long argument list and you want to use the defaults</h3>
-</div>
-<div id="for-everything-except-an-argument-near-the-end-of-the-list-like-in-plotting-functions" class="section level3">
-<h3>for everything except an argument near the end of the list (like in plotting functions)</h3>
-</div>
-<div id="they-can-also-be-partially-matched-meaning-you-dont-need-to-type-the-entire-argument-out" class="section level3">
-<h3>They can also be PARTIALLY matched, meaning you don’t need to type the entire argument out</h3>
-</div>
-</div>
-<div id="defining-a-function" class="section level2">
-<h2>Defining a Function</h2>
-<p>g &lt;- function(a, b=1, c=2, d=NULL) { # You can set a default argument to NULL, meaning no argument }</p>
-</div>
-<div id="lazy-evalutation-argument-to-functions-are-evaluated-lazily-so-only-as-needed" class="section level2">
-<h2>Lazy Evalutation: Argument to functions are evaluated lazily, so ONLY as needed</h2>
-<p>h &lt;- function(a,b) { # Argument “b” isn’t needed so h(2) won’t produce an error, because 2 just becomes “a” a^2 } h(2) # This next function produces an error because argument “b” is missing, but it still prints “a”! j &lt;- function(a,b) { print(a) print(b) } j(45)</p>
-</div>
-<div id="the-argument-indicates-a-variable-number-of-arguments-usually-passed-on-to-other-functions" class="section level2">
-<h2>The “…” Argument: … indicates a variable number of arguments usually passed on to OTHER functions</h2>
-</div>
-<div id="is-often-used-when-extending-another-function-and-you-dont-want-to-copy-the-entire-arugment-list" class="section level2">
-<h2>… is often used when extending another function and you don’t want to copy the entire arugment list</h2>
-<p>myplot &lt;- function(x,y,type=“l”,…) { # Here, we pass on arguments to function “plot” plot(x,y,type = type, …) }</p>
-</div>
-<div id="is-also-necessary-when-the-number-of-arguments-passed-to-the-function-cant-be-known-in-advance" class="section level2">
-<h2>… is also necessary when the number of arguments passed to the function can’t be known in advance</h2>
-<p>args(paste) # You could be dealing with many strings: they take the place of the … args(cat) ## One catch with … is that any arguments that appear AFTER … must be named explicitly and CAN’T be partially matched</p>
-</div>
+<div id="the-argument-indicates-a-variable-number-of-arguments-usually-passed-on-to-other-functions" class="section level1">
+<h1>The “…” Argument: … indicates a variable number of arguments usually passed on to OTHER functions</h1>
+<ul>
+<li>… is often used when extending another function and you don’t want to copy the entire argument list</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubXlwbG90IDwtIGZ1bmN0aW9uKHgseSx0eXBlPVwibFwiLC4uLikgeyAjIEhlcmUsIHdlIHBhc3Mgb24gYXJndW1lbnRzIHRvIGZ1bmN0aW9uIFwicGxvdFwiXG4gIHBsb3QoeCx5LHR5cGUgPSB0eXBlLCAuLi4pXG59XG5gYGAifQ== -->
+<pre class="r"><code>myplot &lt;- function(x,y,type=&quot;l&quot;,...) { # Here, we pass on arguments to function &quot;plot&quot;
+  plot(x,y,type = type, ...)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>… is also necessary when the number of arguments passed to the function can’t be known in advance</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJncyhwYXN0ZSkgIyBZb3UgY291bGQgYmUgZGVhbGluZyB3aXRoIG1hbnkgc3RyaW5nczogdGhleSB0YWtlIHRoZSBwbGFjZSBvZiB0aGUgLi4uXG5hcmdzKGNhdClcbmBgYCJ9 -->
+<pre class="r"><code>args(paste) # You could be dealing with many strings: they take the place of the ...
+args(cat)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>One catch with … is that any arguments that appear AFTER … must be named explicitly and CAN’T be partially matched</li>
+</ul>
 </div>
 <div id="scoping-rules" class="section level1">
 <h1>Scoping Rules</h1>
-<div id="how-does-r-know-which-value-to-assign-to-which-symbol-when-you-type" class="section level2">
-<h2>How does R know which value to assign to which symbol? When you type</h2>
-<p>lm &lt;- function(x) {x*x} # effectively defining another function for lm (already a function in the stats package) ## … how does R know which lm() to use?</p>
+<div id="how-does-r-know-which-value-to-assign-to-which-symbol" class="section level2">
+<h2>How does R know which value to assign to which symbol?</h2>
+<ul>
+<li>When you type:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG0gPC0gZnVuY3Rpb24oeCkge3gqeH0gXG4jIGVmZmVjdGl2ZWx5IGRlZmluaW5nIGFub3RoZXIgZnVuY3Rpb24gZm9yIGxtIChhbHJlYWR5IGEgZnVuY3Rpb24gaW4gdGhlIHN0YXRzIHBhY2thZ2UpXG5gYGAifQ== -->
+<pre class="r"><code>lm &lt;- function(x) {x*x} 
+# effectively defining another function for lm (already a function in the stats package)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>… how does R know which lm() to use?</li>
+</ul>
 </div>
 <div id="binding-values-to-symbol" class="section level2">
 <h2>Binding Values to Symbol</h2>
-<div id="when-r-tries-binding-a-value-to-a-symbol-it-search-through-a-series-of-environments-to-find-the-apropos-value" class="section level3">
-<h3>When R tries binding a value to a symbol, it search through a series of environments to find the apropos value</h3>
-</div>
-<div id="the-order-is-roughly-1-search-global-environment-for-symbol-name-and-2-search-namespaces-of-packages" class="section level3">
-<h3>The order is roughly: (1) search global environment for symbol name and (2) search namespaces of packages</h3>
-<p>search() # Allows us to see the hierarchy of how R will match symbols ### Global Enviornment is always number 1 and last is the BASE packages ### When you load a package with library, THE NAMESPACE OF THAT PACKAGE IS PUT IN POSITION 2 OF THE SEARCH LIST ### Everything else is shifted DOWN</p>
-</div>
-</div>
-<div id="scoping-rules-are-the-main-feature-making-r-different-from-s-they-determine-how-a-value-is-associated-with-a-free" class="section level2">
-<h2>Scoping rules are the main feature making R different from S; they determine how a value is associated with a free</h2>
-</div>
-<div id="variable-in-a-function" class="section level2">
-<h2>variable in a function</h2>
-</div>
-<div id="r-uses-lexical-or-static-scoping-alt-dynamic-scoping" class="section level2">
-<h2>R uses LEXICAL or STATIC SCOPING (alt: dynamic scoping)</h2>
-<div id="lexical-scoping-is-useful-for-simplifying-statistical-computation" class="section level3">
-<h3>Lexical scoping is useful for simplifying statistical computation</h3>
-</div>
+<ul>
+<li>When R tries binding a value to a symbol, it search through a series of environments to find the apropos value</li>
+<li>The order is roughly: (1) search global environment for symbol name and (2) search namespaces of packages</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2VhcmNoKCkgIyBBbGxvd3MgdXMgdG8gc2VlIHRoZSBoaWVyYXJjaHkgb2YgaG93IFIgd2lsbCBtYXRjaCBzeW1ib2xzXG5gYGAifQ== -->
+<pre class="r"><code>search() # Allows us to see the hierarchy of how R will match symbols</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Global Enviornment is always number 1 and last is the BASE packages</li>
+<li>When you load a package with library, THE NAMESPACE OF THAT PACKAGE IS PUT IN POSITION 2 OF THE SEARCH LIST; Everything else is shifted DOWN</li>
+<li>Scoping rules are the main feature making R different from S; they determine how a value is associated with a free variable in a function</li>
+<li>R uses LEXICAL or STATIC SCOPING (alt: dynamic scoping)</li>
+<li>Lexical scoping is useful for simplifying statistical computation</li>
+</ul>
 </div>
 <div id="lexical-scoping" class="section level2">
 <h2>Lexical Scoping</h2>
-<p>k &lt;- function(x,y) { x^2 + y / z } ### This function has 2 formal args (x,y); z is a FREE VARIABLE ### Scoping rules determine how values are assigned to FREE VARIABLES, which are NOT formal args or local variables ### <strong><em>The values of free variables are searched for in the environment in which the function was defined</em></strong></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuayA8LSBmdW5jdGlvbih4LHkpIHtcbiAgeF4yICsgeSAvIHpcbn1cbmBgYCJ9 -->
+<pre class="r"><code>k &lt;- function(x,y) {
+  x^2 + y / z
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>This function has 2 formal args (x,y); z is a FREE VARIABLE</li>
+<li>Scoping rules determine how values are assigned to FREE VARIABLES, which are NOT formal args or local variables</li>
+<li>The values of free variables are searched for in the environment in which the function was defined!!!</li>
+</ul>
 </div>
 <div id="environments" class="section level2">
 <h2>Environments</h2>
-<div id="an-environment-is-a-collection-of-symbolvalue-pairs-e.g.-x-symbol-and-3.14-value" class="section level3">
-<h3>An environment is a collection of (symbol,value) pairs (e.g., x = symbol and 3.14 = value)</h3>
+<ul>
+<li>An environment is a collection of (symbol,value) pairs (e.g., x = symbol and 3.14 = value)</li>
+<li>Every environment has a parent environment; each environment can have multiple children</li>
+<li>Only environment without a parent is the empty environment</li>
+<li>Function + Environment = A FUNCTION CLOSURE</li>
+</ul>
 </div>
-<div id="every-environment-has-a-parent-environment-each-environment-can-have-multiple-children" class="section level3">
-<h3>Every environment has a parent environment; each environment can have multiple children</h3>
+<div id="free-variables" class="section level2">
+<h2>FREE VARIABLES</h2>
+<ul>
+<li>If value of a symbol IS NOT found in the environment in which a function was defined, then the search is continued in the PARENT ENVIRONMENT.</li>
+<li>Search continues down the sequence of parent environments until we hit the TOP-LEVEL ENVIRONMENT</li>
+<li>After the top-level environment, search continues down the search list until we hit the EMPTY ENVIRONMENT</li>
+<li>If R can’t find the FREE VARIABLE value before this happens, we encounter an error.</li>
+<li>FREE VARIABLE? -&gt; PARENT ENV -&gt; TOP-LEVEL ENV -&gt; EMPTY ENV</li>
+<li>Why does it matter? - Typically, functions are defined in global env, so values of free variables are found in user’s workspace - R allows you to have functions defined INSIDE other function; other languages like C don’t let you do this</li>
+</ul>
 </div>
-<div id="only-enviornment-without-a-parent-is-the-empty-environment" class="section level3">
-<h3>Only enviornment without a parent is the empty environment</h3>
-</div>
-<div id="function-environment-a-function-closure" class="section level3">
-<h3>Function + Environment = A FUNCTION CLOSURE</h3>
-</div>
-</div>
-<div id="searching-for-free-variable-value" class="section level2">
-<h2>Searching for FREE VARIABLE value</h2>
-<div id="if-value-of-a-symbol-is-not-found-in-the-environment-in-which-a-function-was-defined-then-the-search-is-continued" class="section level3">
-<h3>If value of a symbol IS NOT found in the environment in which a function was defined, then the search is continued</h3>
-</div>
-<div id="in-the-parent-environment." class="section level3">
-<h3>in the PARENT ENVIRONMENT.</h3>
-</div>
-<div id="search-continues-down-the-sequence-of-parent-environments-until-we-hit-the-top-level-environment" class="section level3">
-<h3>Search continues down the sequence of parent environments until we hit the TOP-LEVEL ENVIRONMENT</h3>
-</div>
-<div id="after-the-top-level-environment-search-continues-down-the-search-list-until-we-hit-the-empty-environment" class="section level3">
-<h3>After the top-level environment, search continues down the search list until we hit the EMPTY ENVIRONMENT</h3>
-</div>
-<div id="if-r-cant-find-the-free-variable-value-before-this-happens-we-encounter-an-error." class="section level3">
-<h3>If R can’t find the FREE VARIABLE value before this happens, we encounter an error.</h3>
-</div>
-<div id="free-variable---parent-env---top-level-env---empty-env" class="section level3">
-<h3>FREE VARIABLE? -&gt; PARENT ENV -&gt; TOP-LEVEL ENV -&gt; EMPTY ENV</h3>
-</div>
-</div>
-<div id="why-does-it-matter" class="section level2">
-<h2>Why does it matter?</h2>
-<div id="typically-functions-are-defined-in-global-env-so-values-of-free-variables-are-found-in-users-workspace" class="section level3">
-<h3>Typically, functions are defined in global env, so values of free variables are found in user’s workspace</h3>
-</div>
-<div id="r-allows-you-to-have-functions-defined-inside-other-function-other-languages-like-c-dont-let-you-do-this" class="section level3">
-<h3>R allows you to have functions defined INSIDE other function; other languages like C don’t let you do this</h3>
-</div>
-<div id="lets-try-a-function-within-a-function" class="section level3">
-<h3>Let’s try a function within a function:</h3>
-<p>make.power &lt;- function(n) { # Main function pow &lt;- function(x) { # Nested function x^n } pow }</p>
-<p>cube &lt;- make.power(3) # We first “make” the function by setting the power (n). Cube is now the new function cube(3) # We’ve set n to 3, so now we choose 3 again for cubing square &lt;- make.power(2) # Another example: making a function square() that allows us to square values square(3) # Returns 9, because 3^2 = 9</p>
-</div>
+<div id="functions-within-functions" class="section level2">
+<h2>Functions Within Functions</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFrZS5wb3dlciA8LSBmdW5jdGlvbihuKSB7ICMgTWFpbiBmdW5jdGlvblxuICAgICAgICBwb3cgPC0gZnVuY3Rpb24oeCkgeyAjIE5lc3RlZCBmdW5jdGlvblxuICAgICAgICAgICAgICAgIHheblxuICAgICAgICAgICAgICAgIH1cbiAgICAgICAgcG93XG59XG5cbmN1YmUgPC0gbWFrZS5wb3dlcigzKSBcbiMgV2UgZmlyc3QgXCJtYWtlXCIgdGhlIGZ1bmN0aW9uIGJ5IHNldHRpbmcgdGhlIHBvd2VyIChuKS4gQ3ViZSBpcyBub3cgdGhlIG5ldyBmdW5jdGlvblxuY3ViZSgzKSBcbiMgV2UndmUgc2V0IG4gdG8gMywgc28gbm93IHdlIGNob29zZSAzIGFnYWluIGZvciBjdWJpbmdcbnNxdWFyZSA8LSBtYWtlLnBvd2VyKDIpIFxuIyBBbm90aGVyIGV4YW1wbGU6IG1ha2luZyBhIGZ1bmN0aW9uIHNxdWFyZSgpIHRoYXQgYWxsb3dzIHVzIHRvIHNxdWFyZSB2YWx1ZXNcbnNxdWFyZSgzKSAjIFJldHVybnMgOSwgYmVjYXVzZSAzXjIgPSA5XG5gYGAifQ== -->
+<pre class="r"><code>make.power &lt;- function(n) { # Main function
+        pow &lt;- function(x) { # Nested function
+                x^n
+                }
+        pow
+}
+
+cube &lt;- make.power(3) 
+# We first &quot;make&quot; the function by setting the power (n). Cube is now the new function
+cube(3) 
+# We've set n to 3, so now we choose 3 again for cubing
+square &lt;- make.power(2) 
+# Another example: making a function square() that allows us to square values
+square(3) # Returns 9, because 3^2 = 9</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="exploring-a-function-closure-how-to-find-out-what-is-in-a-functions-environment" class="section level2">
 <h2>Exploring a Function Closure: How to find out what is in a function’s environment</h2>
-<p>ls(environment(cube)) # Checks for environment variables get(“n”,environment(cube)) ## Closure environment in which n has been previously set to 3 ls(environment(square)) get(“n”, environment(square))</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubHMoZW52aXJvbm1lbnQoY3ViZSkpICMgQ2hlY2tzIGZvciBlbnZpcm9ubWVudCB2YXJpYWJsZXNcbmdldChcIm5cIixlbnZpcm9ubWVudChjdWJlKSkgIyMgQ2xvc3VyZSBlbnZpcm9ubWVudCBpbiB3aGljaCBuIGhhcyBiZWVuIHByZXZpb3VzbHkgc2V0IHRvIDNcbmxzKGVudmlyb25tZW50KHNxdWFyZSkpXG5nZXQoXCJuXCIsIGVudmlyb25tZW50KHNxdWFyZSkpXG5gYGAifQ== -->
+<pre class="r"><code>ls(environment(cube)) # Checks for environment variables
+get(&quot;n&quot;,environment(cube)) ## Closure environment in which n has been previously set to 3
+ls(environment(square))
+get(&quot;n&quot;, environment(square))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="lexical-vs.dynamic-scoping" class="section level2">
 <h2>Lexical vs. Dynamic Scoping</h2>
-<p>y &lt;- 10 f &lt;- function(x) { # In this function, y and g are free variables y &lt;-2 y^2 + g(x) }</p>
-<p>g &lt;- function(x) { # In this function, y is the only free variable x*y } f(3) # == 34. What???</p>
-<div id="with-lexical-scoping-y-in-function-g-is-looked-up-in-the-environment-in-which-the-function-was-defined-global-env" class="section level3">
-<h3>With Lexical Scoping, y in function g is looked up in the environment in which the function was defined (global env)</h3>
-</div>
-<div id="so-for-g-alone-y-10." class="section level3">
-<h3>So for g alone, y = 10.</h3>
-</div>
-<div id="once-we-go-into-function-f-y-is-redefined-to-2-but-only-in-that-environment-outside-the-function-env-y-is-still-10." class="section level3">
-<h3>Once we go into function f, y is REDEFINED to 2, but ONLY IN THAT ENVIRONMENT; Outside the function env, y is still 10.</h3>
-</div>
-<div id="with-dynamic-scoping-y-is-looked-up-in-the-env-from-which-the-func-was-called-the-calling-env-parent-frame" class="section level3">
-<h3>With Dynamic scoping, y is looked up in the env from which the func was CALLED (the CALLING ENV == PARENT FRAME)</h3>
-</div>
-<div id="when-a-func-is-defined-in-global-env-and-is-then-called-from-the-global-env-then-the-defining-env-calling-env." class="section level3">
-<h3>When a func is defined in global env and is then called from the global env, then the defining env == calling env.</h3>
-</div>
-<div id="this-sometimes-gives-the-appearance-of-dynamic-scoping" class="section level3">
-<h3>This sometimes gives the appearance of dynamic scoping:</h3>
-<p>rm(y) g &lt;- function(x) { a &lt;-3 # Defined within func env; dynamically scoped x+a+y # y is free variable, previous undefined } g(2) # Error?! y was not found. y &lt;- 3 # Make R happy by giving it y, but now y is in the global environment (instead of defined in func) g(2) # All good(?). Not really, we’ve just switched to lexical scoping</p>
-</div>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueSA8LSAxMFxuZiA8LSBmdW5jdGlvbih4KSB7ICMgSW4gdGhpcyBmdW5jdGlvbiwgeSBhbmQgZyBhcmUgZnJlZSB2YXJpYWJsZXNcbiAgeSA8LTJcbiAgeV4yICsgZyh4KVxufVxuXG5nIDwtIGZ1bmN0aW9uKHgpIHsgIyBJbiB0aGlzIGZ1bmN0aW9uLCB5IGlzIHRoZSBvbmx5IGZyZWUgdmFyaWFibGVcbiAgeCp5XG59XG5mKDMpICMgPT0gMzQuXG5gYGAifQ== -->
+<pre class="r"><code>y &lt;- 10
+f &lt;- function(x) { # In this function, y and g are free variables
+  y &lt;-2
+  y^2 + g(x)
+}
+
+g &lt;- function(x) { # In this function, y is the only free variable
+  x*y
+}
+f(3) # == 34.</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>What just happened?</li>
+<li>With Lexical Scoping, y in function g is looked up in the environment in which the function was defined (global env)</li>
+<li>So for g alone, y = 10.</li>
+<li>Once we go into function f, y is REDEFINED to 2, but ONLY IN THAT ENVIRONMENT; Outside the function env, y is still 10.</li>
+<li>With Dynamic scoping, y is looked up in the env from which the func was CALLED (the CALLING ENV == PARENT FRAME)</li>
+<li>When a func is defined in global env and is then called from the global env, then the defining env == calling env.</li>
+<li>This sometimes gives the appearance of dynamic scoping:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="consequences-of-lexical-scoping" class="section level2">
 <h2>Consequences of Lexical Scoping</h2>
-<div id="all-objects-must-be-stored-in-memory" class="section level3">
-<h3>All objects must be stored in memory</h3>
-</div>
-<div id="all-functions-must-carry-a-pointer-to-their-respective-defining-environments-which-could-be-anywhere" class="section level3">
-<h3>All functions must carry a pointer to their respective defining environments, which could be anywhere</h3>
-</div>
-<div id="in-s-plus-free-variables-are-always-looked-up-in-global-workspace-so-everything-can-be-stored-on-the-disk" class="section level3">
-<h3>In S-PLUS, free variables are always looked up in global workspace, so everything can be stored on the disk</h3>
-</div>
-<div id="because-the-defining-env-of-all-functions-is-the-same" class="section level3">
-<h3>because the defining env of all functions is THE SAME</h3>
-</div>
-</div>
-<div id="optimization-example" class="section level2">
-<h2>Optimization Example</h2>
-<div id="optimization-routines-in-r-like-optim-nlm-and-optimize-require-you-to-pass-a-function-whose-argument-is-a" class="section level3">
-<h3>Optimization routines in R like optim, nlm, and optimize require you to pass a function whose argument is a</h3>
-</div>
-<div id="vector-of-parameters-e.g.-a-log-likelihood" class="section level3">
-<h3>vector of parameters (e.g., a log-likelihood)</h3>
-</div>
-<div id="but-an-object-function-might-depend-on-other-things-besides-its-parameters" class="section level3">
-<h3>But, an object function might depend on other things besides its parameters</h3>
-</div>
-<div id="when-writing-software-that-does-optimization-it-may-be-desirable-to-allow-the-user-to-fix-certain-parameters" class="section level3">
-<h3>When writing software that does optimization, it may be desirable to allow the user to fix certain parameters</h3>
-</div>
-</div>
-<div id="maximizing-a-normal-likelihood" class="section level2">
-<h2>Maximizing a Normal Likelihood</h2>
-<div id="write-a-constructor-function-a-negative-log-likelihood-function" class="section level3">
-<h3>Write a “constructor” function: a negative log-likelihood function</h3>
-<p>make.NegLogLike &lt;- function(data,fixed=c(F,F)) { # Second argument = logical vector determines whether or not to fix params params &lt;- fixed function(p) { # p is the parameter vector that we want to optimize over params[!fixed] &lt;- p mu &lt;- params[1] # Log-likelihood param sigma &lt;- params[2] # Log-likelihood param a &lt;- -0.5<em>length(data)</em>log(2<em>pi</em>sigma^2) # Defining the log-likelihood function b &lt;- -0.5*sum((data-mu)^2) / (sigma^2) -(a+b) # Returns log-likelihood } } ### Simulate data for the constructor function set.seed(1) # Sets random number seed normals &lt;- rnorm(100,1,2) # Generate normalized numbers nLL &lt;- make.NegLogLike(normals) # Constructs function based on object normals nLL # Gives hexademical vale of the address of where the defining environment is located in memory ls(environment(nLL)) # Calls environment of nLL, which calls the free variables data, params, and fixed optim(c(mu=0,sigma=1),nLL)$par # Now we can optimize the data according to function nLL() #### This gives us values that are close to the true mean (1) and true SD (2)</p>
-</div>
-<div id="we-dont-need-to-estimate-mean-or-sigma-we-could-also-just-give-make.negloglike-the-true-mean-andor-sd" class="section level3">
-<h3>We don’t need to estimate mean or sigma, we could also just give make.NegLogLike() the true mean and/or SD:</h3>
-<p>nLL &lt;- make.NegLogLike(normals,c(FALSE,2)) # Let mu be free optimize(nLL,c(-1,3))<span class="math inline">\(minimum # Which gives the min value of the mean, vector c(-1,3) is the range in which the min is searched for #### optim() != optimize(); optimize() gives the estimated value for ONE parameter, optim() for both nLL &lt;- make.NegLogLike(normals, c(1,F)) # Let sigma be free this time optimize(nLL,c(1e-6,10))\)</span>min</p>
-</div>
-</div>
-<div id="plotting-the-likelihood" class="section level2">
-<h2>Plotting the Likelihood!</h2>
-<p>nLL &lt;- make.NegLogLike(normals, c(1,FALSE)) x &lt;- seq(1,4,len=100) # Vector of independent numbers y &lt;- sapply(x,nLL) plot(x,exp(-(y-min(y))),type=“l”) # Creates a nLL function of SD</p>
-<p>nLL &lt;- make.NegLogLike(normals, c(FALSE,2)) x &lt;- seq(0.5,1.5,len=100) y &lt;- sapply(x,nLL) plot(x,exp(-(y-min(y))),type=“l”) # Creates a nLL function of the mean</p>
+<ul>
+<li>All objects must be stored in memory</li>
+<li>All functions must carry a pointer to their respective defining environments, which could be anywhere</li>
+<li>In S-PLUS, free variables are always looked up in global workspace, so everything can be stored on the disk because the defining env of all functions is THE SAME</li>
+</ul>
 </div>
 <div id="lexical-scoping-summary" class="section level2">
 <h2>Lexical Scoping Summary</h2>
-<div id="objective-functions-can-be-built-which-contain-all-necessary-data-for-evaluating-the-function" class="section level3">
-<h3>Objective functions can be built which contain all necessary data for evaluating the function</h3>
-</div>
-<div id="no-need-to-carry-around-long-argument-lists-useful-for-interactive-and-exploratory-work" class="section level3">
-<h3>NO need to carry around long argument lists – useful for interactive and exploratory work</h3>
-</div>
-<div id="code-can-be-simplified-and-cleaned-up" class="section level3">
-<h3>Code can be simplified and cleaned up</h3>
-</div>
+<ul>
+<li>Objective functions can be built which contain all necessary data for evaluating the function</li>
+<li>NO need to carry around long argument lists – useful for interactive and exploratory work</li>
+<li>Code can be simplified and cleaned up # Optimization Example</li>
+<li>Optimization routines in R like optim, nlm, and optimize require you to pass a function whose argument is a vector of parameters (e.g., a log-likelihood)</li>
+<li>But, an object function might depend on other things besides its parameters</li>
+<li>When writing software that does optimization, it may be desirable to allow the user to fix certain parameters</li>
+</ul>
 </div>
 </div>
 <div id="coding-standards-for-r" class="section level1">
 <h1>Coding Standards for R</h1>
-<div id="always-use-text-fileseditors" class="section level2">
-<h2>Always use text files/editors</h2>
+<ul>
+<li>Always use text files/editors</li>
+<li>Indent your code (About 4-8 spaces) and limit the width of your code to 80 columns</li>
+<li>Force yourself to think about writing your code aesthetically</li>
+</ul>
+<div id="maximizing-a-normal-likelihood" class="section level2">
+<h2>Maximizing a Normal Likelihood</h2>
+<ul>
+<li>Write a “constructor” function: a negative log-likelihood function</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFrZS5OZWdMb2dMaWtlIDwtIGZ1bmN0aW9uKGRhdGEsZml4ZWQ9YyhGLEYpKSB7ICMgU2Vjb25kIGFyZ3VtZW50ID0gbG9naWNhbCB2ZWN0b3IgZGV0ZXJtaW5lcyB3aGV0aGVyIG9yIG5vdCB0byBmaXggcGFyYW1zXG4gIHBhcmFtcyA8LSBmaXhlZFxuICBmdW5jdGlvbihwKSB7ICMgcCBpcyB0aGUgcGFyYW1ldGVyIHZlY3RvciB0aGF0IHdlIHdhbnQgdG8gb3B0aW1pemUgb3ZlclxuICAgIHBhcmFtc1shZml4ZWRdIDwtIHBcbiAgICBtdSA8LSBwYXJhbXNbMV0gIyBMb2ctbGlrZWxpaG9vZCBwYXJhbVxuICAgIHNpZ21hIDwtIHBhcmFtc1syXSAjIExvZy1saWtlbGlob29kIHBhcmFtXG4gICAgYSA8LSAtMC41Kmxlbmd0aChkYXRhKSpsb2coMipwaSpzaWdtYV4yKSAjIERlZmluaW5nIHRoZSBsb2ctbGlrZWxpaG9vZCBmdW5jdGlvblxuICAgIGIgPC0gLTAuNSpzdW0oKGRhdGEtbXUpXjIpIC8gKHNpZ21hXjIpXG4gICAgLShhK2IpICMgUmV0dXJucyBsb2ctbGlrZWxpaG9vZFxuICB9XG59XG5gYGAifQ== -->
+<pre class="r"><code>make.NegLogLike &lt;- function(data,fixed=c(F,F)) { # Second argument = logical vector determines whether or not to fix params
+  params &lt;- fixed
+  function(p) { # p is the parameter vector that we want to optimize over
+    params[!fixed] &lt;- p
+    mu &lt;- params[1] # Log-likelihood param
+    sigma &lt;- params[2] # Log-likelihood param
+    a &lt;- -0.5*length(data)*log(2*pi*sigma^2) # Defining the log-likelihood function
+    b &lt;- -0.5*sum((data-mu)^2) / (sigma^2)
+    -(a+b) # Returns log-likelihood
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
-<div id="indent-your-code-about-4-8-spaces-and-limit-the-width-of-your-code-to-80-columns" class="section level2">
-<h2>Indent your code (About 4-8 spaces) and limit the width of your code to 80 columns</h2>
+<div id="simulate-data-for-the-constructor-function" class="section level2">
+<h2>Simulate data for the constructor function</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMSkgXG4jIFNldHMgcmFuZG9tIG51bWJlciBzZWVkXG5ub3JtYWxzIDwtIHJub3JtKDEwMCwxLDIpIFxuIyBHZW5lcmF0ZSBub3JtYWxpemVkIG51bWJlcnNcbm5MTCA8LSBtYWtlLk5lZ0xvZ0xpa2Uobm9ybWFscykgXG4jIENvbnN0cnVjdHMgZnVuY3Rpb24gYmFzZWQgb24gb2JqZWN0IG5vcm1hbHNcbm5MTCBcbiMgR2l2ZXMgaGV4YWRlbWljYWwgdmFsZSBvZiB0aGUgYWRkcmVzcyBvZiB3aGVyZSB0aGUgZGVmaW5pbmcgZW52aXJvbm1lbnQgaXMgbG9jYXRlZCBpbiBcbiMgbWVtb3J5XG5scyhlbnZpcm9ubWVudChuTEwpKSBcbiMgQ2FsbHMgZW52aXJvbm1lbnQgb2YgbkxMLCB3aGljaCBjYWxscyB0aGUgZnJlZSB2YXJpYWJsZXMgZGF0YSwgcGFyYW1zLCBhbmQgZml4ZWRcbm9wdGltKGMobXU9MCxzaWdtYT0xKSxuTEwpJHBhciBcbiMgTm93IHdlIGNhbiBvcHRpbWl6ZSB0aGUgZGF0YSBhY2NvcmRpbmcgdG8gZnVuY3Rpb24gbkxMKClcbmBgYCJ9 -->
+<pre class="r"><code>set.seed(1) 
+# Sets random number seed
+normals &lt;- rnorm(100,1,2) 
+# Generate normalized numbers
+nLL &lt;- make.NegLogLike(normals) 
+# Constructs function based on object normals
+nLL 
+# Gives hexademical vale of the address of where the defining environment is located in 
+# memory
+ls(environment(nLL)) 
+# Calls environment of nLL, which calls the free variables data, params, and fixed
+optim(c(mu=0,sigma=1),nLL)$par 
+# Now we can optimize the data according to function nLL()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>This gives us values that are close to the true mean (1) and true SD (2)</li>
+<li>We don’t need to estimate mean or sigma, we could also just give make.NegLogLike() the true mean and/or SD:</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
-<div id="force-yourself-to-think-about-writing-your-code-aesthetically" class="section level2">
-<h2>Force yourself to think about writing your code aesthetically</h2>
+<div id="plotting-the-likelihood" class="section level2">
+<h2>Plotting the Likelihood!</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubkxMIDwtIG1ha2UuTmVnTG9nTGlrZShub3JtYWxzLCBjKDEsRkFMU0UpKVxueCA8LSBzZXEoMSw0LGxlbj0xMDApICMgVmVjdG9yIG9mIGluZGVwZW5kZW50IG51bWJlcnNcbnkgPC0gc2FwcGx5KHgsbkxMKVxucGxvdCh4LGV4cCgtKHktbWluKHkpKSksdHlwZT1cImxcIikgIyBDcmVhdGVzIGEgbkxMIGZ1bmN0aW9uIG9mIFNEXG5cbm5MTCA8LSBtYWtlLk5lZ0xvZ0xpa2Uobm9ybWFscywgYyhGQUxTRSwyKSlcbnggPC0gc2VxKDAuNSwxLjUsbGVuPTEwMClcbnkgPC0gc2FwcGx5KHgsbkxMKVxucGxvdCh4LGV4cCgtKHktbWluKHkpKSksdHlwZT1cImxcIikgIyBDcmVhdGVzIGEgbkxMIGZ1bmN0aW9uIG9mIHRoZSBtZWFuXG5gYGAifQ== -->
+<pre class="r"><code>nLL &lt;- make.NegLogLike(normals, c(1,FALSE))
+x &lt;- seq(1,4,len=100) # Vector of independent numbers
+y &lt;- sapply(x,nLL)
+plot(x,exp(-(y-min(y))),type=&quot;l&quot;) # Creates a nLL function of SD
+
+nLL &lt;- make.NegLogLike(normals, c(FALSE,2))
+x &lt;- seq(0.5,1.5,len=100)
+y &lt;- sapply(x,nLL)
+plot(x,exp(-(y-min(y))),type=&quot;l&quot;) # Creates a nLL function of the mean</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 </div>
 <div id="dates-and-times-in-r" class="section level1">
 <h1>Dates and Times in R</h1>
-<div id="r-has-developed-a-special-representation-of-dates-and-times" class="section level2">
-<h2>R has developed a special representation of dates and times</h2>
-</div>
-<div id="dates-are-represented-by-the-date-class" class="section level2">
-<h2>Dates are represented by the “Date” class</h2>
-</div>
-<div id="time-by-the-posixct-or-posixlt-class" class="section level2">
-<h2>Time by the POSIXct or POSIXlt class</h2>
-</div>
+<ul>
+<li>R has developed a special representation of dates and times</li>
+<li>Dates are represented by the “Date” class</li>
+<li>Time by the POSIXct or POSIXlt class</li>
+</ul>
 <div id="date-class-can-be-coerced-from-a-character-string-using-as.date" class="section level2">
 <h2>Date class can be coerced from a character string using as.Date()</h2>
-<p>z &lt;- as.Date(“1970-01-01”) # Here we coerce the string in the parantheses to the data January 1, 1970, which is day “0” in R time. unclass(z) # Therefore, when you unclass this, it becomes the number zero! unclass(as.Date(“1970-01-02”)) # In like manner, one day AHEAD of January 1, 1970 should be (and is) the number 1. unclass(as.Date(“2018-10-24”))</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueiA8LSBhcy5EYXRlKFwiMTk3MC0wMS0wMVwiKSBcbiMgSGVyZSB3ZSBjb2VyY2UgdGhlIHN0cmluZyBpbiB0aGUgcGFyYW50aGVzZXMgdG8gdGhlIGRhdGEgSmFudWFyeSAxLCAxOTcwLCB3aGljaCBpcyBkYXkgXG4jIFwiMFwiIGluIFIgdGltZS5cbnVuY2xhc3MoeikgXG4jIFRoZXJlZm9yZSwgd2hlbiB5b3UgdW5jbGFzcyB0aGlzLCBpdCBiZWNvbWVzIHRoZSBudW1iZXIgemVybyFcbnVuY2xhc3MoYXMuRGF0ZShcIjE5NzAtMDEtMDJcIikpIFxuIyBJbiBsaWtlIG1hbm5lciwgb25lIGRheSBBSEVBRCBvZiBKYW51YXJ5IDEsIDE5NzAgc2hvdWxkIGJlIChhbmQgaXMpIHRoZSBudW1iZXIgMS5cbnVuY2xhc3MoYXMuRGF0ZShcIjIwMTgtMTAtMjRcIikpXG5gYGAifQ== -->
+<pre class="r"><code>z &lt;- as.Date(&quot;1970-01-01&quot;) 
+# Here we coerce the string in the parantheses to the data January 1, 1970, which is day 
+# &quot;0&quot; in R time.
+unclass(z) 
+# Therefore, when you unclass this, it becomes the number zero!
+unclass(as.Date(&quot;1970-01-02&quot;)) 
+# In like manner, one day AHEAD of January 1, 1970 should be (and is) the number 1.
+unclass(as.Date(&quot;2018-10-24&quot;))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="times-are-represented-using-the-posixct-or-lt-classes" class="section level2">
 <h2>Times are represented using the POSIXct or lt classes</h2>
-<div id="posixct-just-a-very-large-integer-under-the-hood-useful-class-when-you-want-to-store-times-in-a-data-frame" class="section level3">
-<h3>POSIXct just a very large integer under the hood; useful class when you want to store times in a data frame</h3>
+<ul>
+<li>POSIXct just a very large integer under the hood; useful class when you want to store times in a data frame</li>
+<li>POSIXlt is a list underneath and stores a bunch of useful info like the day of the week, day of the year, etc.</li>
+<li>Some generic functions that work on dates and times</li>
+<li>Can also be coerced from character string</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYSA8LSBTeXMudGltZSgpIFxuIyBTeXMudGltZSgpIGdpdmVzIHlvdSB0aGUgUE9TSVhjdCB2ZWN0b3Igb2YgdGhlIGN1cnJlbnQgdGltZVxucCA8LSBhcy5QT1NJWGx0KGEpIFxuIyBDb2VyY2luZyB0byBQT1NJWGx0IGdpdmVzIHlvdSBhIGxpc3Qgb2YgdXNlZnVsIGluZm9ybWF0aW9uIGFib3V0IHlvdXIgY3VycmVudCB0aW1lXG5uYW1lcyh1bmNsYXNzKHApKSBcbiMgR2l2ZXMgeW91IGEgdmVjdG9yIG9mIHRoZSBjb250ZW50c1xucCRzZWMgXG4jIFRoZSBudW1iZXIgb2Ygc2Vjb25kcyBpbiB0aGUgKHByZXZpb3VzbHkpIGN1cnJlbnQgdGltZSwgZm9yIGluc3RhbmNlXG51bmNsYXNzKGEpIFxuIyBHaXZlbiBhIGlzIGFscmVhZHkgaW4gUE9TSVhjdCBmb3JtYXQsIHdoZW4gd2UgdW5jbGFzcyBpdCBnaXZlcyB0aGUgbnVtYmVyIG9mIHNlY29uZHMgXG4jIHNpbmNlIEphbnVhcnkgMSwgMTk3MFxuYGBgIn0= -->
+<pre class="r"><code>a &lt;- Sys.time() 
+# Sys.time() gives you the POSIXct vector of the current time
+p &lt;- as.POSIXlt(a) 
+# Coercing to POSIXlt gives you a list of useful information about your current time
+names(unclass(p)) 
+# Gives you a vector of the contents
+p$sec 
+# The number of seconds in the (previously) current time, for instance
+unclass(a) 
+# Given a is already in POSIXct format, when we unclass it gives the number of seconds 
+# since January 1, 1970</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li><p>In order to get the list elements of a time, you should first coerce POSIXct to POSIXlt</p></li>
+<li><p>strptime() allows you to create a POSIXlt list from a human-readable date</p></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0ZXN0cmluZyA8LSBjKFwiSmFudWFyeSAxMCwgMjAxMiAxMDo0MFwiLCBcIkRlY2VtYmVyIDksIDIwMTEgOToxMFwiKVxuaiA8LSBzdHJwdGltZShkYXRlc3RyaW5nLCBcIiVCICVkLCAlWSAlSDolTVwiKSBcbiMgVGhlIHBlcmNlbnQgc2lnbnMgKGZvcm1hdHRpbmcgc3RyaW5nKSB0ZWxsIHN0cnB0aW1lIHdoYXQgZWFjaCBpdGVtIGluIHRoZSBzdHJpbmcgaXMsIFxuIyBkZWxpbWl0ZWQgYnkgYSBzcGFjZVxuY2xhc3MoaikgXG4jIEEgY2xhc3Mgb2YgdHdvIFBPU0lYbHQgbGlzdHMuXG5gYGAifQ== -->
+<pre class="r"><code>datestring &lt;- c(&quot;January 10, 2012 10:40&quot;, &quot;December 9, 2011 9:10&quot;)
+j &lt;- strptime(datestring, &quot;%B %d, %Y %H:%M&quot;) 
+# The percent signs (formatting string) tell strptime what each item in the string is, 
+# delimited by a space
+class(j) 
+# A class of two POSIXlt lists.</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>You can use mathematical operations on dates and times (+ and -) to find out, for example, how many days are between the two dates</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuayA8LSBhcy5EYXRlKFwiMjAxMi0wMS0wMVwiKVxubCA8LSBzdHJwdGltZShcIjkgSmFuIDIwMTEgMTE6MzQ6MjFcIiwgXCIlZCAlYiAlWSAlSDolTTolU1wiKVxuayA8LSBhcy5QT1NJWGx0KGspICMgTmVlZCB0byBjaGFuZ2UgayB0byBQT1NJWGx0IGJlZm9yZSBzdWJ0cmFjdGlvblxuay1sICMgVGltZSBkaWZmZXJlbmNlIG9mIDM1Ni41MSBkYXlzXG5gYGAifQ== -->
+<pre class="r"><code>k &lt;- as.Date(&quot;2012-01-01&quot;)
+l &lt;- strptime(&quot;9 Jan 2011 11:34:21&quot;, &quot;%d %b %Y %H:%M:%S&quot;)
+k &lt;- as.POSIXlt(k) # Need to change k to POSIXlt before subtraction
+k-l # Time difference of 356.51 days</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>POSIX also handles things like leap years, daylight savings, and time zones</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSA8LSBhcy5QT1NJWGN0KFwiMjAxMi0xMC0yNSAwMTowMDowMFwiKVxubiA8LSBhcy5QT1NJWGN0KFwiMjAxMi0xMC0yNSAwNjowMDowMFwiLCB0eiA9IFwiR01UXCIpXG5tLW5cbmFyZ3VtZW50cyhhcy5QT1NJWGN0KVxuYGBgIn0= -->
+<pre class="r"><code>m &lt;- as.POSIXct(&quot;2012-10-25 01:00:00&quot;)
+n &lt;- as.POSIXct(&quot;2012-10-25 06:00:00&quot;, tz = &quot;GMT&quot;)
+m-n
+arguments(as.POSIXct)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
-<div id="posixlt-is-a-list-underneath-and-stores-a-bunch-of-useful-info-like-the-day-of-the-week-day-of-the-year-etc." class="section level3">
-<h3>POSIXlt is a list underneath and stores a bunch of useful info like the day of the week, day of the year, etc.</h3>
 </div>
-<div id="some-generic-functions-that-work-on-dates-and-times" class="section level3">
-<h3>Some generic functions that work on dates and times</h3>
-</div>
-<div id="can-also-be-coerced-from-character-string" class="section level3">
-<h3>Can also be coerced from character string</h3>
-<p>a &lt;- Sys.time() # Sys.time() gives you the POSIXct vector of the current time p &lt;- as.POSIXlt(a) # Coercing to POSIXlt gives you a list of useful information about your current time names(unclass(p)) # Gives you a vector of the contents p$sec # The number of seconds in the (previously) current time, for instance unclass(a) # Given a is already in POSIXct format, when we unclass it gives the number of seconds since January 1, 1970 ### In order to get the list elements of a time, you should first coerce POSIXct to POSIXlt</p>
-</div>
-</div>
-<div id="strptime-allows-you-to-create-a-posixlt-list-from-a-human-readable-date" class="section level2">
-<h2>strptime() allows you to create a POSIXlt list from a human-readable date</h2>
-<p>datestring &lt;- c(“January 10, 2012 10:40”, “December 9, 2011 9:10”) j &lt;- strptime(datestring, “%B %d, %Y %H:%M”) # The percent signs (formatting string) tell strptime what each item in the string is, delimited by a space class(j) # A class of two POSIXlt lists.</p>
-</div>
-<div id="you-can-use-mathematical-operations-on-dates-and-times-and---to-find-out-for-example-how-many-days-are-between-the-two-dates" class="section level2">
-<h2>You can use mathematical operations on dates and times (+ and -) to find out, for example, how many days are between the two dates</h2>
-<p>k &lt;- as.Date(“2012-01-01”) l &lt;- strptime(“9 Jan 2011 11:34:21”, “%d %b %Y %H:%M:%S”) k &lt;- as.POSIXlt(k) # Need to change k to POSIXlt before subtraction k-l # Time difference of 356.51 days ## POSIX also handles things like leap years, daylight savings, and time zones m &lt;- as.POSIXct(“2012-10-25 01:00:00”) n &lt;- as.POSIXct(“2012-10-25 06:00:00”, tz = “GMT”) m-n arguments(as.POSIXct)</p>
+<div id="end-of-week-2" class="section level1">
+<h1>END OF WEEK 2</h1>
 <!-- rnb-text-end -->
 </div>
-</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBQcm9ncmFtbWluZzogV2VlayAyIE5vdGVzIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCiMgQ29udHJvbCBTdHJ1Y3R1cmVzCiogQWxsb3cgeW91IHRvIGNvbnRyb2wgdGhlIGZsb3cgb2YgYW4gUiBwcm9ncmFtLgoqIGlmLCBlbHNlLCBmb3IsIHdoaWxlLCByZXBlYXQgKGluZmluaXRlIGxvb3ApLCBicmVhayAoZW5kIGxvb3ApLCBuZXh0IChza2lwIGl0ZXJhdGlvbiBvZiAKICBsb29wKSwgcmV0dXJuIChleGl0KQoqIE1vc3Qgb2YgdGhlc2UgYXJlIHVzZWQgd2hlbiB3cml0aW5nIGZ1bmN0aW9ucyBvciBsb25nZXIgZXhwcmVzc2lvbnMKCiMjIElmLCBFbHNlCmBgYHtyfQppZihjb25kaXRpb24pIHsKICAgICAgICAjIERvIHNvbWV0aGluZwp9IGVsc2UgewogICAgICAgICMgRG8gc29tZXRoaW5nIGVsc2UKfSBlbHNlIGlmIChjb25kaXRpb24yKSB7CiAgICAgICAgIyBEbyBzb21ldGhpbmcgZGlmZmVyZW50IGdpdmVuIGEgZGlmZmVyZW50IGNvbmRpdGlvbgp9CmBgYAoqIEVsc2UgbXVzdCBiZSBhdCB0aGUgZW5kLCB0aGVyZSBjYW4gYmUgYXMgbWFueSBlbHNlIGlmcyBhcyBuZWVkZWQKKiBBbiBleGFtcGxlOgpgYGB7cn0KYSA9IDQKaWYoYSA+IDMpIHsKICAgICAgICBiIDwtIDEwCn0gZWxzZSB7CiAgICAgICAgYiA8LSAwCn0KYGBgCgojIyBGb3IgTG9vcHMKYGBge3J9CmZvcihpIGluIDE6MTApIHsKICAgICAgICAjIExvb3AgaW5kZXggaXMgaSA9IDEgdGhyb3VnaCAxMAogICAgICAgIHByaW50KGkpCn0KYGBgCgoqIEV4YW1wbGU6IGEgY2hhcmFjdGVyIHZlY3RvcgpgYGB7cn0KYyA8LSBjKCJhIiwiYiIsImMiLCJkIikKZm9yKGkgaW4gMTo0KSB7CiAgICAgICAgIyBDYWxsaW5nIGJ5IGluZGV4IGhlcmUKICAgICAgICBwcmludChjW2ldKQp9Cgpmb3IoaSBpbiBzZXFfYWxvbmcoYykpIHsgCiMgQ3JlYXRlcyBpbnRlZ2VyIHNlcXVlbmNlIGVxdWFsIHRvIHRoZSBsZW5ndGggb2YgYXJndW1lbnQgdmVjdG9yCiAgICAgICAgIyBUaGlzIGxvb3AgZXF1aXZhbGVudCB0byB0aGUgbGFzdAogICAgICAgIHByaW50KGNbaV0pCn0KCmZvcihsZXR0ZXIgaW4gYykgewojVGhpcyB0aW1lIHdlIG9ubHkgY2FyZSBhYm91dCBsZXR0ZXJzIGluIHRoZSB2ZWN0b3IgKHdoaWNoIGhhcHBlbiB0byBiZSBhbGwgb2YgdGhlbSkKICAgICAgICBwcmludChsZXR0ZXIpCn0KCmZvcihpIGluIDE6NCkgcHJpbnQoY1tpXSkgIyBEb24ndCBuZWVkIHRoZSBicmFja2V0IGZvcm1hdCEKYGBgCgoqIE5lc3RlZCBmb3IgbG9vcHMKYGBge3J9CmQgPC0gbWF0cml4KDE6NiwgMiwgMykKZm9yKGkgaW4gc2VxX2xlbihucm93KGQpKSkgewogICAgICAgIGZvcihqIGluIHNlcV9sZW4obmNvbChkKSkpIHsKICAgICAgICAgICAgICAgIHByaW50KGRbaSxqXSkKICAgICAgICB9Cn0KYGBgCi0gTmVzdGluZyBiZXlvbmQgMi0zIGxldmVscyBpcyBvZnRlbiB2ZXJ5IGRpZmZpY3VsdCB0byByZWFkIG9yIHVuZGVyc3RhbmQuCgojIyBXaGlsZSBMb29wcwoqIEJlZ2luIGJ5IHRlc3RpbmcgYSBjb25kaXRpb246IGlmIGl0IGlzIHRydWUsIHRoZSBsb29wIGJvZHkgaXMgZXhlY3V0ZWQgdW50aWwgdGhlIGluaXRpYWwgICBjb25kaXRpb24gaXMgbm8gbG9uZ2VyIG1ldC4KYGBge3J9CmNvdW50IDwtIDAKd2hpbGUoY291bnQgPCAxMCkgewogICAgICAgIHByaW50KGNvdW50KQogICAgICAgIGNvdW50IDwtIGNvdW50ICsgMSAjIFRoaXMgY29tbWFuZCBzdG9wcyBhdCA5Cn0KYGBgCiogU29tZXRpbWVzIHRoZXJlIHdpbGwgYmUgbW9yZSB0aGFuIG9uZSBjb25kaXRpb24gaW4gdGhlIHRlc3QKYGBge3J9CnogPC0gNQp3aGlsZSh6ID49IDMgJiYgeiA8PSAxMCkgeyAjIEtlZXAgeiBiZXR3ZWVuIDMgYW5kIDEwCiAgICAgICAgcHJpbnQoeikKICAgICAgICBjb2luIDwtIHJiaW5vbSgxLDEsMC41KSAjIEZsaXBzIGEgY29pbgogICAgICAgIGlmKGNvaW49PTEpIHsgIyMgUmFuZG9tIHdhbGsKICAgICAgICAgICAgICAgIHogPC0geiArIDEgIyBBZGQgdG8geiBpZiBjb2luIGlzIDEKICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgICAgeiA8LSB6IC0gMSAjIFN1YnRyYWN0IGZyb20geiBpZiBjb2luIGlzIG5vdCBvbmUKICAgICAgICB9Cn0KYGBgCgojIyBSZXBlYXQgTG9vcHMKKiBJbml0aWF0ZXMgYW4gaW5maW5pdGUgbG9vcCwgYW5kIHRoZSBvbmx5IHdheSB0byBleGl0IG9uZSBpcyB0byBjYWxsIGEgQlJFQUsKYGBge3J9CmUgPC0gMQp0b2wgPC0gMWUtOApyZXBlYXR7CiAgICAgICAgZiA8LSBjb21wdXRlRXN0aW1hdGUoKSAjIFRISVMgSVMgQSBGQUtFIEZVTkNUSU9OCiAgICAgICAgaWYoYWJzKGYtZSkgPCB0b2wpIHsgICMgaWYgdGhlIGFic29sdXRlIHZhbHVlIG9mIGYtZSBpcyBsZXNzIHRoYW4gdGhlIHRvbGVyYW5jZS4uLgogICAgICAgICAgICAgICAgYnJlYWsgICAgICAgICAgICAgICAgIyBicmVhayB0aGUgZnVuY3Rpb24KICAgICAgICB9IGVsc2UgeyAgICAgICAgICAgICAgICMgSWYgaXRzIG5vdCBncmVhdGVyIHRoYW4gdG9sLi4uCiAgICAgICAgICAgICAgICBmIDwtIGUgICAgICAgICAgICAgICAjIGUgaXMgdGhlIG5ldyBmLgogICAgICAgIH0KfQpgYGAKKiBSZXBlYXQgbG9vcHMgYXJlIGRhbmdlcm91cyBiZWNhdXNlIHRoZXJlIGlzIG5vIGd1YXJhbnRlZSBpdCB3aWxsIHN0b3AsIHNvIGl0IGlzIGJldHRlciAKICB0byBzZXQgYSBoYXJkIGxpbWl0IG9uIHRoZSBudW1iZXIgb2YgaXRlcmF0aW9ucyAobGlrZSB3aXRoIGEgZm9yIGxvb3ApIHRoYW4gcmVwb3J0IAogIHdoZXRoZXIgY29udmVyZ2VuY2Ugd2FzIGFjaGlldmVkIG9yIG5vdC4KCiMjIE5leHQgYW5kIFJldHVybiBDb250cm9sIEZ1bmN0aW9ucwoqIG5leHQgaXMgdXNlZCB0byBza2lwIGEgbG9vcCBpdGVyYXRpb24KYGBge3J9CmZvcihpIGluIDE6MTAwKSB7CiAgICAgICAgaWYoaSA8PSAyMCkgewogICAgICAgICAjIyBTa2lwIHRoZSBmaXJzdCAyMCBpdGVyYXRpb25zCiAgICAgICAgICAgICAgICBuZXh0CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAjIyBEbyBzb21ldGhpbmcgaGVyZQogICAgICAgIH0KfQpgYGAKKiBSZXR1cm4gc2lnbmFscyB0aGF0IGEgZnVuY3Rpb24gc2hvdWxkIGV4aXQgYW5kIHJldHVybiBhIGdpdmVuIHZhbHVlCgojIEZ1bmN0aW9ucwoqIEZ1bmN0aW9ucyBhcmUgY3JlYXRlZCB1c2luZyB0aGUgZnVuY3Rpb24oKSBkaXJlY3RpdmUgYW5kIGFyZSBzdG9yZWQgYXMgUiBvYmplY3QgbGlrZSBhbnl0aGluZyBlbHNlOyB0aGV5IGFyZSBvZiBjbGFzcyAiZnVuY3Rpb24iCgpMRUZUIE9GRiBIRVJFCgojIyBGdW5jdGlvbnMgY2FuIGJlIHBhc3NlZCBhcyBhcmd1bWVudHMgdG8gb3RoZXIgZnVuY3Rpb25zCiMjIEZ1bmN0aW9ucyBjYW4gYmUgbmVzdGVkIHNvIHlvdSBjYW4gZGVmaW5lIGEgZnVuY3Rpb24gaW5zaWRlIGFub3RoZXIgb25lCiMjIEZ1bmN0aW9ucyBoYXZlIE5BTUVEIEFSR1VNRU5UUyB3aGljaCBwb3RlbnRpYWxseSBoYXZlIGRlZmF1bHQgdmFsdWVzCgojIyBGT1JNQUwgQVJHVU1FTlRTIGFyZSBpbmNsdWRlZCBpbiBmdW5jdGlvbiBkZWZpbml0aW9uOyBzb21ldGltZXMgdGhleSBhcmVuJ3QgQUxMIHVzZWQKIyMjIGZvcm1hbHMoKSByZXR1cnMgYSBsaXN0IG9mIGFsbCBmb3JtYWwgYXJndW1lbnRzIG9mIGZ1bmN0aW9uCiMjIyBDYW4gYmUgbWlzc2luZyBvciBtaWdodCBoYXZlIGRlZmF1bHQgdmFsdWVzCgojIyBBcmd1bWVudCBNYXRjaGluZzogV2hlbiBhbiBhcmd1bWVudCBpcyBtYXRjaGVkIGJ5IG5hbWUsIGl0IGlzICJ0YWtlbiBvdXQiIG9mIHRoZSBhcmd1bWVudCBsaXN0IGFuZCAKIyMgdGhlIHJlbWFpbmluZyB1bm5hbWVkIGFyZ3VtZW50cyBhcmUgbWF0Y2hlZCBpbiB0aGUgb3JkZXIgdGhleSBhcmUgbGlzdGVkIGluIHRoZSBmdW5jdGlvbiBkZWZpbml0aW9uLgoKIyMjIE5hbWVkIGFyZ3VtZW50cyBhcmUgaGVscGZ1bCB3aGVuIHlvdSBoYXZlIGEgbG9uZyBhcmd1bWVudCBsaXN0IGFuZCB5b3Ugd2FudCB0byB1c2UgdGhlIGRlZmF1bHRzCiMjIyBmb3IgZXZlcnl0aGluZyBleGNlcHQgYW4gYXJndW1lbnQgbmVhciB0aGUgZW5kIG9mIHRoZSBsaXN0IChsaWtlIGluIHBsb3R0aW5nIGZ1bmN0aW9ucykKCiMjIyBUaGV5IGNhbiBhbHNvIGJlIFBBUlRJQUxMWSBtYXRjaGVkLCBtZWFuaW5nIHlvdSBkb24ndCBuZWVkIHRvIHR5cGUgdGhlIGVudGlyZSBhcmd1bWVudCBvdXQKCiMjIERlZmluaW5nIGEgRnVuY3Rpb24KZyA8LSBmdW5jdGlvbihhLCBiPTEsIGM9MiwgZD1OVUxMKSB7CiAgIyBZb3UgY2FuIHNldCBhIGRlZmF1bHQgYXJndW1lbnQgdG8gTlVMTCwgbWVhbmluZyBubyBhcmd1bWVudAp9CgojIyBMYXp5IEV2YWx1dGF0aW9uOiBBcmd1bWVudCB0byBmdW5jdGlvbnMgYXJlIGV2YWx1YXRlZCBsYXppbHksIHNvIE9OTFkgYXMgbmVlZGVkCmggPC0gZnVuY3Rpb24oYSxiKSB7ICMgQXJndW1lbnQgImIiIGlzbid0IG5lZWRlZCBzbyBoKDIpIHdvbid0IHByb2R1Y2UgYW4gZXJyb3IsIGJlY2F1c2UgMiBqdXN0IGJlY29tZXMgImEiCiAgYV4yCn0KaCgyKSAKIyBUaGlzIG5leHQgZnVuY3Rpb24gcHJvZHVjZXMgYW4gZXJyb3IgYmVjYXVzZSBhcmd1bWVudCAiYiIgaXMgbWlzc2luZywgYnV0IGl0IHN0aWxsIHByaW50cyAiYSIhCmogPC0gZnVuY3Rpb24oYSxiKSB7CiAgcHJpbnQoYSkKICBwcmludChiKQp9CmooNDUpCgojIyBUaGUgIi4uLiIgQXJndW1lbnQ6IC4uLiBpbmRpY2F0ZXMgYSB2YXJpYWJsZSBudW1iZXIgb2YgYXJndW1lbnRzIHVzdWFsbHkgcGFzc2VkIG9uIHRvIE9USEVSIGZ1bmN0aW9ucwojIyAuLi4gaXMgb2Z0ZW4gdXNlZCB3aGVuIGV4dGVuZGluZyBhbm90aGVyIGZ1bmN0aW9uIGFuZCB5b3UgZG9uJ3Qgd2FudCB0byBjb3B5IHRoZSBlbnRpcmUgYXJ1Z21lbnQgbGlzdAoKbXlwbG90IDwtIGZ1bmN0aW9uKHgseSx0eXBlPSJsIiwuLi4pIHsgIyBIZXJlLCB3ZSBwYXNzIG9uIGFyZ3VtZW50cyB0byBmdW5jdGlvbiAicGxvdCIKICBwbG90KHgseSx0eXBlID0gdHlwZSwgLi4uKQp9CgojIyAuLi4gaXMgYWxzbyBuZWNlc3Nhcnkgd2hlbiB0aGUgbnVtYmVyIG9mIGFyZ3VtZW50cyBwYXNzZWQgdG8gdGhlIGZ1bmN0aW9uIGNhbid0IGJlIGtub3duIGluIGFkdmFuY2UKYXJncyhwYXN0ZSkgIyBZb3UgY291bGQgYmUgZGVhbGluZyB3aXRoIG1hbnkgc3RyaW5nczogdGhleSB0YWtlIHRoZSBwbGFjZSBvZiB0aGUgLi4uCmFyZ3MoY2F0KQojIyBPbmUgY2F0Y2ggd2l0aCAuLi4gaXMgdGhhdCBhbnkgYXJndW1lbnRzIHRoYXQgYXBwZWFyIEFGVEVSIC4uLiBtdXN0IGJlIG5hbWVkIGV4cGxpY2l0bHkgYW5kIENBTidUIGJlIHBhcnRpYWxseSBtYXRjaGVkCgoKIyBTY29waW5nIFJ1bGVzCiMjIEhvdyBkb2VzIFIga25vdyB3aGljaCB2YWx1ZSB0byBhc3NpZ24gdG8gd2hpY2ggc3ltYm9sPyBXaGVuIHlvdSB0eXBlCmxtIDwtIGZ1bmN0aW9uKHgpIHt4Knh9ICMgZWZmZWN0aXZlbHkgZGVmaW5pbmcgYW5vdGhlciBmdW5jdGlvbiBmb3IgbG0gKGFscmVhZHkgYSBmdW5jdGlvbiBpbiB0aGUgc3RhdHMgcGFja2FnZSkKIyMgLi4uIGhvdyBkb2VzIFIga25vdyB3aGljaCBsbSgpIHRvIHVzZT8KCiMjIEJpbmRpbmcgVmFsdWVzIHRvIFN5bWJvbAojIyMgV2hlbiBSIHRyaWVzIGJpbmRpbmcgYSB2YWx1ZSB0byBhIHN5bWJvbCwgaXQgc2VhcmNoIHRocm91Z2ggYSBzZXJpZXMgb2YgZW52aXJvbm1lbnRzIHRvIGZpbmQgdGhlIGFwcm9wb3MgdmFsdWUKIyMjIFRoZSBvcmRlciBpcyByb3VnaGx5OiAoMSkgc2VhcmNoIGdsb2JhbCBlbnZpcm9ubWVudCBmb3Igc3ltYm9sIG5hbWUgYW5kICgyKSBzZWFyY2ggbmFtZXNwYWNlcyBvZiBwYWNrYWdlcwpzZWFyY2goKSAjIEFsbG93cyB1cyB0byBzZWUgdGhlIGhpZXJhcmNoeSBvZiBob3cgUiB3aWxsIG1hdGNoIHN5bWJvbHMKIyMjIEdsb2JhbCBFbnZpb3JubWVudCBpcyBhbHdheXMgbnVtYmVyIDEgYW5kIGxhc3QgaXMgdGhlIEJBU0UgcGFja2FnZXMKIyMjIFdoZW4geW91IGxvYWQgYSBwYWNrYWdlIHdpdGggbGlicmFyeSwgVEhFIE5BTUVTUEFDRSBPRiBUSEFUIFBBQ0tBR0UgSVMgUFVUIElOIFBPU0lUSU9OIDIgT0YgVEhFIFNFQVJDSCBMSVNUCiMjIyBFdmVyeXRoaW5nIGVsc2UgaXMgc2hpZnRlZCBET1dOCgojIyBTY29waW5nIHJ1bGVzIGFyZSB0aGUgbWFpbiBmZWF0dXJlIG1ha2luZyBSIGRpZmZlcmVudCBmcm9tIFM7IHRoZXkgZGV0ZXJtaW5lIGhvdyBhIHZhbHVlIGlzIGFzc29jaWF0ZWQgd2l0aCBhIGZyZWUKIyMgdmFyaWFibGUgaW4gYSBmdW5jdGlvbgoKIyMgUiB1c2VzIExFWElDQUwgb3IgU1RBVElDIFNDT1BJTkcgKGFsdDogZHluYW1pYyBzY29waW5nKQojIyMgTGV4aWNhbCBzY29waW5nIGlzIHVzZWZ1bCBmb3Igc2ltcGxpZnlpbmcgc3RhdGlzdGljYWwgY29tcHV0YXRpb24KCiMjIExleGljYWwgU2NvcGluZwprIDwtIGZ1bmN0aW9uKHgseSkgewogIHheMiArIHkgLyB6Cn0KIyMjIFRoaXMgZnVuY3Rpb24gaGFzIDIgZm9ybWFsIGFyZ3MgKHgseSk7IHogaXMgYSBGUkVFIFZBUklBQkxFCiMjIyBTY29waW5nIHJ1bGVzIGRldGVybWluZSBob3cgdmFsdWVzIGFyZSBhc3NpZ25lZCB0byBGUkVFIFZBUklBQkxFUywgd2hpY2ggYXJlIE5PVCBmb3JtYWwgYXJncyBvciBsb2NhbCB2YXJpYWJsZXMKIyMjICoqKlRoZSB2YWx1ZXMgb2YgZnJlZSB2YXJpYWJsZXMgYXJlIHNlYXJjaGVkIGZvciBpbiB0aGUgZW52aXJvbm1lbnQgaW4gd2hpY2ggdGhlIGZ1bmN0aW9uIHdhcyBkZWZpbmVkKioqCgojIyBFbnZpcm9ubWVudHMKIyMjIEFuIGVudmlyb25tZW50IGlzIGEgY29sbGVjdGlvbiBvZiAoc3ltYm9sLHZhbHVlKSBwYWlycyAoZS5nLiwgeCA9IHN5bWJvbCBhbmQgMy4xNCA9IHZhbHVlKQojIyMgRXZlcnkgZW52aXJvbm1lbnQgaGFzIGEgcGFyZW50IGVudmlyb25tZW50OyBlYWNoIGVudmlyb25tZW50IGNhbiBoYXZlIG11bHRpcGxlIGNoaWxkcmVuCiMjIyBPbmx5IGVudmlvcm5tZW50IHdpdGhvdXQgYSBwYXJlbnQgaXMgdGhlIGVtcHR5IGVudmlyb25tZW50CiMjIyBGdW5jdGlvbiArIEVudmlyb25tZW50ID0gQSBGVU5DVElPTiBDTE9TVVJFCgojIyBTZWFyY2hpbmcgZm9yIEZSRUUgVkFSSUFCTEUgdmFsdWUKIyMjIElmIHZhbHVlIG9mIGEgc3ltYm9sIElTIE5PVCBmb3VuZCBpbiB0aGUgZW52aXJvbm1lbnQgaW4gd2hpY2ggYSBmdW5jdGlvbiB3YXMgZGVmaW5lZCwgdGhlbiB0aGUgc2VhcmNoIGlzIGNvbnRpbnVlZAojIyMgaW4gdGhlIFBBUkVOVCBFTlZJUk9OTUVOVC4KCiMjIyBTZWFyY2ggY29udGludWVzIGRvd24gdGhlIHNlcXVlbmNlIG9mIHBhcmVudCBlbnZpcm9ubWVudHMgdW50aWwgd2UgaGl0IHRoZSBUT1AtTEVWRUwgRU5WSVJPTk1FTlQKIyMjIEFmdGVyIHRoZSB0b3AtbGV2ZWwgZW52aXJvbm1lbnQsIHNlYXJjaCBjb250aW51ZXMgZG93biB0aGUgc2VhcmNoIGxpc3QgdW50aWwgd2UgaGl0IHRoZSBFTVBUWSBFTlZJUk9OTUVOVAojIyMgSWYgUiBjYW4ndCBmaW5kIHRoZSBGUkVFIFZBUklBQkxFIHZhbHVlIGJlZm9yZSB0aGlzIGhhcHBlbnMsIHdlIGVuY291bnRlciBhbiBlcnJvci4KIyMjIEZSRUUgVkFSSUFCTEU/IC0+IFBBUkVOVCBFTlYgLT4gVE9QLUxFVkVMIEVOViAtPiBFTVBUWSBFTlYKCiMjIFdoeSBkb2VzIGl0IG1hdHRlcj8KIyMjIFR5cGljYWxseSwgZnVuY3Rpb25zIGFyZSBkZWZpbmVkIGluIGdsb2JhbCBlbnYsIHNvIHZhbHVlcyBvZiBmcmVlIHZhcmlhYmxlcyBhcmUgZm91bmQgaW4gdXNlcidzIHdvcmtzcGFjZQojIyMgUiBhbGxvd3MgeW91IHRvIGhhdmUgZnVuY3Rpb25zIGRlZmluZWQgSU5TSURFIG90aGVyIGZ1bmN0aW9uOyBvdGhlciBsYW5ndWFnZXMgbGlrZSBDIGRvbid0IGxldCB5b3UgZG8gdGhpcwojIyMgTGV0J3MgdHJ5IGEgZnVuY3Rpb24gd2l0aGluIGEgZnVuY3Rpb246CgptYWtlLnBvd2VyIDwtIGZ1bmN0aW9uKG4pIHsgIyBNYWluIGZ1bmN0aW9uCiAgcG93IDwtIGZ1bmN0aW9uKHgpIHsgIyBOZXN0ZWQgZnVuY3Rpb24KICAgIHhebgogIH0KICBwb3cKfQoKY3ViZSA8LSBtYWtlLnBvd2VyKDMpICMgV2UgZmlyc3QgIm1ha2UiIHRoZSBmdW5jdGlvbiBieSBzZXR0aW5nIHRoZSBwb3dlciAobikuIEN1YmUgaXMgbm93IHRoZSBuZXcgZnVuY3Rpb24KY3ViZSgzKSAjIFdlJ3ZlIHNldCBuIHRvIDMsIHNvIG5vdyB3ZSBjaG9vc2UgMyBhZ2FpbiBmb3IgY3ViaW5nCnNxdWFyZSA8LSBtYWtlLnBvd2VyKDIpICMgQW5vdGhlciBleGFtcGxlOiBtYWtpbmcgYSBmdW5jdGlvbiBzcXVhcmUoKSB0aGF0IGFsbG93cyB1cyB0byBzcXVhcmUgdmFsdWVzCnNxdWFyZSgzKSAjIFJldHVybnMgOSwgYmVjYXVzZSAzXjIgPSA5CgojIyBFeHBsb3JpbmcgYSBGdW5jdGlvbiBDbG9zdXJlOiBIb3cgdG8gZmluZCBvdXQgd2hhdCBpcyBpbiBhIGZ1bmN0aW9uJ3MgZW52aXJvbm1lbnQKbHMoZW52aXJvbm1lbnQoY3ViZSkpICMgQ2hlY2tzIGZvciBlbnZpcm9ubWVudCB2YXJpYWJsZXMKZ2V0KCJuIixlbnZpcm9ubWVudChjdWJlKSkgIyMgQ2xvc3VyZSBlbnZpcm9ubWVudCBpbiB3aGljaCBuIGhhcyBiZWVuIHByZXZpb3VzbHkgc2V0IHRvIDMKbHMoZW52aXJvbm1lbnQoc3F1YXJlKSkKZ2V0KCJuIiwgZW52aXJvbm1lbnQoc3F1YXJlKSkKCiMjIExleGljYWwgdnMuIER5bmFtaWMgU2NvcGluZwp5IDwtIDEwCmYgPC0gZnVuY3Rpb24oeCkgeyAjIEluIHRoaXMgZnVuY3Rpb24sIHkgYW5kIGcgYXJlIGZyZWUgdmFyaWFibGVzCiAgeSA8LTIKICB5XjIgKyBnKHgpCn0KCmcgPC0gZnVuY3Rpb24oeCkgeyAjIEluIHRoaXMgZnVuY3Rpb24sIHkgaXMgdGhlIG9ubHkgZnJlZSB2YXJpYWJsZQogIHgqeQp9CmYoMykgIyA9PSAzNC4gV2hhdD8/PwoKIyMjIFdpdGggTGV4aWNhbCBTY29waW5nLCB5IGluIGZ1bmN0aW9uIGcgaXMgbG9va2VkIHVwIGluIHRoZSBlbnZpcm9ubWVudCBpbiB3aGljaCB0aGUgZnVuY3Rpb24gd2FzIGRlZmluZWQgKGdsb2JhbCBlbnYpCiMjIyBTbyBmb3IgZyBhbG9uZSwgeSA9IDEwLgojIyMgT25jZSB3ZSBnbyBpbnRvIGZ1bmN0aW9uIGYsIHkgaXMgUkVERUZJTkVEIHRvIDIsIGJ1dCBPTkxZIElOIFRIQVQgRU5WSVJPTk1FTlQ7IE91dHNpZGUgdGhlIGZ1bmN0aW9uIGVudiwgeSBpcyBzdGlsbCAxMC4KIyMjIFdpdGggRHluYW1pYyBzY29waW5nLCB5IGlzIGxvb2tlZCB1cCBpbiB0aGUgZW52IGZyb20gd2hpY2ggdGhlIGZ1bmMgd2FzIENBTExFRCAodGhlIENBTExJTkcgRU5WID09IFBBUkVOVCBGUkFNRSkKCiMjIyBXaGVuIGEgZnVuYyBpcyBkZWZpbmVkIGluIGdsb2JhbCBlbnYgYW5kIGlzIHRoZW4gY2FsbGVkIGZyb20gdGhlIGdsb2JhbCBlbnYsIHRoZW4gdGhlIGRlZmluaW5nIGVudiA9PSBjYWxsaW5nIGVudi4KIyMjIFRoaXMgc29tZXRpbWVzIGdpdmVzIHRoZSBhcHBlYXJhbmNlIG9mIGR5bmFtaWMgc2NvcGluZzoKcm0oeSkKZyA8LSBmdW5jdGlvbih4KSB7CiAgYSA8LTMgIyBEZWZpbmVkIHdpdGhpbiBmdW5jIGVudjsgZHluYW1pY2FsbHkgc2NvcGVkCiAgeCthK3kgIyB5IGlzIGZyZWUgdmFyaWFibGUsIHByZXZpb3VzIHVuZGVmaW5lZAp9CmcoMikgIyBFcnJvcj8hIHkgd2FzIG5vdCBmb3VuZC4KeSA8LSAzICMgTWFrZSBSIGhhcHB5IGJ5IGdpdmluZyBpdCB5LCBidXQgbm93IHkgaXMgaW4gdGhlIGdsb2JhbCBlbnZpcm9ubWVudCAoaW5zdGVhZCBvZiBkZWZpbmVkIGluIGZ1bmMpCmcoMikgIyBBbGwgZ29vZCg/KS4gTm90IHJlYWxseSwgd2UndmUganVzdCBzd2l0Y2hlZCB0byBsZXhpY2FsIHNjb3BpbmcKCiMjIENvbnNlcXVlbmNlcyBvZiBMZXhpY2FsIFNjb3BpbmcKIyMjIEFsbCBvYmplY3RzIG11c3QgYmUgc3RvcmVkIGluIG1lbW9yeQojIyMgQWxsIGZ1bmN0aW9ucyBtdXN0IGNhcnJ5IGEgcG9pbnRlciB0byB0aGVpciByZXNwZWN0aXZlIGRlZmluaW5nIGVudmlyb25tZW50cywgd2hpY2ggY291bGQgYmUgYW55d2hlcmUKIyMjIEluIFMtUExVUywgZnJlZSB2YXJpYWJsZXMgYXJlIGFsd2F5cyBsb29rZWQgdXAgaW4gZ2xvYmFsIHdvcmtzcGFjZSwgc28gZXZlcnl0aGluZyBjYW4gYmUgc3RvcmVkIG9uIHRoZSBkaXNrCiMjIyBiZWNhdXNlIHRoZSBkZWZpbmluZyBlbnYgb2YgYWxsIGZ1bmN0aW9ucyBpcyBUSEUgU0FNRQoKIyMgT3B0aW1pemF0aW9uIEV4YW1wbGUKIyMjIE9wdGltaXphdGlvbiByb3V0aW5lcyBpbiBSIGxpa2Ugb3B0aW0sIG5sbSwgYW5kIG9wdGltaXplIHJlcXVpcmUgeW91IHRvIHBhc3MgYSBmdW5jdGlvbiB3aG9zZSBhcmd1bWVudCBpcyBhIAojIyMgdmVjdG9yIG9mIHBhcmFtZXRlcnMgKGUuZy4sIGEgbG9nLWxpa2VsaWhvb2QpCgojIyMgQnV0LCBhbiBvYmplY3QgZnVuY3Rpb24gbWlnaHQgZGVwZW5kIG9uIG90aGVyIHRoaW5ncyBiZXNpZGVzIGl0cyBwYXJhbWV0ZXJzCiMjIyBXaGVuIHdyaXRpbmcgc29mdHdhcmUgdGhhdCBkb2VzIG9wdGltaXphdGlvbiwgaXQgbWF5IGJlIGRlc2lyYWJsZSB0byBhbGxvdyB0aGUgdXNlciB0byBmaXggY2VydGFpbiBwYXJhbWV0ZXJzCgojIyBNYXhpbWl6aW5nIGEgTm9ybWFsIExpa2VsaWhvb2QKIyMjIFdyaXRlIGEgImNvbnN0cnVjdG9yIiBmdW5jdGlvbjogYSBuZWdhdGl2ZSBsb2ctbGlrZWxpaG9vZCBmdW5jdGlvbgptYWtlLk5lZ0xvZ0xpa2UgPC0gZnVuY3Rpb24oZGF0YSxmaXhlZD1jKEYsRikpIHsgIyBTZWNvbmQgYXJndW1lbnQgPSBsb2dpY2FsIHZlY3RvciBkZXRlcm1pbmVzIHdoZXRoZXIgb3Igbm90IHRvIGZpeCBwYXJhbXMKICBwYXJhbXMgPC0gZml4ZWQKICBmdW5jdGlvbihwKSB7ICMgcCBpcyB0aGUgcGFyYW1ldGVyIHZlY3RvciB0aGF0IHdlIHdhbnQgdG8gb3B0aW1pemUgb3ZlcgogICAgcGFyYW1zWyFmaXhlZF0gPC0gcAogICAgbXUgPC0gcGFyYW1zWzFdICMgTG9nLWxpa2VsaWhvb2QgcGFyYW0KICAgIHNpZ21hIDwtIHBhcmFtc1syXSAjIExvZy1saWtlbGlob29kIHBhcmFtCiAgICBhIDwtIC0wLjUqbGVuZ3RoKGRhdGEpKmxvZygyKnBpKnNpZ21hXjIpICMgRGVmaW5pbmcgdGhlIGxvZy1saWtlbGlob29kIGZ1bmN0aW9uCiAgICBiIDwtIC0wLjUqc3VtKChkYXRhLW11KV4yKSAvIChzaWdtYV4yKQogICAgLShhK2IpICMgUmV0dXJucyBsb2ctbGlrZWxpaG9vZAogIH0KfQojIyMgU2ltdWxhdGUgZGF0YSBmb3IgdGhlIGNvbnN0cnVjdG9yIGZ1bmN0aW9uCnNldC5zZWVkKDEpICMgU2V0cyByYW5kb20gbnVtYmVyIHNlZWQKbm9ybWFscyA8LSBybm9ybSgxMDAsMSwyKSAjIEdlbmVyYXRlIG5vcm1hbGl6ZWQgbnVtYmVycwpuTEwgPC0gbWFrZS5OZWdMb2dMaWtlKG5vcm1hbHMpICMgQ29uc3RydWN0cyBmdW5jdGlvbiBiYXNlZCBvbiBvYmplY3Qgbm9ybWFscwpuTEwgIyBHaXZlcyBoZXhhZGVtaWNhbCB2YWxlIG9mIHRoZSBhZGRyZXNzIG9mIHdoZXJlIHRoZSBkZWZpbmluZyBlbnZpcm9ubWVudCBpcyBsb2NhdGVkIGluIG1lbW9yeQpscyhlbnZpcm9ubWVudChuTEwpKSAjIENhbGxzIGVudmlyb25tZW50IG9mIG5MTCwgd2hpY2ggY2FsbHMgdGhlIGZyZWUgdmFyaWFibGVzIGRhdGEsIHBhcmFtcywgYW5kIGZpeGVkCm9wdGltKGMobXU9MCxzaWdtYT0xKSxuTEwpJHBhciAjIE5vdyB3ZSBjYW4gb3B0aW1pemUgdGhlIGRhdGEgYWNjb3JkaW5nIHRvIGZ1bmN0aW9uIG5MTCgpCiMjIyMgVGhpcyBnaXZlcyB1cyB2YWx1ZXMgdGhhdCBhcmUgY2xvc2UgdG8gdGhlIHRydWUgbWVhbiAoMSkgYW5kIHRydWUgU0QgKDIpCgojIyMgV2UgZG9uJ3QgbmVlZCB0byBlc3RpbWF0ZSBtZWFuIG9yIHNpZ21hLCB3ZSBjb3VsZCBhbHNvIGp1c3QgZ2l2ZSBtYWtlLk5lZ0xvZ0xpa2UoKSB0aGUgdHJ1ZSBtZWFuIGFuZC9vciBTRDoKbkxMIDwtIG1ha2UuTmVnTG9nTGlrZShub3JtYWxzLGMoRkFMU0UsMikpICMgTGV0IG11IGJlIGZyZWUKb3B0aW1pemUobkxMLGMoLTEsMykpJG1pbmltdW0gIyBXaGljaCBnaXZlcyB0aGUgbWluIHZhbHVlIG9mIHRoZSBtZWFuLCB2ZWN0b3IgYygtMSwzKSBpcyB0aGUgcmFuZ2UgaW4gd2hpY2ggdGhlIG1pbiBpcyBzZWFyY2hlZCBmb3IKIyMjIyBvcHRpbSgpICE9IG9wdGltaXplKCk7IG9wdGltaXplKCkgZ2l2ZXMgdGhlIGVzdGltYXRlZCB2YWx1ZSBmb3IgT05FIHBhcmFtZXRlciwgb3B0aW0oKSBmb3IgYm90aApuTEwgPC0gbWFrZS5OZWdMb2dMaWtlKG5vcm1hbHMsIGMoMSxGKSkgIyBMZXQgc2lnbWEgYmUgZnJlZSB0aGlzIHRpbWUKb3B0aW1pemUobkxMLGMoMWUtNiwxMCkpJG1pbgoKIyMgUGxvdHRpbmcgdGhlIExpa2VsaWhvb2QhCm5MTCA8LSBtYWtlLk5lZ0xvZ0xpa2Uobm9ybWFscywgYygxLEZBTFNFKSkKeCA8LSBzZXEoMSw0LGxlbj0xMDApICMgVmVjdG9yIG9mIGluZGVwZW5kZW50IG51bWJlcnMKeSA8LSBzYXBwbHkoeCxuTEwpCnBsb3QoeCxleHAoLSh5LW1pbih5KSkpLHR5cGU9ImwiKSAjIENyZWF0ZXMgYSBuTEwgZnVuY3Rpb24gb2YgU0QKCm5MTCA8LSBtYWtlLk5lZ0xvZ0xpa2Uobm9ybWFscywgYyhGQUxTRSwyKSkKeCA8LSBzZXEoMC41LDEuNSxsZW49MTAwKQp5IDwtIHNhcHBseSh4LG5MTCkKcGxvdCh4LGV4cCgtKHktbWluKHkpKSksdHlwZT0ibCIpICMgQ3JlYXRlcyBhIG5MTCBmdW5jdGlvbiBvZiB0aGUgbWVhbgoKIyMgTGV4aWNhbCBTY29waW5nIFN1bW1hcnkKIyMjIE9iamVjdGl2ZSBmdW5jdGlvbnMgY2FuIGJlIGJ1aWx0IHdoaWNoIGNvbnRhaW4gYWxsIG5lY2Vzc2FyeSBkYXRhIGZvciBldmFsdWF0aW5nIHRoZSBmdW5jdGlvbgojIyMgTk8gbmVlZCB0byBjYXJyeSBhcm91bmQgbG9uZyBhcmd1bWVudCBsaXN0cyAtLSB1c2VmdWwgZm9yIGludGVyYWN0aXZlIGFuZCBleHBsb3JhdG9yeSB3b3JrCiMjIyBDb2RlIGNhbiBiZSBzaW1wbGlmaWVkIGFuZCBjbGVhbmVkIHVwCgojIENvZGluZyBTdGFuZGFyZHMgZm9yIFIKIyMgQWx3YXlzIHVzZSB0ZXh0IGZpbGVzL2VkaXRvcnMKIyMgSW5kZW50IHlvdXIgY29kZSAoQWJvdXQgNC04IHNwYWNlcykgYW5kIGxpbWl0IHRoZSB3aWR0aCBvZiB5b3VyIGNvZGUgdG8gODAgY29sdW1ucwojIyBGb3JjZSB5b3Vyc2VsZiB0byB0aGluayBhYm91dCB3cml0aW5nIHlvdXIgY29kZSBhZXN0aGV0aWNhbGx5CgojIERhdGVzIGFuZCBUaW1lcyBpbiBSCiMjIFIgaGFzIGRldmVsb3BlZCBhIHNwZWNpYWwgcmVwcmVzZW50YXRpb24gb2YgZGF0ZXMgYW5kIHRpbWVzCiMjIERhdGVzIGFyZSByZXByZXNlbnRlZCBieSB0aGUgIkRhdGUiIGNsYXNzCiMjIFRpbWUgYnkgdGhlIFBPU0lYY3Qgb3IgUE9TSVhsdCBjbGFzcwoKIyMgRGF0ZSBjbGFzcyBjYW4gYmUgY29lcmNlZCBmcm9tIGEgY2hhcmFjdGVyIHN0cmluZyB1c2luZyBhcy5EYXRlKCkKeiA8LSBhcy5EYXRlKCIxOTcwLTAxLTAxIikgIyBIZXJlIHdlIGNvZXJjZSB0aGUgc3RyaW5nIGluIHRoZSBwYXJhbnRoZXNlcyB0byB0aGUgZGF0YSBKYW51YXJ5IDEsIDE5NzAsIHdoaWNoIGlzIGRheSAiMCIgaW4gUiB0aW1lLgp1bmNsYXNzKHopICMgVGhlcmVmb3JlLCB3aGVuIHlvdSB1bmNsYXNzIHRoaXMsIGl0IGJlY29tZXMgdGhlIG51bWJlciB6ZXJvIQp1bmNsYXNzKGFzLkRhdGUoIjE5NzAtMDEtMDIiKSkgIyBJbiBsaWtlIG1hbm5lciwgb25lIGRheSBBSEVBRCBvZiBKYW51YXJ5IDEsIDE5NzAgc2hvdWxkIGJlIChhbmQgaXMpIHRoZSBudW1iZXIgMS4KdW5jbGFzcyhhcy5EYXRlKCIyMDE4LTEwLTI0IikpCgojIyBUaW1lcyBhcmUgcmVwcmVzZW50ZWQgdXNpbmcgdGhlIFBPU0lYY3Qgb3IgbHQgY2xhc3NlcwojIyMgUE9TSVhjdCBqdXN0IGEgdmVyeSBsYXJnZSBpbnRlZ2VyIHVuZGVyIHRoZSBob29kOyB1c2VmdWwgY2xhc3Mgd2hlbiB5b3Ugd2FudCB0byBzdG9yZSB0aW1lcyBpbiBhIGRhdGEgZnJhbWUKIyMjIFBPU0lYbHQgaXMgYSBsaXN0IHVuZGVybmVhdGggYW5kIHN0b3JlcyBhIGJ1bmNoIG9mIHVzZWZ1bCBpbmZvIGxpa2UgdGhlIGRheSBvZiB0aGUgd2VlaywgZGF5IG9mIHRoZSB5ZWFyLCBldGMuCiMjIyBTb21lIGdlbmVyaWMgZnVuY3Rpb25zIHRoYXQgd29yayBvbiBkYXRlcyBhbmQgdGltZXMKIyMjIENhbiBhbHNvIGJlIGNvZXJjZWQgZnJvbSBjaGFyYWN0ZXIgc3RyaW5nCmEgPC0gU3lzLnRpbWUoKSAjIFN5cy50aW1lKCkgZ2l2ZXMgeW91IHRoZSBQT1NJWGN0IHZlY3RvciBvZiB0aGUgY3VycmVudCB0aW1lCnAgPC0gYXMuUE9TSVhsdChhKSAjIENvZXJjaW5nIHRvIFBPU0lYbHQgZ2l2ZXMgeW91IGEgbGlzdCBvZiB1c2VmdWwgaW5mb3JtYXRpb24gYWJvdXQgeW91ciBjdXJyZW50IHRpbWUKbmFtZXModW5jbGFzcyhwKSkgIyBHaXZlcyB5b3UgYSB2ZWN0b3Igb2YgdGhlIGNvbnRlbnRzCnAkc2VjICMgVGhlIG51bWJlciBvZiBzZWNvbmRzIGluIHRoZSAocHJldmlvdXNseSkgY3VycmVudCB0aW1lLCBmb3IgaW5zdGFuY2UKdW5jbGFzcyhhKSAjIEdpdmVuIGEgaXMgYWxyZWFkeSBpbiBQT1NJWGN0IGZvcm1hdCwgd2hlbiB3ZSB1bmNsYXNzIGl0IGdpdmVzIHRoZSBudW1iZXIgb2Ygc2Vjb25kcyBzaW5jZSBKYW51YXJ5IDEsIDE5NzAKIyMjIEluIG9yZGVyIHRvIGdldCB0aGUgbGlzdCBlbGVtZW50cyBvZiBhIHRpbWUsIHlvdSBzaG91bGQgZmlyc3QgY29lcmNlIFBPU0lYY3QgdG8gUE9TSVhsdAoKIyMgc3RycHRpbWUoKSBhbGxvd3MgeW91IHRvIGNyZWF0ZSBhIFBPU0lYbHQgbGlzdCBmcm9tIGEgaHVtYW4tcmVhZGFibGUgZGF0ZQpkYXRlc3RyaW5nIDwtIGMoIkphbnVhcnkgMTAsIDIwMTIgMTA6NDAiLCAiRGVjZW1iZXIgOSwgMjAxMSA5OjEwIikKaiA8LSBzdHJwdGltZShkYXRlc3RyaW5nLCAiJUIgJWQsICVZICVIOiVNIikgIyBUaGUgcGVyY2VudCBzaWducyAoZm9ybWF0dGluZyBzdHJpbmcpIHRlbGwgc3RycHRpbWUgd2hhdCBlYWNoIGl0ZW0gaW4gdGhlIHN0cmluZyBpcywgZGVsaW1pdGVkIGJ5IGEgc3BhY2UKY2xhc3MoaikgIyBBIGNsYXNzIG9mIHR3byBQT1NJWGx0IGxpc3RzLgoKIyMgWW91IGNhbiB1c2UgbWF0aGVtYXRpY2FsIG9wZXJhdGlvbnMgb24gZGF0ZXMgYW5kIHRpbWVzICgrIGFuZCAtKSB0byBmaW5kIG91dCwgZm9yIGV4YW1wbGUsIGhvdyBtYW55IGRheXMgYXJlIGJldHdlZW4gdGhlIHR3byBkYXRlcwprIDwtIGFzLkRhdGUoIjIwMTItMDEtMDEiKQpsIDwtIHN0cnB0aW1lKCI5IEphbiAyMDExIDExOjM0OjIxIiwgIiVkICViICVZICVIOiVNOiVTIikKayA8LSBhcy5QT1NJWGx0KGspICMgTmVlZCB0byBjaGFuZ2UgayB0byBQT1NJWGx0IGJlZm9yZSBzdWJ0cmFjdGlvbgprLWwgIyBUaW1lIGRpZmZlcmVuY2Ugb2YgMzU2LjUxIGRheXMKIyMgUE9TSVggYWxzbyBoYW5kbGVzIHRoaW5ncyBsaWtlIGxlYXAgeWVhcnMsIGRheWxpZ2h0IHNhdmluZ3MsIGFuZCB0aW1lIHpvbmVzCm0gPC0gYXMuUE9TSVhjdCgiMjAxMi0xMC0yNSAwMTowMDowMCIpCm4gPC0gYXMuUE9TSVhjdCgiMjAxMi0xMC0yNSAwNjowMDowMCIsIHR6ID0gIkdNVCIpCm0tbgphcmd1bWVudHMoYXMuUE9TSVhjdCkK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBQcm9ncmFtbWluZzogV2VlayAyIE5vdGVzIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKZGVzY3JpcHRpb246IENvbnRyb2wgU3RydWN0dXJlcywgTGV4aWNhbCBTY29waW5nLCBPcHRpbWl6YXRpb24sIGFuZCBUaW1lCi0tLQojIENvbnRyb2wgU3RydWN0dXJlcwoqIEFsbG93IHlvdSB0byBjb250cm9sIHRoZSBmbG93IG9mIGFuIFIgcHJvZ3JhbS4KKiBpZiwgZWxzZSwgZm9yLCB3aGlsZSwgcmVwZWF0IChpbmZpbml0ZSBsb29wKSwgYnJlYWsgKGVuZCBsb29wKSwgbmV4dCAoc2tpcCBpdGVyYXRpb24gb2YgCiAgbG9vcCksIHJldHVybiAoZXhpdCkKKiBNb3N0IG9mIHRoZXNlIGFyZSB1c2VkIHdoZW4gd3JpdGluZyBmdW5jdGlvbnMgb3IgbG9uZ2VyIGV4cHJlc3Npb25zCgojIyBJZiwgRWxzZQpgYGB7cn0KaWYoY29uZGl0aW9uKSB7CiAgICAgICAgIyBEbyBzb21ldGhpbmcKfSBlbHNlIHsKICAgICAgICAjIERvIHNvbWV0aGluZyBlbHNlCn0gZWxzZSBpZiAoY29uZGl0aW9uMikgewogICAgICAgICMgRG8gc29tZXRoaW5nIGRpZmZlcmVudCBnaXZlbiBhIGRpZmZlcmVudCBjb25kaXRpb24KfQpgYGAKKiBFbHNlIG11c3QgYmUgYXQgdGhlIGVuZCwgdGhlcmUgY2FuIGJlIGFzIG1hbnkgZWxzZSBpZnMgYXMgbmVlZGVkCiogQW4gZXhhbXBsZToKYGBge3J9CmEgPSA0CmlmKGEgPiAzKSB7CiAgICAgICAgYiA8LSAxMAp9IGVsc2UgewogICAgICAgIGIgPC0gMAp9CmBgYAoKIyMgRm9yIExvb3BzCmBgYHtyfQpmb3IoaSBpbiAxOjEwKSB7CiAgICAgICAgIyBMb29wIGluZGV4IGlzIGkgPSAxIHRocm91Z2ggMTAKICAgICAgICBwcmludChpKQp9CmBgYAoKKiBFeGFtcGxlOiBhIGNoYXJhY3RlciB2ZWN0b3IKYGBge3J9CmMgPC0gYygiYSIsImIiLCJjIiwiZCIpCmZvcihpIGluIDE6NCkgewogICAgICAgICMgQ2FsbGluZyBieSBpbmRleCBoZXJlCiAgICAgICAgcHJpbnQoY1tpXSkKfQoKZm9yKGkgaW4gc2VxX2Fsb25nKGMpKSB7IAojIENyZWF0ZXMgaW50ZWdlciBzZXF1ZW5jZSBlcXVhbCB0byB0aGUgbGVuZ3RoIG9mIGFyZ3VtZW50IHZlY3RvcgogICAgICAgICMgVGhpcyBsb29wIGVxdWl2YWxlbnQgdG8gdGhlIGxhc3QKICAgICAgICBwcmludChjW2ldKQp9Cgpmb3IobGV0dGVyIGluIGMpIHsKI1RoaXMgdGltZSB3ZSBvbmx5IGNhcmUgYWJvdXQgbGV0dGVycyBpbiB0aGUgdmVjdG9yICh3aGljaCBoYXBwZW4gdG8gYmUgYWxsIG9mIHRoZW0pCiAgICAgICAgcHJpbnQobGV0dGVyKQp9Cgpmb3IoaSBpbiAxOjQpIHByaW50KGNbaV0pICMgRG9uJ3QgbmVlZCB0aGUgYnJhY2tldCBmb3JtYXQhCmBgYAoKKiBOZXN0ZWQgZm9yIGxvb3BzCmBgYHtyfQpkIDwtIG1hdHJpeCgxOjYsIDIsIDMpCmZvcihpIGluIHNlcV9sZW4obnJvdyhkKSkpIHsKICAgICAgICBmb3IoaiBpbiBzZXFfbGVuKG5jb2woZCkpKSB7CiAgICAgICAgICAgICAgICBwcmludChkW2ksal0pCiAgICAgICAgfQp9CmBgYAotIE5lc3RpbmcgYmV5b25kIDItMyBsZXZlbHMgaXMgb2Z0ZW4gdmVyeSBkaWZmaWN1bHQgdG8gcmVhZCBvciB1bmRlcnN0YW5kLgoKIyMgV2hpbGUgTG9vcHMKKiBCZWdpbiBieSB0ZXN0aW5nIGEgY29uZGl0aW9uOiBpZiBpdCBpcyB0cnVlLCB0aGUgbG9vcCBib2R5IGlzIGV4ZWN1dGVkIHVudGlsIHRoZSBpbml0aWFsICAgY29uZGl0aW9uIGlzIG5vIGxvbmdlciBtZXQuCmBgYHtyfQpjb3VudCA8LSAwCndoaWxlKGNvdW50IDwgMTApIHsKICAgICAgICBwcmludChjb3VudCkKICAgICAgICBjb3VudCA8LSBjb3VudCArIDEgIyBUaGlzIGNvbW1hbmQgc3RvcHMgYXQgOQp9CmBgYAoqIFNvbWV0aW1lcyB0aGVyZSB3aWxsIGJlIG1vcmUgdGhhbiBvbmUgY29uZGl0aW9uIGluIHRoZSB0ZXN0CmBgYHtyfQp6IDwtIDUKd2hpbGUoeiA+PSAzICYmIHogPD0gMTApIHsgIyBLZWVwIHogYmV0d2VlbiAzIGFuZCAxMAogICAgICAgIHByaW50KHopCiAgICAgICAgY29pbiA8LSByYmlub20oMSwxLDAuNSkgIyBGbGlwcyBhIGNvaW4KICAgICAgICBpZihjb2luPT0xKSB7ICMjIFJhbmRvbSB3YWxrCiAgICAgICAgICAgICAgICB6IDwtIHogKyAxICMgQWRkIHRvIHogaWYgY29pbiBpcyAxCiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgICAgIHogPC0geiAtIDEgIyBTdWJ0cmFjdCBmcm9tIHogaWYgY29pbiBpcyBub3Qgb25lCiAgICAgICAgfQp9CmBgYAoKIyMgUmVwZWF0IExvb3BzCiogSW5pdGlhdGVzIGFuIGluZmluaXRlIGxvb3AsIGFuZCB0aGUgb25seSB3YXkgdG8gZXhpdCBvbmUgaXMgdG8gY2FsbCBhIEJSRUFLCmBgYHtyfQplIDwtIDEKdG9sIDwtIDFlLTgKcmVwZWF0ewogICAgICAgIGYgPC0gY29tcHV0ZUVzdGltYXRlKCkgIyBUSElTIElTIEEgRkFLRSBGVU5DVElPTgogICAgICAgIGlmKGFicyhmLWUpIDwgdG9sKSB7ICAjIGlmIHRoZSBhYnNvbHV0ZSB2YWx1ZSBvZiBmLWUgaXMgbGVzcyB0aGFuIHRoZSB0b2xlcmFuY2UuLi4KICAgICAgICAgICAgICAgIGJyZWFrICAgICAgICAgICAgICAgICMgYnJlYWsgdGhlIGZ1bmN0aW9uCiAgICAgICAgfSBlbHNlIHsgICAgICAgICAgICAgICAjIElmIGl0cyBub3QgZ3JlYXRlciB0aGFuIHRvbC4uLgogICAgICAgICAgICAgICAgZiA8LSBlICAgICAgICAgICAgICAgIyBlIGlzIHRoZSBuZXcgZi4KICAgICAgICB9Cn0KYGBgCiogUmVwZWF0IGxvb3BzIGFyZSBkYW5nZXJvdXMgYmVjYXVzZSB0aGVyZSBpcyBubyBndWFyYW50ZWUgaXQgd2lsbCBzdG9wLCBzbyBpdCBpcyBiZXR0ZXIgCiAgdG8gc2V0IGEgaGFyZCBsaW1pdCBvbiB0aGUgbnVtYmVyIG9mIGl0ZXJhdGlvbnMgKGxpa2Ugd2l0aCBhIGZvciBsb29wKSB0aGFuIHJlcG9ydCAKICB3aGV0aGVyIGNvbnZlcmdlbmNlIHdhcyBhY2hpZXZlZCBvciBub3QuCgojIyBOZXh0IGFuZCBSZXR1cm4gQ29udHJvbCBGdW5jdGlvbnMKKiBuZXh0IGlzIHVzZWQgdG8gc2tpcCBhIGxvb3AgaXRlcmF0aW9uCmBgYHtyfQpmb3IoaSBpbiAxOjEwMCkgewogICAgICAgIGlmKGkgPD0gMjApIHsKICAgICAgICAgIyMgU2tpcCB0aGUgZmlyc3QgMjAgaXRlcmF0aW9ucwogICAgICAgICAgICAgICAgbmV4dAogICAgICAgIH0gZWxzZSB7CiAgICAgICAgIyMgRG8gc29tZXRoaW5nIGhlcmUKICAgICAgICB9Cn0KYGBgCiogUmV0dXJuIHNpZ25hbHMgdGhhdCBhIGZ1bmN0aW9uIHNob3VsZCBleGl0IGFuZCByZXR1cm4gYSBnaXZlbiB2YWx1ZQoKIyBGdW5jdGlvbnMKKiBGdW5jdGlvbnMgYXJlIGNyZWF0ZWQgdXNpbmcgdGhlIGZ1bmN0aW9uKCkgZGlyZWN0aXZlIGFuZCBhcmUgc3RvcmVkIGFzIFIgb2JqZWN0IGxpa2UgICAgICBhbnl0aGluZyBlbHNlOyB0aGV5IGFyZSBvZiBjbGFzcyAiZnVuY3Rpb24iCiogRnVuY3Rpb25zIGNhbiBiZSBwYXNzZWQgYXMgYXJndW1lbnRzIHRvIG90aGVyIGZ1bmN0aW9ucwoqIEZ1bmN0aW9ucyBjYW4gYmUgbmVzdGVkIHNvIHlvdSBjYW4gZGVmaW5lIGEgZnVuY3Rpb24gaW5zaWRlIGFub3RoZXIgb25lCiogRnVuY3Rpb25zIGhhdmUgTkFNRUQgQVJHVU1FTlRTIHdoaWNoIHBvdGVudGlhbGx5IGhhdmUgZGVmYXVsdCB2YWx1ZXMKKiBGT1JNQUwgQVJHVU1FTlRTIGFyZSBpbmNsdWRlZCBpbiBmdW5jdGlvbiBkZWZpbml0aW9uOyBzb21ldGltZXMgdGhleSBhcmVuJ3QgQUxMIHVzZWQKICAgICAgICAtIGZvcm1hbHMoKSByZXR1cnMgYSBsaXN0IG9mIGFsbCBmb3JtYWwgYXJndW1lbnRzIG9mIGZ1bmN0aW9uCiAgICAgICAgLSBDYW4gYmUgbWlzc2luZyBvciBtaWdodCBoYXZlIGRlZmF1bHQgdmFsdWVzCiogQVJHVU1FTlQgTUFUQ0hJTkc6IFdoZW4gYW4gYXJndW1lbnQgaXMgbWF0Y2hlZCBieSBuYW1lLCBpdCBpcyAidGFrZW4gb3V0IiBvZiB0aGUgICAgCiAgYXJndW1lbnQgbGlzdCBhbmQgdGhlIHJlbWFpbmluZyB1bm5hbWVkIGFyZ3VtZW50cyBhcmUgbWF0Y2hlZCBpbiB0aGUgb3JkZXIgdGhleSBhcmUgCiAgbGlzdGVkIGluIHRoZSBmdW5jdGlvbiBkZWZpbml0aW9uLgoqIE5hbWVkIGFyZ3VtZW50cyBhcmUgaGVscGZ1bCB3aGVuIHlvdSBoYXZlIGEgbG9uZyBhcmd1bWVudCBsaXN0IGFuZCB5b3Ugd2FudCB0byB1c2UgdGhlIAogIGRlZmF1bHRzIGZvciBldmVyeXRoaW5nIGV4Y2VwdCBhbiBhcmd1bWVudCBuZWFyIHRoZSBlbmQgb2YgdGhlIGxpc3QgKGxpa2UgaW4gcGxvdHRpbmcgCiAgZnVuY3Rpb25zKQogICAgICAgIC1UaGV5IGNhbiBhbHNvIGJlIFBBUlRJQUxMWSBtYXRjaGVkLCBtZWFuaW5nIHlvdSBkb24ndCBuZWVkIHRvIHR5cGUgdGhlIGVudGlyZSAKICAgICAgICAgYXJndW1lbnQgb3V0CiAgICAgICAgIAojIERlZmluaW5nIGEgRnVuY3Rpb24KYGBge3J9CmcgPC0gZnVuY3Rpb24oYSwgYj0xLCBjPTIsIGQ9TlVMTCkgewogICMgWW91IGNhbiBzZXQgYSBkZWZhdWx0IGFyZ3VtZW50IHRvIE5VTEwsIG1lYW5pbmcgbm8gYXJndW1lbnQKfQpgYGAKKiBMYXp5IEV2YWx1YXRpb246IEFyZ3VtZW50IHRvIGZ1bmN0aW9ucyBhcmUgZXZhbHVhdGVkIGxhemlseSwgc28gT05MWSBhcyBuZWVkZWQKYGBge3J9CmggPC0gZnVuY3Rpb24oYSxiKSB7ICMgQXJndW1lbnQgImIiIGlzbid0IG5lZWRlZCBzbyBoKDIpIHdvbid0IHByb2R1Y2UgYW4gZXJyb3IsIGJlY2F1c2UgMiBqdXN0IGJlY29tZXMgImEiCiAgYV4yCn0KaCgyKSAKYGBgCiogVGhpcyBuZXh0IGZ1bmN0aW9uIHByb2R1Y2VzIGFuIGVycm9yIGJlY2F1c2UgYXJndW1lbnQgImIiIGlzIG1pc3NpbmcsIGJ1dCBpdCBzdGlsbCAKICBwcmludHMgImEiIQpgYGB7cn0KaiA8LSBmdW5jdGlvbihhLGIpIHsKICBwcmludChhKQogIHByaW50KGIpCn0Kaig0NSkKYGBgCgojIFRoZSAiLi4uIiBBcmd1bWVudDogLi4uIGluZGljYXRlcyBhIHZhcmlhYmxlIG51bWJlciBvZiBhcmd1bWVudHMgdXN1YWxseSBwYXNzZWQgb24gdG8gT1RIRVIgZnVuY3Rpb25zCiogLi4uIGlzIG9mdGVuIHVzZWQgd2hlbiBleHRlbmRpbmcgYW5vdGhlciBmdW5jdGlvbiBhbmQgeW91IGRvbid0IHdhbnQgdG8gY29weSB0aGUgZW50aXJlIGFyZ3VtZW50IGxpc3QKYGBge3J9Cm15cGxvdCA8LSBmdW5jdGlvbih4LHksdHlwZT0ibCIsLi4uKSB7ICMgSGVyZSwgd2UgcGFzcyBvbiBhcmd1bWVudHMgdG8gZnVuY3Rpb24gInBsb3QiCiAgcGxvdCh4LHksdHlwZSA9IHR5cGUsIC4uLikKfQpgYGAKKiAuLi4gaXMgYWxzbyBuZWNlc3Nhcnkgd2hlbiB0aGUgbnVtYmVyIG9mIGFyZ3VtZW50cyBwYXNzZWQgdG8gdGhlIGZ1bmN0aW9uIGNhbid0IGJlIGtub3duCiAgaW4gYWR2YW5jZQpgYGB7cn0KYXJncyhwYXN0ZSkgIyBZb3UgY291bGQgYmUgZGVhbGluZyB3aXRoIG1hbnkgc3RyaW5nczogdGhleSB0YWtlIHRoZSBwbGFjZSBvZiB0aGUgLi4uCmFyZ3MoY2F0KQpgYGAKKiBPbmUgY2F0Y2ggd2l0aCAuLi4gaXMgdGhhdCBhbnkgYXJndW1lbnRzIHRoYXQgYXBwZWFyIEFGVEVSIC4uLiBtdXN0IGJlIG5hbWVkIGV4cGxpY2l0bHkgCiAgYW5kIENBTidUIGJlIHBhcnRpYWxseSBtYXRjaGVkCgoKIyBTY29waW5nIFJ1bGVzCiMjIEhvdyBkb2VzIFIga25vdyB3aGljaCB2YWx1ZSB0byBhc3NpZ24gdG8gd2hpY2ggc3ltYm9sPyAKKiBXaGVuIHlvdSB0eXBlOgpgYGB7cn0KbG0gPC0gZnVuY3Rpb24oeCkge3gqeH0gCiMgZWZmZWN0aXZlbHkgZGVmaW5pbmcgYW5vdGhlciBmdW5jdGlvbiBmb3IgbG0gKGFscmVhZHkgYSBmdW5jdGlvbiBpbiB0aGUgc3RhdHMgcGFja2FnZSkKYGBgCiogLi4uIGhvdyBkb2VzIFIga25vdyB3aGljaCBsbSgpIHRvIHVzZT8KCiMjIEJpbmRpbmcgVmFsdWVzIHRvIFN5bWJvbAoqIFdoZW4gUiB0cmllcyBiaW5kaW5nIGEgdmFsdWUgdG8gYSBzeW1ib2wsIGl0IHNlYXJjaCB0aHJvdWdoIGEgc2VyaWVzIG9mIGVudmlyb25tZW50cyB0byAKICBmaW5kIHRoZSBhcHJvcG9zIHZhbHVlCiogVGhlIG9yZGVyIGlzIHJvdWdobHk6ICgxKSBzZWFyY2ggZ2xvYmFsIGVudmlyb25tZW50IGZvciBzeW1ib2wgbmFtZSBhbmQgKDIpIHNlYXJjaCAKICBuYW1lc3BhY2VzIG9mIHBhY2thZ2VzCmBgYHtyfQpzZWFyY2goKSAjIEFsbG93cyB1cyB0byBzZWUgdGhlIGhpZXJhcmNoeSBvZiBob3cgUiB3aWxsIG1hdGNoIHN5bWJvbHMKYGBgCiogR2xvYmFsIEVudmlvcm5tZW50IGlzIGFsd2F5cyBudW1iZXIgMSBhbmQgbGFzdCBpcyB0aGUgQkFTRSBwYWNrYWdlcwoqIFdoZW4geW91IGxvYWQgYSBwYWNrYWdlIHdpdGggbGlicmFyeSwgVEhFIE5BTUVTUEFDRSBPRiBUSEFUIFBBQ0tBR0UgSVMgUFVUIElOIFBPU0lUSU9OIDIKICBPRiBUSEUgU0VBUkNIIExJU1Q7IEV2ZXJ5dGhpbmcgZWxzZSBpcyBzaGlmdGVkIERPV04KKiBTY29waW5nIHJ1bGVzIGFyZSB0aGUgbWFpbiBmZWF0dXJlIG1ha2luZyBSIGRpZmZlcmVudCBmcm9tIFM7IHRoZXkgZGV0ZXJtaW5lIGhvdyBhIHZhbHVlCiAgaXMgYXNzb2NpYXRlZCB3aXRoIGEgZnJlZSB2YXJpYWJsZSBpbiBhIGZ1bmN0aW9uCiogUiB1c2VzIExFWElDQUwgb3IgU1RBVElDIFNDT1BJTkcgKGFsdDogZHluYW1pYyBzY29waW5nKQoqIExleGljYWwgc2NvcGluZyBpcyB1c2VmdWwgZm9yIHNpbXBsaWZ5aW5nIHN0YXRpc3RpY2FsIGNvbXB1dGF0aW9uCgojIyBMZXhpY2FsIFNjb3BpbmcKYGBge3J9CmsgPC0gZnVuY3Rpb24oeCx5KSB7CiAgeF4yICsgeSAvIHoKfQpgYGAKKiBUaGlzIGZ1bmN0aW9uIGhhcyAyIGZvcm1hbCBhcmdzICh4LHkpOyB6IGlzIGEgRlJFRSBWQVJJQUJMRQoqIFNjb3BpbmcgcnVsZXMgZGV0ZXJtaW5lIGhvdyB2YWx1ZXMgYXJlIGFzc2lnbmVkIHRvIEZSRUUgVkFSSUFCTEVTLCB3aGljaCBhcmUgTk9UIGZvcm1hbCAKICBhcmdzIG9yIGxvY2FsIHZhcmlhYmxlcwoqIFRoZSB2YWx1ZXMgb2YgZnJlZSB2YXJpYWJsZXMgYXJlIHNlYXJjaGVkIGZvciBpbiB0aGUgZW52aXJvbm1lbnQgaW4gd2hpY2ggdGhlIGZ1bmN0aW9uIAogIHdhcyBkZWZpbmVkISEhCgojIyBFbnZpcm9ubWVudHMKKiBBbiBlbnZpcm9ubWVudCBpcyBhIGNvbGxlY3Rpb24gb2YgKHN5bWJvbCx2YWx1ZSkgcGFpcnMgKGUuZy4sIHggPSBzeW1ib2wgYW5kIDMuMTQgPSAKICB2YWx1ZSkKKiBFdmVyeSBlbnZpcm9ubWVudCBoYXMgYSBwYXJlbnQgZW52aXJvbm1lbnQ7IGVhY2ggZW52aXJvbm1lbnQgY2FuIGhhdmUgbXVsdGlwbGUgY2hpbGRyZW4KKiBPbmx5IGVudmlyb25tZW50IHdpdGhvdXQgYSBwYXJlbnQgaXMgdGhlIGVtcHR5IGVudmlyb25tZW50CiogRnVuY3Rpb24gKyBFbnZpcm9ubWVudCA9IEEgRlVOQ1RJT04gQ0xPU1VSRQoKIyMgRlJFRSBWQVJJQUJMRVMKKiBJZiB2YWx1ZSBvZiBhIHN5bWJvbCBJUyBOT1QgZm91bmQgaW4gdGhlIGVudmlyb25tZW50IGluIHdoaWNoIGEgZnVuY3Rpb24gd2FzIGRlZmluZWQsIAogIHRoZW4gdGhlIHNlYXJjaCBpcyBjb250aW51ZWQgaW4gdGhlIFBBUkVOVCBFTlZJUk9OTUVOVC4KKiBTZWFyY2ggY29udGludWVzIGRvd24gdGhlIHNlcXVlbmNlIG9mIHBhcmVudCBlbnZpcm9ubWVudHMgdW50aWwgd2UgaGl0IHRoZSBUT1AtTEVWRUwgCiAgRU5WSVJPTk1FTlQKKiBBZnRlciB0aGUgdG9wLWxldmVsIGVudmlyb25tZW50LCBzZWFyY2ggY29udGludWVzIGRvd24gdGhlIHNlYXJjaCBsaXN0IHVudGlsIHdlIGhpdCB0aGUgCiAgRU1QVFkgRU5WSVJPTk1FTlQKKiBJZiBSIGNhbid0IGZpbmQgdGhlIEZSRUUgVkFSSUFCTEUgdmFsdWUgYmVmb3JlIHRoaXMgaGFwcGVucywgd2UgZW5jb3VudGVyIGFuIGVycm9yLgoqIEZSRUUgVkFSSUFCTEU/IC0+IFBBUkVOVCBFTlYgLT4gVE9QLUxFVkVMIEVOViAtPiBFTVBUWSBFTlYKKiBXaHkgZG9lcyBpdCBtYXR0ZXI/CiAgICAgICAgLSBUeXBpY2FsbHksIGZ1bmN0aW9ucyBhcmUgZGVmaW5lZCBpbiBnbG9iYWwgZW52LCBzbyB2YWx1ZXMgb2YgZnJlZSB2YXJpYWJsZXMgYXJlIAogICAgICAgICAgZm91bmQgaW4gdXNlcidzIHdvcmtzcGFjZQogICAgICAgIC0gUiBhbGxvd3MgeW91IHRvIGhhdmUgZnVuY3Rpb25zIGRlZmluZWQgSU5TSURFIG90aGVyIGZ1bmN0aW9uOyBvdGhlciBsYW5ndWFnZXMgCiAgICAgICAgICBsaWtlIEMgZG9uJ3QgbGV0IHlvdSBkbyB0aGlzCiAgICAgICAgICAKIyMgRnVuY3Rpb25zIFdpdGhpbiBGdW5jdGlvbnMKYGBge3J9Cm1ha2UucG93ZXIgPC0gZnVuY3Rpb24obikgeyAjIE1haW4gZnVuY3Rpb24KICAgICAgICBwb3cgPC0gZnVuY3Rpb24oeCkgeyAjIE5lc3RlZCBmdW5jdGlvbgogICAgICAgICAgICAgICAgeF5uCiAgICAgICAgICAgICAgICB9CiAgICAgICAgcG93Cn0KCmN1YmUgPC0gbWFrZS5wb3dlcigzKSAKIyBXZSBmaXJzdCAibWFrZSIgdGhlIGZ1bmN0aW9uIGJ5IHNldHRpbmcgdGhlIHBvd2VyIChuKS4gQ3ViZSBpcyBub3cgdGhlIG5ldyBmdW5jdGlvbgpjdWJlKDMpIAojIFdlJ3ZlIHNldCBuIHRvIDMsIHNvIG5vdyB3ZSBjaG9vc2UgMyBhZ2FpbiBmb3IgY3ViaW5nCnNxdWFyZSA8LSBtYWtlLnBvd2VyKDIpIAojIEFub3RoZXIgZXhhbXBsZTogbWFraW5nIGEgZnVuY3Rpb24gc3F1YXJlKCkgdGhhdCBhbGxvd3MgdXMgdG8gc3F1YXJlIHZhbHVlcwpzcXVhcmUoMykgIyBSZXR1cm5zIDksIGJlY2F1c2UgM14yID0gOQpgYGAKCiMjIEV4cGxvcmluZyBhIEZ1bmN0aW9uIENsb3N1cmU6IEhvdyB0byBmaW5kIG91dCB3aGF0IGlzIGluIGEgZnVuY3Rpb24ncyBlbnZpcm9ubWVudApgYGB7cn0KbHMoZW52aXJvbm1lbnQoY3ViZSkpICMgQ2hlY2tzIGZvciBlbnZpcm9ubWVudCB2YXJpYWJsZXMKZ2V0KCJuIixlbnZpcm9ubWVudChjdWJlKSkgIyMgQ2xvc3VyZSBlbnZpcm9ubWVudCBpbiB3aGljaCBuIGhhcyBiZWVuIHByZXZpb3VzbHkgc2V0IHRvIDMKbHMoZW52aXJvbm1lbnQoc3F1YXJlKSkKZ2V0KCJuIiwgZW52aXJvbm1lbnQoc3F1YXJlKSkKYGBgCgojIyBMZXhpY2FsIHZzLiBEeW5hbWljIFNjb3BpbmcKYGBge3J9CnkgPC0gMTAKZiA8LSBmdW5jdGlvbih4KSB7ICMgSW4gdGhpcyBmdW5jdGlvbiwgeSBhbmQgZyBhcmUgZnJlZSB2YXJpYWJsZXMKICB5IDwtMgogIHleMiArIGcoeCkKfQoKZyA8LSBmdW5jdGlvbih4KSB7ICMgSW4gdGhpcyBmdW5jdGlvbiwgeSBpcyB0aGUgb25seSBmcmVlIHZhcmlhYmxlCiAgeCp5Cn0KZigzKSAjID09IDM0LgpgYGAKKiBXaGF0IGp1c3QgaGFwcGVuZWQ/CiogV2l0aCBMZXhpY2FsIFNjb3BpbmcsIHkgaW4gZnVuY3Rpb24gZyBpcyBsb29rZWQgdXAgaW4gdGhlIGVudmlyb25tZW50IGluIHdoaWNoIHRoZSAKICBmdW5jdGlvbiB3YXMgZGVmaW5lZCAoZ2xvYmFsIGVudikKKiBTbyBmb3IgZyBhbG9uZSwgeSA9IDEwLgoqIE9uY2Ugd2UgZ28gaW50byBmdW5jdGlvbiBmLCB5IGlzIFJFREVGSU5FRCB0byAyLCBidXQgT05MWSBJTiBUSEFUIEVOVklST05NRU5UOyBPdXRzaWRlIAogIHRoZSBmdW5jdGlvbiBlbnYsIHkgaXMgc3RpbGwgMTAuCiogV2l0aCBEeW5hbWljIHNjb3BpbmcsIHkgaXMgbG9va2VkIHVwIGluIHRoZSBlbnYgZnJvbSB3aGljaCB0aGUgZnVuYyB3YXMgQ0FMTEVEICh0aGUgCiAgQ0FMTElORyBFTlYgPT0gUEFSRU5UIEZSQU1FKQoqIFdoZW4gYSBmdW5jIGlzIGRlZmluZWQgaW4gZ2xvYmFsIGVudiBhbmQgaXMgdGhlbiBjYWxsZWQgZnJvbSB0aGUgZ2xvYmFsIGVudiwgdGhlbiB0aGUgCiAgZGVmaW5pbmcgZW52ID09IGNhbGxpbmcgZW52LgoqIFRoaXMgc29tZXRpbWVzIGdpdmVzIHRoZSBhcHBlYXJhbmNlIG9mIGR5bmFtaWMgc2NvcGluZzoKYGBge3J9CnJtKHkpCmcgPC0gZnVuY3Rpb24oeCkgewogICAgICAgIGEgPC0zICMgRGVmaW5lZCB3aXRoaW4gZnVuYyBlbnY7IGR5bmFtaWNhbGx5IHNjb3BlZAogICAgICAgIHgrYSt5ICMgeSBpcyBmcmVlIHZhcmlhYmxlLCBwcmV2aW91cyB1bmRlZmluZWQKfQpnKDIpICMgRXJyb3I/ISB5IHdhcyBub3QgZm91bmQuCnkgPC0gMyAKIyBNYWtlIFIgaGFwcHkgYnkgZ2l2aW5nIGl0IHksIGJ1dCBub3cgeSBpcyBpbiB0aGUgZ2xvYmFsIGVudmlyb25tZW50IChpbnN0ZWFkIG9mIGRlZmluZWQgCiMgaW4gZnVuYykKZygyKSAKIyBBbGwgZ29vZCg/KS4gTm90IHJlYWxseSwgd2UndmUganVzdCBzd2l0Y2hlZCB0byBsZXhpY2FsIHNjb3BpbmcKYGBgCgojIyBDb25zZXF1ZW5jZXMgb2YgTGV4aWNhbCBTY29waW5nCiogQWxsIG9iamVjdHMgbXVzdCBiZSBzdG9yZWQgaW4gbWVtb3J5CiogQWxsIGZ1bmN0aW9ucyBtdXN0IGNhcnJ5IGEgcG9pbnRlciB0byB0aGVpciByZXNwZWN0aXZlIGRlZmluaW5nIGVudmlyb25tZW50cywgd2hpY2ggCiAgY291bGQgYmUgYW55d2hlcmUKKiBJbiBTLVBMVVMsIGZyZWUgdmFyaWFibGVzIGFyZSBhbHdheXMgbG9va2VkIHVwIGluIGdsb2JhbCB3b3Jrc3BhY2UsIHNvIGV2ZXJ5dGhpbmcgY2FuIGJlCiAgc3RvcmVkIG9uIHRoZSBkaXNrIGJlY2F1c2UgdGhlIGRlZmluaW5nIGVudiBvZiBhbGwgZnVuY3Rpb25zIGlzIFRIRSBTQU1FCgojIyBMZXhpY2FsIFNjb3BpbmcgU3VtbWFyeQoqIE9iamVjdGl2ZSBmdW5jdGlvbnMgY2FuIGJlIGJ1aWx0IHdoaWNoIGNvbnRhaW4gYWxsIG5lY2Vzc2FyeSBkYXRhIGZvciBldmFsdWF0aW5nIHRoZSAKICBmdW5jdGlvbgoqIE5PIG5lZWQgdG8gY2FycnkgYXJvdW5kIGxvbmcgYXJndW1lbnQgbGlzdHMgLS0gdXNlZnVsIGZvciBpbnRlcmFjdGl2ZSBhbmQgZXhwbG9yYXRvcnkgCiAgd29yawoqIENvZGUgY2FuIGJlIHNpbXBsaWZpZWQgYW5kIGNsZWFuZWQgdXAKIyBPcHRpbWl6YXRpb24gRXhhbXBsZQoqIE9wdGltaXphdGlvbiByb3V0aW5lcyBpbiBSIGxpa2Ugb3B0aW0sIG5sbSwgYW5kIG9wdGltaXplIHJlcXVpcmUgeW91IHRvIHBhc3MgYSBmdW5jdGlvbiAKICB3aG9zZSBhcmd1bWVudCBpcyBhIHZlY3RvciBvZiBwYXJhbWV0ZXJzIChlLmcuLCBhIGxvZy1saWtlbGlob29kKQoqIEJ1dCwgYW4gb2JqZWN0IGZ1bmN0aW9uIG1pZ2h0IGRlcGVuZCBvbiBvdGhlciB0aGluZ3MgYmVzaWRlcyBpdHMgcGFyYW1ldGVycwoqIFdoZW4gd3JpdGluZyBzb2Z0d2FyZSB0aGF0IGRvZXMgb3B0aW1pemF0aW9uLCBpdCBtYXkgYmUgZGVzaXJhYmxlIHRvIGFsbG93IHRoZSB1c2VyIHRvIAogIGZpeCBjZXJ0YWluIHBhcmFtZXRlcnMKICAKIyBDb2RpbmcgU3RhbmRhcmRzIGZvciBSCiogQWx3YXlzIHVzZSB0ZXh0IGZpbGVzL2VkaXRvcnMKKiBJbmRlbnQgeW91ciBjb2RlIChBYm91dCA0LTggc3BhY2VzKSBhbmQgbGltaXQgdGhlIHdpZHRoIG9mIHlvdXIgY29kZSB0byA4MCBjb2x1bW5zCiogRm9yY2UgeW91cnNlbGYgdG8gdGhpbmsgYWJvdXQgd3JpdGluZyB5b3VyIGNvZGUgYWVzdGhldGljYWxseQoKIyMgTWF4aW1pemluZyBhIE5vcm1hbCBMaWtlbGlob29kCiogV3JpdGUgYSAiY29uc3RydWN0b3IiIGZ1bmN0aW9uOiBhIG5lZ2F0aXZlIGxvZy1saWtlbGlob29kIGZ1bmN0aW9uCmBgYHtyfQptYWtlLk5lZ0xvZ0xpa2UgPC0gZnVuY3Rpb24oZGF0YSxmaXhlZD1jKEYsRikpIHsgIyBTZWNvbmQgYXJndW1lbnQgPSBsb2dpY2FsIHZlY3RvciBkZXRlcm1pbmVzIHdoZXRoZXIgb3Igbm90IHRvIGZpeCBwYXJhbXMKICBwYXJhbXMgPC0gZml4ZWQKICBmdW5jdGlvbihwKSB7ICMgcCBpcyB0aGUgcGFyYW1ldGVyIHZlY3RvciB0aGF0IHdlIHdhbnQgdG8gb3B0aW1pemUgb3ZlcgogICAgcGFyYW1zWyFmaXhlZF0gPC0gcAogICAgbXUgPC0gcGFyYW1zWzFdICMgTG9nLWxpa2VsaWhvb2QgcGFyYW0KICAgIHNpZ21hIDwtIHBhcmFtc1syXSAjIExvZy1saWtlbGlob29kIHBhcmFtCiAgICBhIDwtIC0wLjUqbGVuZ3RoKGRhdGEpKmxvZygyKnBpKnNpZ21hXjIpICMgRGVmaW5pbmcgdGhlIGxvZy1saWtlbGlob29kIGZ1bmN0aW9uCiAgICBiIDwtIC0wLjUqc3VtKChkYXRhLW11KV4yKSAvIChzaWdtYV4yKQogICAgLShhK2IpICMgUmV0dXJucyBsb2ctbGlrZWxpaG9vZAogIH0KfQpgYGAKCiMjIFNpbXVsYXRlIGRhdGEgZm9yIHRoZSBjb25zdHJ1Y3RvciBmdW5jdGlvbgpgYGB7cn0Kc2V0LnNlZWQoMSkgCiMgU2V0cyByYW5kb20gbnVtYmVyIHNlZWQKbm9ybWFscyA8LSBybm9ybSgxMDAsMSwyKSAKIyBHZW5lcmF0ZSBub3JtYWxpemVkIG51bWJlcnMKbkxMIDwtIG1ha2UuTmVnTG9nTGlrZShub3JtYWxzKSAKIyBDb25zdHJ1Y3RzIGZ1bmN0aW9uIGJhc2VkIG9uIG9iamVjdCBub3JtYWxzCm5MTCAKIyBHaXZlcyBoZXhhZGVtaWNhbCB2YWxlIG9mIHRoZSBhZGRyZXNzIG9mIHdoZXJlIHRoZSBkZWZpbmluZyBlbnZpcm9ubWVudCBpcyBsb2NhdGVkIGluIAojIG1lbW9yeQpscyhlbnZpcm9ubWVudChuTEwpKSAKIyBDYWxscyBlbnZpcm9ubWVudCBvZiBuTEwsIHdoaWNoIGNhbGxzIHRoZSBmcmVlIHZhcmlhYmxlcyBkYXRhLCBwYXJhbXMsIGFuZCBmaXhlZApvcHRpbShjKG11PTAsc2lnbWE9MSksbkxMKSRwYXIgCiMgTm93IHdlIGNhbiBvcHRpbWl6ZSB0aGUgZGF0YSBhY2NvcmRpbmcgdG8gZnVuY3Rpb24gbkxMKCkKYGBgCiogVGhpcyBnaXZlcyB1cyB2YWx1ZXMgdGhhdCBhcmUgY2xvc2UgdG8gdGhlIHRydWUgbWVhbiAoMSkgYW5kIHRydWUgU0QgKDIpCiogV2UgZG9uJ3QgbmVlZCB0byBlc3RpbWF0ZSBtZWFuIG9yIHNpZ21hLCB3ZSBjb3VsZCBhbHNvIGp1c3QgZ2l2ZSBtYWtlLk5lZ0xvZ0xpa2UoKSB0aGUgCiAgdHJ1ZSBtZWFuIGFuZC9vciBTRDoKYGBge3J9Cm5MTCA8LSBtYWtlLk5lZ0xvZ0xpa2Uobm9ybWFscyxjKEZBTFNFLDIpKSAKIyBMZXQgbXUgYmUgZnJlZQpvcHRpbWl6ZShuTEwsYygtMSwzKSkkbWluaW11bSAKIyBXaGljaCBnaXZlcyB0aGUgbWluIHZhbHVlIG9mIHRoZSBtZWFuLCB2ZWN0b3IgYygtMSwzKSBpcyB0aGUgcmFuZ2UgaW4gd2hpY2ggdGhlIG1pbiBpcyBzZWFyY2hlZCBmb3IKCiMgb3B0aW0oKSAhPSBvcHRpbWl6ZSgpOyBvcHRpbWl6ZSgpIGdpdmVzIHRoZSBlc3RpbWF0ZWQgdmFsdWUgZm9yIE9ORSBwYXJhbWV0ZXIsIG9wdGltKCkgZm9yIGJvdGg6CgpuTEwgPC0gbWFrZS5OZWdMb2dMaWtlKG5vcm1hbHMsIGMoMSxGKSkgIyBMZXQgc2lnbWEgYmUgZnJlZSB0aGlzIHRpbWUKb3B0aW1pemUobkxMLGMoMWUtNiwxMCkpJG1pbgpgYGAKCiMjIFBsb3R0aW5nIHRoZSBMaWtlbGlob29kIQpgYGB7cn0KbkxMIDwtIG1ha2UuTmVnTG9nTGlrZShub3JtYWxzLCBjKDEsRkFMU0UpKQp4IDwtIHNlcSgxLDQsbGVuPTEwMCkgIyBWZWN0b3Igb2YgaW5kZXBlbmRlbnQgbnVtYmVycwp5IDwtIHNhcHBseSh4LG5MTCkKcGxvdCh4LGV4cCgtKHktbWluKHkpKSksdHlwZT0ibCIpICMgQ3JlYXRlcyBhIG5MTCBmdW5jdGlvbiBvZiBTRAoKbkxMIDwtIG1ha2UuTmVnTG9nTGlrZShub3JtYWxzLCBjKEZBTFNFLDIpKQp4IDwtIHNlcSgwLjUsMS41LGxlbj0xMDApCnkgPC0gc2FwcGx5KHgsbkxMKQpwbG90KHgsZXhwKC0oeS1taW4oeSkpKSx0eXBlPSJsIikgIyBDcmVhdGVzIGEgbkxMIGZ1bmN0aW9uIG9mIHRoZSBtZWFuCmBgYAoKIyBEYXRlcyBhbmQgVGltZXMgaW4gUgoqIFIgaGFzIGRldmVsb3BlZCBhIHNwZWNpYWwgcmVwcmVzZW50YXRpb24gb2YgZGF0ZXMgYW5kIHRpbWVzCiogRGF0ZXMgYXJlIHJlcHJlc2VudGVkIGJ5IHRoZSAiRGF0ZSIgY2xhc3MKKiBUaW1lIGJ5IHRoZSBQT1NJWGN0IG9yIFBPU0lYbHQgY2xhc3MKCiMjIERhdGUgY2xhc3MgY2FuIGJlIGNvZXJjZWQgZnJvbSBhIGNoYXJhY3RlciBzdHJpbmcgdXNpbmcgYXMuRGF0ZSgpCmBgYHtyfQp6IDwtIGFzLkRhdGUoIjE5NzAtMDEtMDEiKSAKIyBIZXJlIHdlIGNvZXJjZSB0aGUgc3RyaW5nIGluIHRoZSBwYXJhbnRoZXNlcyB0byB0aGUgZGF0YSBKYW51YXJ5IDEsIDE5NzAsIHdoaWNoIGlzIGRheSAKIyAiMCIgaW4gUiB0aW1lLgp1bmNsYXNzKHopIAojIFRoZXJlZm9yZSwgd2hlbiB5b3UgdW5jbGFzcyB0aGlzLCBpdCBiZWNvbWVzIHRoZSBudW1iZXIgemVybyEKdW5jbGFzcyhhcy5EYXRlKCIxOTcwLTAxLTAyIikpIAojIEluIGxpa2UgbWFubmVyLCBvbmUgZGF5IEFIRUFEIG9mIEphbnVhcnkgMSwgMTk3MCBzaG91bGQgYmUgKGFuZCBpcykgdGhlIG51bWJlciAxLgp1bmNsYXNzKGFzLkRhdGUoIjIwMTgtMTAtMjQiKSkKYGBgCgojIyBUaW1lcyBhcmUgcmVwcmVzZW50ZWQgdXNpbmcgdGhlIFBPU0lYY3Qgb3IgbHQgY2xhc3NlcwoqIFBPU0lYY3QganVzdCBhIHZlcnkgbGFyZ2UgaW50ZWdlciB1bmRlciB0aGUgaG9vZDsgdXNlZnVsIGNsYXNzIHdoZW4geW91IHdhbnQgdG8gc3RvcmUgCiAgdGltZXMgaW4gYSBkYXRhIGZyYW1lCiogUE9TSVhsdCBpcyBhIGxpc3QgdW5kZXJuZWF0aCBhbmQgc3RvcmVzIGEgYnVuY2ggb2YgdXNlZnVsIGluZm8gbGlrZSB0aGUgZGF5IG9mIHRoZSB3ZWVrLAogIGRheSBvZiB0aGUgeWVhciwgZXRjLgoqIFNvbWUgZ2VuZXJpYyBmdW5jdGlvbnMgdGhhdCB3b3JrIG9uIGRhdGVzIGFuZCB0aW1lcwoqIENhbiBhbHNvIGJlIGNvZXJjZWQgZnJvbSBjaGFyYWN0ZXIgc3RyaW5nCmBgYHtyfQphIDwtIFN5cy50aW1lKCkgCiMgU3lzLnRpbWUoKSBnaXZlcyB5b3UgdGhlIFBPU0lYY3QgdmVjdG9yIG9mIHRoZSBjdXJyZW50IHRpbWUKcCA8LSBhcy5QT1NJWGx0KGEpIAojIENvZXJjaW5nIHRvIFBPU0lYbHQgZ2l2ZXMgeW91IGEgbGlzdCBvZiB1c2VmdWwgaW5mb3JtYXRpb24gYWJvdXQgeW91ciBjdXJyZW50IHRpbWUKbmFtZXModW5jbGFzcyhwKSkgCiMgR2l2ZXMgeW91IGEgdmVjdG9yIG9mIHRoZSBjb250ZW50cwpwJHNlYyAKIyBUaGUgbnVtYmVyIG9mIHNlY29uZHMgaW4gdGhlIChwcmV2aW91c2x5KSBjdXJyZW50IHRpbWUsIGZvciBpbnN0YW5jZQp1bmNsYXNzKGEpIAojIEdpdmVuIGEgaXMgYWxyZWFkeSBpbiBQT1NJWGN0IGZvcm1hdCwgd2hlbiB3ZSB1bmNsYXNzIGl0IGdpdmVzIHRoZSBudW1iZXIgb2Ygc2Vjb25kcyAKIyBzaW5jZSBKYW51YXJ5IDEsIDE5NzAKYGBgCiogSW4gb3JkZXIgdG8gZ2V0IHRoZSBsaXN0IGVsZW1lbnRzIG9mIGEgdGltZSwgeW91IHNob3VsZCBmaXJzdCBjb2VyY2UgUE9TSVhjdCB0byBQT1NJWGx0CgoqIHN0cnB0aW1lKCkgYWxsb3dzIHlvdSB0byBjcmVhdGUgYSBQT1NJWGx0IGxpc3QgZnJvbSBhIGh1bWFuLXJlYWRhYmxlIGRhdGUKYGBge3J9CmRhdGVzdHJpbmcgPC0gYygiSmFudWFyeSAxMCwgMjAxMiAxMDo0MCIsICJEZWNlbWJlciA5LCAyMDExIDk6MTAiKQpqIDwtIHN0cnB0aW1lKGRhdGVzdHJpbmcsICIlQiAlZCwgJVkgJUg6JU0iKSAKIyBUaGUgcGVyY2VudCBzaWducyAoZm9ybWF0dGluZyBzdHJpbmcpIHRlbGwgc3RycHRpbWUgd2hhdCBlYWNoIGl0ZW0gaW4gdGhlIHN0cmluZyBpcywgCiMgZGVsaW1pdGVkIGJ5IGEgc3BhY2UKY2xhc3MoaikgCiMgQSBjbGFzcyBvZiB0d28gUE9TSVhsdCBsaXN0cy4KYGBgCgoqIFlvdSBjYW4gdXNlIG1hdGhlbWF0aWNhbCBvcGVyYXRpb25zIG9uIGRhdGVzIGFuZCB0aW1lcyAoKyBhbmQgLSkgdG8gZmluZCBvdXQsIGZvciAKICBleGFtcGxlLCBob3cgbWFueSBkYXlzIGFyZSBiZXR3ZWVuIHRoZSB0d28gZGF0ZXMKYGBge3J9CmsgPC0gYXMuRGF0ZSgiMjAxMi0wMS0wMSIpCmwgPC0gc3RycHRpbWUoIjkgSmFuIDIwMTEgMTE6MzQ6MjEiLCAiJWQgJWIgJVkgJUg6JU06JVMiKQprIDwtIGFzLlBPU0lYbHQoaykgIyBOZWVkIHRvIGNoYW5nZSBrIHRvIFBPU0lYbHQgYmVmb3JlIHN1YnRyYWN0aW9uCmstbCAjIFRpbWUgZGlmZmVyZW5jZSBvZiAzNTYuNTEgZGF5cwpgYGAKCiogUE9TSVggYWxzbyBoYW5kbGVzIHRoaW5ncyBsaWtlIGxlYXAgeWVhcnMsIGRheWxpZ2h0IHNhdmluZ3MsIGFuZCB0aW1lIHpvbmVzCmBgYHtyfQptIDwtIGFzLlBPU0lYY3QoIjIwMTItMTAtMjUgMDE6MDA6MDAiKQpuIDwtIGFzLlBPU0lYY3QoIjIwMTItMTAtMjUgMDY6MDA6MDAiLCB0eiA9ICJHTVQiKQptLW4KYXJndW1lbnRzKGFzLlBPU0lYY3QpCmBgYAoKIyBFTkQgT0YgV0VFSyAy</div>
 
 
 
