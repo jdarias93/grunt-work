@@ -176,26 +176,13 @@ $(document).ready(function () {
 
 
 <!-- rnb-text-begin -->
-<ul>
-<li>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> Notebook. When you execute code within the notebook, the results appear beneath the code.</li>
-<li>Try executing this chunk by clicking the <em>Run</em> button within the chunk or by placing your cursor inside it and pressing <em>Cmd+Shift+Enter</em>.</li>
-</ul>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<ul>
-<li>Add a new chunk by clicking the <em>Insert Chunk</em> button on the toolbar or by pressing <em>Cmd+Option+I</em>. When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the <em>Preview</em> button or press <em>Cmd+Shift+K</em> to preview the HTML file).</li>
-</ul>
 <div id="loop-functions" class="section level1">
 <h1>Loop Functions</h1>
 <ul>
 <li>For &amp; while loops are useful when programming but not when working interactively on the command line; there are some functions which implement looping to make life easier</li>
 <li>lapply: Loop over a list and evaluate function on each element</li>
 <li>sapply: Same as lapply but simplify the result</li>
+<li>apply: Apply a function over subsets of a vector</li>
 <li>tapply: Apply function over vector subsets</li>
 <li>mapply: Multivariate version of lapply</li>
 <li>Aux function split() also useful in conjuction with lapply</li>
@@ -204,12 +191,121 @@ $(document).ready(function () {
 <div id="lapply" class="section level1">
 <h1>lapply</h1>
 <ul>
-<li>Takes three arugments</li>
+<li>Takes three arguments: a list, a function, and other arguments (…)</li>
+<li>If x is not a list, it will be coerced using as.list</li>
+<li>Always returns a list, regardless of the class of the input</li>
 </ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFYXN5IGV4YW1wbGVcbmEgPC0gbGlzdChiPTE6NSxjPXJub3JtKDEwKSlcbmFcbmxhcHBseShhLG1lYW4pICMgR2l2ZXMgbWVhbiBvZiBmaXJzdCBhbmQgc2Vjb25kIGVsZW1lbnRzXG5cbiMgU2xpZ2h0bHkgbW9yZSBjb21wbGV4IGV4YW1wbGVcbmQgPC0gbGlzdChlPTE6NCxmPXJub3JtKDEwKSxnPXJub3JtKDIwLDEpLGg9cm5vcm0oMTAwLDUpKVxubGFwcGx5KGQsbWVhbilcblxuIyBBbm90aGVyIHdheSB0byBjYWxsIGxhcHBseVxuaSA8LSAxOjRcbmxhcHBseShpLHJ1bmlmKSAjIFVuaWZvcm0gcmFuZG9tIHZhcmlhYmxlc1xubGFwcGx5KGkscnVuaWYsIG1pbj0wLG1heD0xMCkgIyBQYXNzaW5nIGFyZ3VtZW50cyB0aHJvdWdoIC4uLlxuYGBgIn0= -->
+<pre class="r"><code># Easy example
+a &lt;- list(b=1:5,c=rnorm(10))
+a
+lapply(a,mean) # Gives mean of first and second elements
+
+# Slightly more complex example
+d &lt;- list(e=1:4,f=rnorm(10),g=rnorm(20,1),h=rnorm(100,5))
+lapply(d,mean)
+
+# Another way to call lapply
+i &lt;- 1:4
+lapply(i,runif) # Uniform random variables
+lapply(i,runif, min=0,max=10) # Passing arguments through ...</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>lapply and friends make heavy use of anonymous functions (functions that don’t have names)</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaiA8LSBsaXN0KGE9bWF0cml4KDE6NCwyLDIpLGI9bWF0cml4KDE6NiwzLDIpKVxuaiAjIFNheSB5b3Ugd2FudCB0byBleHRyYWN0IHRoZSBmaXJzdCBjb2x1bW4gZnJvbSB0aGVzZSBtYXRyaWNlcy5cbmxhcHBseShqLGZ1bmN0aW9uKGVsdCkgZWx0WywxXSkgIyBcImVsdFwiIGlzIGFuIGFub255bW91cyBmdW5jdGlvbiFcbmBgYCJ9 -->
+<pre class="r"><code>j &lt;- list(a=matrix(1:4,2,2),b=matrix(1:6,3,2))
+j # Say you want to extract the first column from these matrices.
+lapply(j,function(elt) elt[,1]) # &quot;elt&quot; is an anonymous function!</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="sapply" class="section level1">
+<h1>sapply</h1>
+<ul>
+<li>Tries to simplify the result of lapply whenever possible</li>
+<li>The result is a list where every element is length 1, then a vector is returned; where every element is a vector of the same length (&gt;1), a matrix is returned.</li>
+<li>If it can’t figure it out, a list is returned</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuayA8LSBsaXN0KGwgPSAxOjQsIG0gPSBybm9ybSgxMCksIG4gPSBybm9ybSgyMCwxKSwgbyA9IHJub3JtKDEwMCw1KSlcbmxhcHBseShrLG1lYW4pICMgUmV0dXJucyBhIGxpc3QsIGJ1dCB3aGF0IGlmIHdlIGp1c3Qgd2FudCBhIHZlY3Rvcj9cbnNhcHBseShrLG1lYW4pICMgc2FwcGx5IGRvZXMganVzdCB0aGF0LlxubWVhbihrKSAjIERPRVNOJ1QgV09SSyBiZWNhdXNlIGsgaXMgYSBsaXN0LlxuYGBgIn0= -->
+<pre class="r"><code>k &lt;- list(l = 1:4, m = rnorm(10), n = rnorm(20,1), o = rnorm(100,5))
+lapply(k,mean) # Returns a list, but what if we just want a vector?
+sapply(k,mean) # sapply does just that.
+mean(k) # DOESN'T WORK because k is a list.</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="apply" class="section level1">
+<h1>apply</h1>
+<ul>
+<li>Used to evaluate a function over the margins of an array</li>
+<li>Most often used to apply a function to the rows or columns of a matrix</li>
+<li>Can be used with general array (like taking the average of an array of matrices)</li>
+<li>Not really faster than writing a loop but works in one line!</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKGFwcGx5KVxuIyBYIGlzIGFuIGFycmF5XG4jIE1BUkdJTiBpcyBhbiBpbnRlZ2VyIHZlY3RvciBpbmRpY2F0aW5nIHdoaWNoIG1hcmdpbnMgc2hvdWxkIGJlIFwicmV0YWluZWRcIlxuIyMgVEhJUyBDT1JSRVNQT05EUyBUTyBUSEUgRElNRU5TSU9OLiBGb3IgZXhhbXBsZSwgKHJvdyBjb2x1bW4pIGlzICgxIDIpLlxuIyBGVU4gaXMgYSBmdW5jdGlvbiB0byBiZSBhcHBsaWVkXG4jIC4uLiBmb3Igb3RoZXIgYXJndW1lbnRzIHBhc3NpbmcgdGhyb3VnaFxuXG4jIExldCdzIHRyeSBhbiBleGFtcGxlXG5sIDwtIG1hdHJpeChybm9ybSgyMDApLCAyMCwgMTApICMgQ3JlYXRlIHJhbmRvbSBub3JtYWwgbWF0cml4IG9mIDIwMCBwb2ludHNcbmFwcGx5KGwsIDIsIG1lYW4pICMgUmV0dXJucyB2ZWN0b3Igb2YgbGVuZ3RoIDEwIGZyb20gZWFjaCBhdmVyYWdlZCBjb2x1bW4gb2YgbWF0cml4IGxcbmFwcGx5KGwsIDEsIHN1bSkgIyBSZXR1cm5zIHZlY3RvciBvZiBsZW5ndGggMjAgZnJvbSBlYWNoIHN1bW1lZCBST1cgb2YgbWF0cml4IGxcbmBgYCJ9 -->
+<pre class="r"><code>str(apply)
+# X is an array
+# MARGIN is an integer vector indicating which margins should be &quot;retained&quot;
+## THIS CORRESPONDS TO THE DIMENSION. For example, (row column) is (1 2).
+# FUN is a function to be applied
+# ... for other arguments passing through
+
+# Let's try an example
+l &lt;- matrix(rnorm(200), 20, 10) # Create random normal matrix of 200 points
+apply(l, 2, mean) # Returns vector of length 10 from each averaged column of matrix l
+apply(l, 1, sum) # Returns vector of length 20 from each summed ROW of matrix l</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Shortcuts: col/row sums and means; faster if using large matrix</li>
+<li>rowSums = apply(x,1,sum)</li>
+<li>rowMeans = apply(x,1,mean)</li>
+<li>colSums = apply(x,2,sum)</li>
+<li>colMeans = apply(x,2,mean)</li>
+<li>Other ways to apply apply()</li>
+<li>Quantiles of matrix rows</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXBwbHkobCwxLHF1YW50aWxlLHByb2JzID0gYygwLjI1LDAuNzUpKVxuIyBDcmVhdGVzIDJ4MjAgbWF0cml4IG9mIDI1JSBhbmQgNzUlIHF1YW50aWxlcyBvZiBlYWNoIHJvd1xuYGBgIn0= -->
+<pre class="r"><code>apply(l,1,quantile,probs = c(0.25,0.75))
+# Creates 2x20 matrix of 25% and 75% quantiles of each row</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ul>
+<li>Average matrix in an array</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubSA8LSBhcnJheShybm9ybSgyKjIqMTApLGMoMiwyLDEwKSkgIyBSZXR1cm5zIDEwIG1hdHJpY2VzIG9mIDQgbm9ybWFsIHJhbmRvbSB2YXJpYWJsZXNcbmFwcGx5KG0sYygxLDIpLG1lYW4pICMgYXBwbGllcyBtZWFuIGZvciBlYWNoIG1hdHJpY2VzIGFuZCByZXR1cm5zIDJ4MiBtYXRyaXhcbiMgVGhpcyBpcyBhIHZlcnkgaW1wb3J0YW50IGV4YW1wbGUgYmVjYXVzZSwgZm9yIHRoZSBNQVJHSU4gYXJndW1lbnQsIHdlIGhhdmUgbmVnbGVjdGVkXG4jIHRoZSB0aGlyZCBkaW1lbnNpb24sIG1lYW5pbmcgdGhhdCBhcHBseSB3aWxsIFwic3RhY2tcIiB0aGUgMngyIG1hdHJpY2VzIGFuZCB0aGVuXG4jIGNvbGxhcHNlIHRoZW0gaW50byBvbmUsIGdpdmluZyB0aGUgYXZlcmFnZSBvZiBlYWNoIFwic3RhY2tcIiBxdWFkcmFudC4gVmVyeSBjb29sIVxucm93TWVhbnMobSxkaW1zPTIpICMgRG9lcyB0aGUgc2FtZSB0aGluZyBhcyB0aGUgYWJvdmUuXG5gYGAifQ== -->
+<pre class="r"><code>m &lt;- array(rnorm(2*2*10),c(2,2,10)) # Returns 10 matrices of 4 normal random variables
+apply(m,c(1,2),mean) # applies mean for each matrices and returns 2x2 matrix
+# This is a very important example because, for the MARGIN argument, we have neglected
+# the third dimension, meaning that apply will &quot;stack&quot; the 2x2 matrices and then
+# collapse them into one, giving the average of each &quot;stack&quot; quadrant. Very cool!
+rowMeans(m,dims=2) # Does the same thing as the above.</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiV2VlayAzIE5vdGVzIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgoqIFRoaXMgaXMgYW4gW1IgTWFya2Rvd25dKGh0dHA6Ly9ybWFya2Rvd24ucnN0dWRpby5jb20pIE5vdGVib29rLiBXaGVuIHlvdSBleGVjdXRlIGNvZGUgd2l0aGluIHRoZSBub3RlYm9vaywgdGhlIHJlc3VsdHMgYXBwZWFyIGJlbmVhdGggdGhlIGNvZGUuIAoqIFRyeSBleGVjdXRpbmcgdGhpcyBjaHVuayBieSBjbGlja2luZyB0aGUgKlJ1biogYnV0dG9uIHdpdGhpbiB0aGUgY2h1bmsgb3IgYnkgcGxhY2luZyB5b3VyIGN1cnNvciBpbnNpZGUgaXQgYW5kIHByZXNzaW5nICpDbWQrU2hpZnQrRW50ZXIqLiAKYGBge3J9CnBsb3QoY2FycykKYGBgCiogQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkNtZCtPcHRpb24rSSouCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ21kK1NoaWZ0K0sqIHRvIHByZXZpZXcgdGhlIEhUTUwgZmlsZSkuCgojIExvb3AgRnVuY3Rpb25zCiogRm9yICYgd2hpbGUgbG9vcHMgYXJlIHVzZWZ1bCB3aGVuIHByb2dyYW1taW5nIGJ1dCBub3Qgd2hlbiB3b3JraW5nIGludGVyYWN0aXZlbHkgb24gdGhlIAogIGNvbW1hbmQgbGluZTsgdGhlcmUgYXJlIHNvbWUgZnVuY3Rpb25zIHdoaWNoIGltcGxlbWVudCBsb29waW5nIHRvIG1ha2UgbGlmZSBlYXNpZXIKICAqIGxhcHBseTogTG9vcCBvdmVyIGEgbGlzdCBhbmQgZXZhbHVhdGUgZnVuY3Rpb24gb24gZWFjaCBlbGVtZW50CiAgKiBzYXBwbHk6IFNhbWUgYXMgbGFwcGx5IGJ1dCBzaW1wbGlmeSB0aGUgcmVzdWx0CiAgKiB0YXBwbHk6IEFwcGx5IGZ1bmN0aW9uIG92ZXIgdmVjdG9yIHN1YnNldHMKICAqIG1hcHBseTogTXVsdGl2YXJpYXRlIHZlcnNpb24gb2YgbGFwcGx5CiogQXV4IGZ1bmN0aW9uIHNwbGl0KCkgYWxzbyB1c2VmdWwgaW4gY29uanVjdGlvbiB3aXRoIGxhcHBseQoKIyBsYXBwbHkKLSBUYWtlcyB0aHJlZSBhcnVnbWVudHM=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiV2VlayAzIE5vdGVzIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCiMgTG9vcCBGdW5jdGlvbnMKKiBGb3IgJiB3aGlsZSBsb29wcyBhcmUgdXNlZnVsIHdoZW4gcHJvZ3JhbW1pbmcgYnV0IG5vdCB3aGVuIHdvcmtpbmcgaW50ZXJhY3RpdmVseSBvbiB0aGUgCiAgY29tbWFuZCBsaW5lOyB0aGVyZSBhcmUgc29tZSBmdW5jdGlvbnMgd2hpY2ggaW1wbGVtZW50IGxvb3BpbmcgdG8gbWFrZSBsaWZlIGVhc2llcgogICogbGFwcGx5OiBMb29wIG92ZXIgYSBsaXN0IGFuZCBldmFsdWF0ZSBmdW5jdGlvbiBvbiBlYWNoIGVsZW1lbnQKICAqIHNhcHBseTogU2FtZSBhcyBsYXBwbHkgYnV0IHNpbXBsaWZ5IHRoZSByZXN1bHQKICAqIGFwcGx5OiBBcHBseSBhIGZ1bmN0aW9uIG92ZXIgc3Vic2V0cyBvZiBhIHZlY3RvcgogICogdGFwcGx5OiBBcHBseSBmdW5jdGlvbiBvdmVyIHZlY3RvciBzdWJzZXRzCiAgKiBtYXBwbHk6IE11bHRpdmFyaWF0ZSB2ZXJzaW9uIG9mIGxhcHBseQoqIEF1eCBmdW5jdGlvbiBzcGxpdCgpIGFsc28gdXNlZnVsIGluIGNvbmp1Y3Rpb24gd2l0aCBsYXBwbHkKCiMgbGFwcGx5Ci0gVGFrZXMgdGhyZWUgYXJndW1lbnRzOiBhIGxpc3QsIGEgZnVuY3Rpb24sIGFuZCBvdGhlciBhcmd1bWVudHMgKC4uLikKLSBJZiB4IGlzIG5vdCBhIGxpc3QsIGl0IHdpbGwgYmUgY29lcmNlZCB1c2luZyBhcy5saXN0Ci0gQWx3YXlzIHJldHVybnMgYSBsaXN0LCByZWdhcmRsZXNzIG9mIHRoZSBjbGFzcyBvZiB0aGUgaW5wdXQKYGBge3J9CiMgRWFzeSBleGFtcGxlCmEgPC0gbGlzdChiPTE6NSxjPXJub3JtKDEwKSkKYQpsYXBwbHkoYSxtZWFuKSAjIEdpdmVzIG1lYW4gb2YgZmlyc3QgYW5kIHNlY29uZCBlbGVtZW50cwoKIyBTbGlnaHRseSBtb3JlIGNvbXBsZXggZXhhbXBsZQpkIDwtIGxpc3QoZT0xOjQsZj1ybm9ybSgxMCksZz1ybm9ybSgyMCwxKSxoPXJub3JtKDEwMCw1KSkKbGFwcGx5KGQsbWVhbikKCiMgQW5vdGhlciB3YXkgdG8gY2FsbCBsYXBwbHkKaSA8LSAxOjQKbGFwcGx5KGkscnVuaWYpICMgVW5pZm9ybSByYW5kb20gdmFyaWFibGVzCmxhcHBseShpLHJ1bmlmLCBtaW49MCxtYXg9MTApICMgUGFzc2luZyBhcmd1bWVudHMgdGhyb3VnaCAuLi4KYGBgCiogbGFwcGx5IGFuZCBmcmllbmRzIG1ha2UgaGVhdnkgdXNlIG9mIGFub255bW91cyBmdW5jdGlvbnMgKGZ1bmN0aW9ucyB0aGF0IGRvbid0IGhhdmUgCiAgbmFtZXMpCmBgYHtyfQpqIDwtIGxpc3QoYT1tYXRyaXgoMTo0LDIsMiksYj1tYXRyaXgoMTo2LDMsMikpCmogIyBTYXkgeW91IHdhbnQgdG8gZXh0cmFjdCB0aGUgZmlyc3QgY29sdW1uIGZyb20gdGhlc2UgbWF0cmljZXMuCmxhcHBseShqLGZ1bmN0aW9uKGVsdCkgZWx0WywxXSkgIyAiZWx0IiBpcyBhbiBhbm9ueW1vdXMgZnVuY3Rpb24hCmBgYAoKIyBzYXBwbHkKLSBUcmllcyB0byBzaW1wbGlmeSB0aGUgcmVzdWx0IG9mIGxhcHBseSB3aGVuZXZlciBwb3NzaWJsZQotIFRoZSByZXN1bHQgaXMgYSBsaXN0IHdoZXJlIGV2ZXJ5IGVsZW1lbnQgaXMgbGVuZ3RoIDEsIHRoZW4gYSB2ZWN0b3IgaXMgcmV0dXJuZWQ7IAogIHdoZXJlIGV2ZXJ5IGVsZW1lbnQgaXMgYSB2ZWN0b3Igb2YgdGhlIHNhbWUgbGVuZ3RoICg+MSksIGEgbWF0cml4IGlzIHJldHVybmVkLgotIElmIGl0IGNhbid0IGZpZ3VyZSBpdCBvdXQsIGEgbGlzdCBpcyByZXR1cm5lZApgYGB7cn0KayA8LSBsaXN0KGwgPSAxOjQsIG0gPSBybm9ybSgxMCksIG4gPSBybm9ybSgyMCwxKSwgbyA9IHJub3JtKDEwMCw1KSkKbGFwcGx5KGssbWVhbikgIyBSZXR1cm5zIGEgbGlzdCwgYnV0IHdoYXQgaWYgd2UganVzdCB3YW50IGEgdmVjdG9yPwpzYXBwbHkoayxtZWFuKSAjIHNhcHBseSBkb2VzIGp1c3QgdGhhdC4KbWVhbihrKSAjIERPRVNOJ1QgV09SSyBiZWNhdXNlIGsgaXMgYSBsaXN0LgpgYGAKCiMgYXBwbHkKLSBVc2VkIHRvIGV2YWx1YXRlIGEgZnVuY3Rpb24gb3ZlciB0aGUgbWFyZ2lucyBvZiBhbiBhcnJheQotIE1vc3Qgb2Z0ZW4gdXNlZCB0byBhcHBseSBhIGZ1bmN0aW9uIHRvIHRoZSByb3dzIG9yIGNvbHVtbnMgb2YgYSBtYXRyaXgKLSBDYW4gYmUgdXNlZCB3aXRoIGdlbmVyYWwgYXJyYXkgKGxpa2UgdGFraW5nIHRoZSBhdmVyYWdlIG9mIGFuIGFycmF5IG9mIG1hdHJpY2VzKQotIE5vdCByZWFsbHkgZmFzdGVyIHRoYW4gd3JpdGluZyBhIGxvb3AgYnV0IHdvcmtzIGluIG9uZSBsaW5lIQpgYGB7cn0Kc3RyKGFwcGx5KQojIFggaXMgYW4gYXJyYXkKIyBNQVJHSU4gaXMgYW4gaW50ZWdlciB2ZWN0b3IgaW5kaWNhdGluZyB3aGljaCBtYXJnaW5zIHNob3VsZCBiZSAicmV0YWluZWQiCiMjIFRISVMgQ09SUkVTUE9ORFMgVE8gVEhFIERJTUVOU0lPTi4gRm9yIGV4YW1wbGUsIChyb3cgY29sdW1uKSBpcyAoMSAyKS4KIyBGVU4gaXMgYSBmdW5jdGlvbiB0byBiZSBhcHBsaWVkCiMgLi4uIGZvciBvdGhlciBhcmd1bWVudHMgcGFzc2luZyB0aHJvdWdoCgojIExldCdzIHRyeSBhbiBleGFtcGxlCmwgPC0gbWF0cml4KHJub3JtKDIwMCksIDIwLCAxMCkgIyBDcmVhdGUgcmFuZG9tIG5vcm1hbCBtYXRyaXggb2YgMjAwIHBvaW50cwphcHBseShsLCAyLCBtZWFuKSAjIFJldHVybnMgdmVjdG9yIG9mIGxlbmd0aCAxMCBmcm9tIGVhY2ggYXZlcmFnZWQgY29sdW1uIG9mIG1hdHJpeCBsCmFwcGx5KGwsIDEsIHN1bSkgIyBSZXR1cm5zIHZlY3RvciBvZiBsZW5ndGggMjAgZnJvbSBlYWNoIHN1bW1lZCBST1cgb2YgbWF0cml4IGwKYGBgCiogU2hvcnRjdXRzOiBjb2wvcm93IHN1bXMgYW5kIG1lYW5zOyBmYXN0ZXIgaWYgdXNpbmcgbGFyZ2UgbWF0cml4Ci0gcm93U3VtcyA9IGFwcGx5KHgsMSxzdW0pCi0gcm93TWVhbnMgPSBhcHBseSh4LDEsbWVhbikKLSBjb2xTdW1zID0gYXBwbHkoeCwyLHN1bSkKLSBjb2xNZWFucyA9IGFwcGx5KHgsMixtZWFuKQoqIE90aGVyIHdheXMgdG8gYXBwbHkgYXBwbHkoKQotIFF1YW50aWxlcyBvZiBtYXRyaXggcm93cwpgYGB7cn0KYXBwbHkobCwxLHF1YW50aWxlLHByb2JzID0gYygwLjI1LDAuNzUpKQojIENyZWF0ZXMgMngyMCBtYXRyaXggb2YgMjUlIGFuZCA3NSUgcXVhbnRpbGVzIG9mIGVhY2ggcm93CmBgYAotIEF2ZXJhZ2UgbWF0cml4IGluIGFuIGFycmF5CmBgYHtyfQptIDwtIGFycmF5KHJub3JtKDIqMioxMCksYygyLDIsMTApKSAjIFJldHVybnMgMTAgbWF0cmljZXMgb2YgNCBub3JtYWwgcmFuZG9tIHZhcmlhYmxlcwphcHBseShtLGMoMSwyKSxtZWFuKSAjIGFwcGxpZXMgbWVhbiBmb3IgZWFjaCBtYXRyaWNlcyBhbmQgcmV0dXJucyAyeDIgbWF0cml4CiMgVGhpcyBpcyBhIHZlcnkgaW1wb3J0YW50IGV4YW1wbGUgYmVjYXVzZSwgZm9yIHRoZSBNQVJHSU4gYXJndW1lbnQsIHdlIGhhdmUgbmVnbGVjdGVkCiMgdGhlIHRoaXJkIGRpbWVuc2lvbiwgbWVhbmluZyB0aGF0IGFwcGx5IHdpbGwgInN0YWNrIiB0aGUgMngyIG1hdHJpY2VzIGFuZCB0aGVuCiMgY29sbGFwc2UgdGhlbSBpbnRvIG9uZSwgZ2l2aW5nIHRoZSBhdmVyYWdlIG9mIGVhY2ggInN0YWNrIiBxdWFkcmFudC4gVmVyeSBjb29sIQpyb3dNZWFucyhtLGRpbXM9MikgIyBEb2VzIHRoZSBzYW1lIHRoaW5nIGFzIHRoZSBhYm92ZS4KYGBgCgo=</div>
 
 
 

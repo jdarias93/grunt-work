@@ -2,23 +2,91 @@
 title: "Week 3 Notes"
 output: html_notebook
 ---
-
-* This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
-* Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
-```{r}
-plot(cars)
-```
-* Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
-
 # Loop Functions
 * For & while loops are useful when programming but not when working interactively on the 
   command line; there are some functions which implement looping to make life easier
   * lapply: Loop over a list and evaluate function on each element
   * sapply: Same as lapply but simplify the result
+  * apply: Apply a function over subsets of a vector
   * tapply: Apply function over vector subsets
   * mapply: Multivariate version of lapply
 * Aux function split() also useful in conjuction with lapply
 
 # lapply
-- Takes three arugments
+- Takes three arguments: a list, a function, and other arguments (...)
+- If x is not a list, it will be coerced using as.list
+- Always returns a list, regardless of the class of the input
+```{r}
+# Easy example
+a <- list(b=1:5,c=rnorm(10))
+a
+lapply(a,mean) # Gives mean of first and second elements
+
+# Slightly more complex example
+d <- list(e=1:4,f=rnorm(10),g=rnorm(20,1),h=rnorm(100,5))
+lapply(d,mean)
+
+# Another way to call lapply
+i <- 1:4
+lapply(i,runif) # Uniform random variables
+lapply(i,runif, min=0,max=10) # Passing arguments through ...
+```
+* lapply and friends make heavy use of anonymous functions (functions that don't have 
+  names)
+```{r}
+j <- list(a=matrix(1:4,2,2),b=matrix(1:6,3,2))
+j # Say you want to extract the first column from these matrices.
+lapply(j,function(elt) elt[,1]) # "elt" is an anonymous function!
+```
+
+# sapply
+- Tries to simplify the result of lapply whenever possible
+- The result is a list where every element is length 1, then a vector is returned; 
+  where every element is a vector of the same length (>1), a matrix is returned.
+- If it can't figure it out, a list is returned
+```{r}
+k <- list(l = 1:4, m = rnorm(10), n = rnorm(20,1), o = rnorm(100,5))
+lapply(k,mean) # Returns a list, but what if we just want a vector?
+sapply(k,mean) # sapply does just that.
+mean(k) # DOESN'T WORK because k is a list.
+```
+
+# apply
+- Used to evaluate a function over the margins of an array
+- Most often used to apply a function to the rows or columns of a matrix
+- Can be used with general array (like taking the average of an array of matrices)
+- Not really faster than writing a loop but works in one line!
+```{r}
+str(apply)
+# X is an array
+# MARGIN is an integer vector indicating which margins should be "retained"
+## THIS CORRESPONDS TO THE DIMENSION. For example, (row column) is (1 2).
+# FUN is a function to be applied
+# ... for other arguments passing through
+
+# Let's try an example
+l <- matrix(rnorm(200), 20, 10) # Create random normal matrix of 200 points
+apply(l, 2, mean) # Returns vector of length 10 from each averaged column of matrix l
+apply(l, 1, sum) # Returns vector of length 20 from each summed ROW of matrix l
+```
+* Shortcuts: col/row sums and means; faster if using large matrix
+- rowSums = apply(x,1,sum)
+- rowMeans = apply(x,1,mean)
+- colSums = apply(x,2,sum)
+- colMeans = apply(x,2,mean)
+* Other ways to apply apply()
+- Quantiles of matrix rows
+```{r}
+apply(l,1,quantile,probs = c(0.25,0.75))
+# Creates 2x20 matrix of 25% and 75% quantiles of each row
+```
+- Average matrix in an array
+```{r}
+m <- array(rnorm(2*2*10),c(2,2,10)) # Returns 10 matrices of 4 normal random variables
+apply(m,c(1,2),mean) # applies mean for each matrices and returns 2x2 matrix
+# This is a very important example because, for the MARGIN argument, we have neglected
+# the third dimension, meaning that apply will "stack" the 2x2 matrices and then
+# collapse them into one, giving the average of each "stack" quadrant. Very cool!
+rowMeans(m,dims=2) # Does the same thing as the above.
+```
+
