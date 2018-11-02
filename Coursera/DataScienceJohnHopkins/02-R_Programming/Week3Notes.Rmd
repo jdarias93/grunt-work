@@ -90,3 +90,115 @@ apply(m,c(1,2),mean) # applies mean for each matrices and returns 2x2 matrix
 rowMeans(m,dims=2) # Does the same thing as the above.
 ```
 
+# mapply
+* A multivariate apply that applies a function in parallel over a set of arguments
+* In other words, you specify a function and apply it to multiple lists of objects
+```{r}
+str(mapply)
+# FUN = Function to apply
+# ... = Contains arguments
+# MoreArgs = List of other arguments to FUN
+# SIMPLIFY = Indicates whether the result should be simplified
+
+# Example
+list(rep(1,4), rep(2,3), rep(3,2), rep(4,1))
+# Instead of this, we can do:
+mapply(rep, 1:4, 4:1)
+```
+
+## Vectorizing a Function
+```{r}
+noise <- function(n, mean, sd) {
+        rnorm(n, mean, sd)
+}
+noise(5, 1, 2)
+noise(1:5, 1:5, 2)
+mapply(noise,1:5,1:5,2) # Instant vectorization!
+
+# The above mapply() is the same as:
+list(noise(1,1,2),noise(2,2,2),noise(3,3,2),noise(4,4,2),noise(5,5,2))
+```
+
+# tapply
+* Used to apply a function over subsets of a vector.
+```{r}
+str(tapply)
+# X = Vector
+# Index = Factor or list of factors
+# Fun = Function to apply
+# ... = Arguments to be passed
+# simplify = Should we simplify result?
+
+# Lets do an example where we take group means
+x <- c(rnorm(10), runif(10), rnorm(10,1))
+f <- gl(3,10)
+f
+x
+tapply(x, f, mean) # Takes means of each FACTOR (1,2,3) in subsets of x.
+# In other words, your first mean will be equivalent to:
+mean(x[1:10])
+# In the above tapply(), the result was a vector because the default is simplification.
+tapply(x,f,mean,simplify=FALSE)
+# Setting simplify=FALSE gives a LIST instead.
+tapply(x,f,range)
+# Gives a list of min and max for each FACTORED GROUP.
+```
+
+# split
+* Takes a vector or other objects and splits it into groups determined by a factor or
+  list of factors.
+```{r}
+str(split)
+# x = Vector or List
+# f = factor (or coerced to one) or a list of factors
+# drop = indicates whether empty factor levels should be dropped
+# From here, you can use lapply or sapply on your curated groups.
+
+# Example:
+x <- c(rnorm(10), runif(10), rnorm(10,1)) # Generate list of data
+f <- gl(3,10) # Generate list of factors
+split(x,f) # SPLIT them according to their levels in f. Indices will be paired up.
+# From two vectors, you have created ONE list
+# Now we can put our LIST into lapply
+lapply(split(x,f),mean)
+# Though this was not entirely necessary (we could have done all this with tapply)
+# its a decent example of the use of lapply and split() in tandem
+
+# Lets try an example that is more relevant
+```
+
+## Splitting a Data Frame
+```{r}
+library(datasets)
+head(airquality) # 100+ rows and 6 columns
+
+# Lets calculate the mean ozone, solar, and wind measurements in each month
+# First, we can split the months by level
+s <- split(airquality, airquality$Month) # A list of dataframes
+
+# Next, we use lapply to take the column means of each column we are interested in
+lapply(s, function(x) colMeans(x[, c("Ozone","Solar.R","Wind")]))
+# This gives us a list of vectors.
+# We can do the same thing using sapply.
+sapply(s, function(x) colMeans(x[, c("Ozone","Solar.R", "Wind")]))
+# This gives us a clean 3x5 matrix.
+# Note that some means are NA. Let's fix that.
+sapply(s, function(x) colMeans(x[, c("Ozone","Solar.R", "Wind")], na.rm=TRUE))
+# Add the na.rm=TRUE argument to colMeans excludes NAs from the mean calculation.
+```
+
+## Splitting on More than One Level
+```{r}
+x <- rnorm(10)
+f1 <- gl(2,5) # Let's call this factor delimitation "race"
+f2 <- gl(5,2) # This one "income"
+
+# What should we do when we want to combine these factors?
+interaction(f1,f2) # Combines levels of factor lists f1 and f2
+# Lets look at what is the new list composed of with respect to x
+str(split(x,list(f1,f2))) # This shows that some levels don't have anything
+# How can we drop these vectors?
+str(split(x,list(f1,f2),drop=TRUE)) # Like so. 
+# Now, only levels with observations in them will be saved.
+```
+
