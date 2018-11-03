@@ -261,7 +261,7 @@ printmessage2(x) # Now R has ID'd the NA
 * trace(): Allows you to insert debugging code into a function at specific places
 * recover(): Allows you to modify the error behavior so that you can browse the
   function call stack
-* print() and cat(): More blunt force
+* print() and cat(): More blunt force method
 
 
 
