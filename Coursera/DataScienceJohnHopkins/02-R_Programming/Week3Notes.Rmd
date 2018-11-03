@@ -202,3 +202,72 @@ str(split(x,list(f1,f2),drop=TRUE)) # Like so.
 # Now, only levels with observations in them will be saved.
 ```
 
+# Debugging Tools
+## Diagnosing the Problem
+* Indications that something's not right
+- message: Generic notification/diagnostic message produced by message function;
+  execution of the function continues
+- warning: An indication that something is wrong but not necessarily fatal;   
+  execution of the function continues; gnerated by the warning() function
+- error: An indication that a fatal problem has occured; execution stop;   
+  produced by the stop() function
+- condition: A generic concept for indicating that something unexpected can 
+  occur; programmers can create their own conditions
+```{r}
+log(-1) # Warning example: NaN produced
+
+# How do we fix/sidestep something like this?
+printmessage <- function(x) {
+        if(x>0)
+                print("x is greater than zero")
+        else
+                print("x is less than or equal to zero")
+        invisible(x) # Prevents R from printing the object
+}
+
+printmessage(4) # Function carries out successfully
+printmessage(NA) # Message created. NA is neither greater than nor less than 0.
+
+# Let's rewrite the previous function.
+printmessage2 <- function(x) {
+        if(is.na(x))
+                print("x is a missing value!")
+        else if(x > 0)
+                print("x is greater than zero")
+        else
+                print("x is less than or equal to zero")
+        invisible(x)
+}
+
+printmessage2(x) # Now R has ID'd the NA
+
+```
+* How do you know that something is wrong with your function?
+- What was the input? How did you call the function?
+- What were you expecting? Output, messages, other results?
+- What did you get?
+- How does what you get differ from what you were expecting?
+- Were your expectations correct in the first place?
+- Can you reproduce the problem exactly?
+        * Remember to set seeds if you work with randomly-produced data
+
+## Basic Debugging Tools
+* traceback(): prints out the function call stack after an error occurs; does
+  nothing if there is no error
+* debug(): Flags a function for "debug" mode which allows you to step through
+  execution of a function one line at a time
+* browser(): Suspends the execution of a function wherever it is called and puts 
+  the function in debug mode
+* trace(): Allows you to insert debugging code into a function at specific places
+* recover(): Allows you to modify the error behavior so that you can browse the
+  function call stack
+* print() and cat(): More blunt force method
+
+
+
+
+
+
+
+
+
