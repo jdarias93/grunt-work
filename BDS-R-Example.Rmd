@@ -1,0 +1,209 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Loading Data into R
+```{r}
+# Get your working directory in order with getwd() and setwd("")
+d <- read.csv("Dataset_S1.txt") # Load data
+```
+
+# Exploring and Transforming Dataframes
+```{r}
+head(d, n=3) 
+# Check data
+
+nrow(d) 
+# Check # rows
+
+ncol(d) 
+# Check # columns
+
+dim(d) 
+# Check dimensions (r c)
+
+colnames(d) 
+# Check column names for discrepancies; "X.GC" instead of "%GC"
+
+colnames(d)[12] <- "Percent.GC" 
+# Changed X.GC
+
+d$depth 
+# Access a single column of a dataframe with $
+
+mean(d$depth) 
+# The mean of one column in d
+
+summary(d$depth) 
+# Summary stats of one column in d
+
+d[ , 1:2] 
+# Subsetting columns
+
+d[, c("start","end")] 
+# We can also use column names to acheive the same end
+
+d[1,c("start","end")] 
+# Only first row of start and end columns
+
+d[, "start", drop=FALSE]
+# Disables subsetting as vector (retains dataframe format)
+
+d$cent <- d$start >= 25800000 & d$end <= 29700000 
+```
+
+## Creating Dataframes From Scratch
+```{r}
+x <- sample(1:50,300,replace=TRUE) 
+# Samples numbers 1-50, 300 times
+
+y <- 3.2*x + rnorm(300,0,40) 
+# Function
+
+d_sim <- data.frame(y=y, x=x) 
+# Represents vectors as a dataframe
+```
+
+
+## Logical vector for determining if window within a centromeric region
+```{r}
+table(d$cent) 
+# See how many rows were within the centromeric region
+
+sum(d$cent) 
+# Another way to see how many rows were within region
+
+d$diversity <- d$Pi / (10*1000) 
+# Rescaling data
+```
+
+# Exploring Data Through Slicing and Dicing
+```{r}
+
+summary(d$total.SNPs)
+# SNPs are heavily skewed right: Q3 = 12 but Max = 93! Let's investigate
+
+d$total.SNPs >= 85 
+# Create logical vector
+
+d[d$total.SNPs >= 85, ] 
+# Subset according to logical vector
+# Only rows that have a TRUE value (total.SNPs >= 85) will be kept.
+
+d[d$Pi > 16 & d$Percent.GC > 80, ] 
+# A more elaborate subsetting
+
+d[d$Pi > 16 & d$Percent.GC > 80, c("start","end","depth","Pi")]
+# One more time but asking for specific columns
+
+d$Percent.GC[d$Pi > 16] 
+# Asking for a specific column using a logical vector fromn ANOTHER COLUMN!!!
+
+summary(d$depth[d$Percent.GC >= 80])
+# Subsetting to summarize average depth in the >= 80 window; it is low compared to:
+summary(d$depth[d$Percent.GC < 80])
+
+summary(d$Pi[d$cent])
+# Looking at Pi by windows falling in our above centromere window...
+
+summary(d$Pi[!d$scent])
+# ...and those that fall outside it.
+
+d$Pi > 3
+# which() takes a logical vector and returns the positions of all TRUE values!
+
+which(d$Pi>3)
+which(d$Pi>10)[1:4] 
+# First four TRUE values
+
+d[which.min(d$total.Bases),] 
+# Returns row which has the minimum element
+
+d[which.max(d$depth),] 
+# Returns row with the maximum element
+
+# So the centromere appears to have higher nucleotide diversity than other regions
+# Sometimes subsetting expressions in brackets is redundant so we can use subset()
+
+# subset() takes two arguments: dataframe and conditions to include a row:
+subset(d,Pi > 16 & Percent.GC > 80)
+# A third argument supplied to specify which columns to include:
+subset(d, Pi > 16 & Percent.GC > 80,
+       c(start,end,Pi,Percent.GC,depth))
+# subset is special in that we don't have to "quote" column names
+```
+
+# Exploring Data Visually with ggplot2 I: Scatterplots and Densities
+* Every R user should be acquainted with base graphics but we're gonna focus on ggplot2
+```{r}
+install.packages("ggplot2")
+library(ggplot2)
+
+# Let's create a scatterplot of nucleotide diversity along chromosome
+# We want to add a column called position to our dataframe that is the midpoint between 
+# each window:
+d$position <- d$end + d$start / 2
+ggplot(d) + geom_point(aes(x=position, y=Pi)) 
+# ggplot only works with dataframes
+# geom_point is a layer we add in order to create a scatterplot
+# "geoms" are geometric objects with many aesthetic attributes
+# We specify aesthetic attribute mapping to columns using function aes:
+ggplot(d,aes(x=position, y=Pi)) + geom_point()
+# Lets exclude missing diversity estimates from the centromere:
+ggplot(d) + geom_point(aes(x=position, y=Pi, color=cent))
+# The above figure shows missing diversity estimates around the centromere
+# This is intentional, as centromeric and heterochromatic regions were excluded in this # study.
+
+# Overplotting can be an issue, making it so that we can't get a good sense of
+# diversity distribution from the figure. One way to alleviate this is by making some
+# points transparent so only regions with multiple overlapping points appear dark
+ggplot(d) + geom_point(aes(x=position,y=Pi), alpha=0.01)
+# Notice that we put alpha OUTSIDE of aes(); this makes the argument apply to ALL data 
+# points.
+
+# Now we look at diversity density across ALL positions. We used geom_density() for 
+# this.
+ggplot(d) + geom_density(aes(x=Pi), fill="black")
+# We can also create separate density plots, grouping data by column mapped to the color
+# aesthetic and using colors to indicate the different densities
+ggplot(d) + geom_density(aes(x=Pi, fill=cent),alpha=0.4)
+# In the above line, we fill the densities according to whether the plotted values are
+# within the centromere or not (cent)
+
+# We now see that diversity is skewed to more extreme values in centromeric regions!
+# Mapping columns to additional aesthetic attributes can reveal patterns and info in
+# the data that may NOT be apparent in simple plots!
+```
+* Axis Labels, Plot Titles, and Scales
+- You can change axes and plot labels with xlab(), ylab(), and ggtitle(), respectively.
+- You can set limits for continuous axes using scale_x_continuous(limits=c(start,end))
+- You can changes axes to log 10 scales with scale_x/ylog10()
+
+# Exploring Data Visually with ggplot2 II: Smoothing
+* Adding smoothing lines to plots using geom_smooth() allows us to fit a smoothing curve
+  to data in order to tease out unexpected trends in the data
+* In the next example, we want to superimpose a smooth curve on a scatterplot portraying
+  the relationship between sequencing depth and total number of SNPs
+```{r}
+ggplot(d, aes(x=depth, y=total.SNPs)) + geom_point() + geom_smooth()
+# Visualizing data in this way reveals a well-known relationship between depth and SNPs
+# Higher sequencing depths increases power to detect and call SNPs
+# However, higher and lower GC content regions DECREASE read coverage (depth), which
+# we can illustrate in a plot:
+ggplot(d, aes(x=Percent.GC, y=depth)) + geom_point() + geom_smooth()
+```
+
+# Binning Data with cut() and Bar Plots with ggplot2
+* We can extract info from complex datasets by reducing data resolution through BINNING.
+- In other words, we place continuous numeric values within a discrete number of ranged   bins.
+* We bin data through cut() in R, like so:
+```{r}
+d$GC.binned <- cut(d$Percent.GC,5)
+d$GC.binned
+```
+
+
+
+
+
