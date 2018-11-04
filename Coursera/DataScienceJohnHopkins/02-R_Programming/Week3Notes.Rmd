@@ -299,11 +299,3 @@ read.csv("nosuchfile")
 * Interactive debugging tools traceback(), debug(), browser(), trace(), and
   recover() can be used to find problematic code in functions
 * Debugging tools are NOT a substitute for thing!
-
-
-
-
-
-
-
-
