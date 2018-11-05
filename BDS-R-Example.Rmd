@@ -199,11 +199,51 @@ ggplot(d, aes(x=Percent.GC, y=depth)) + geom_point() + geom_smooth()
 - In other words, we place continuous numeric values within a discrete number of ranged   bins.
 * We bin data through cut() in R, like so:
 ```{r}
-d$GC.binned <- cut(d$Percent.GC,5)
+d$GC.binned <- cut(d$Percent.GC,5) # Cuts data into 5 equally-sized bins (levels)
 d$GC.binned
+table(d$GC.binned) # The distribution of the binned data.
+
+# We can bin with percentage breaks
+cut(d$Percent.GC, c(0,25,50,75,100))
+sum(is.na(cut(d$Percent.GC, c(0,25,50,75,100)))) # Checking if this generates NAs
+ggplot(d) + geom_bar(aes(x=GC.binned)) # Binned data histogram
+ggplot(d) + geom_bar(aes(x=Percent.GC)) # Continuous data histogram
+
+# Depth and GC content story comes out again here, where low and high GC content windows
+# have lower depth.
+ggplot(d) + geom_density(aes(x=depth, linetype=GC.binned),alpha=0.5)
+# When we DON'T group by G.binned, the story disappears
+ggplot(d) + geom_density(aes(x=depth),alpha=0.5)
+# Trying other columns
+ggplot(d) + geom_density(aes(x=Pi, linetype=GC.binned),alpha=0.5)
+ggplot(d) + geom_density(aes(x=total.SNPs, linetype=GC.binned),alpha=0.5)
+
+
+# Bin widths can drastically alter how we view/understand data!!!
+```
+* Finding the Right Bin Width
+```{r}
+# Try different binwidths using the binwidth=X argument
+ggplot(d) + geom_histogram(aes(x=Pi), binwidth=1) + 
+        scale_x_continuous(limits=c(0.01, 80)) 
+ggplot(d) + geom_histogram(aes(x=Pi), binwidth=0.05) + # Undersmoothing
+        scale_x_continuous(limits=c(0.01, 80))
+ggplot(d) + geom_histogram(aes(x=Pi), binwidth=2) +    # Oversmoothing
+        scale_x_continuous(limits=c(0.01, 80))
 ```
 
+# Merging and Combining Data: Matching Vectors and Merging Dataframes
+* Bioinformatics analyses involve connecting many numerous datasets: sequencing data,
+  genomic features, etc.
+* The ability to connect different datasets to tell a cohesive story will become an 
+  increasingly more important analysis skill
+```{r}
+# Simple Operation to check if some a vector's values are in another vector: %in%
+c(4,3,-1) %in% c(1,3,4,8) # Outputs a logical vector with equal length as left vector
+reps <- read.delim("chrX_rmsk.txt.gz",header=TRUE)
+head(reps,3)
 
+```
 
 
 
