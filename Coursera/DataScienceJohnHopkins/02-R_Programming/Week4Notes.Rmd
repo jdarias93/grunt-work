@@ -1,0 +1,73 @@
+---
+title: "Week 4 Notes"
+output: html_notebook
+---
+
+# str() Function
+* Compactly display the internal structure of an R object.
+- A diagnostic function and an alternative to "summary"
+- It is especially well-suited to compactly display the (abbreviated) contents of 
+  (possibly nested) lists.
+- Roughly one line per basic object.
+
+```{r}
+str(str) # str() gives you the arguments that a function takes.
+str(lm)
+x <- rnorm(100,2,4)
+summary(x) # summary() gives statistics BUT...
+str(x) # str() gives you more info, like whether or not this is a numeric vector
+
+f <- gl(40,10) # A factor with forty levels
+summary(f) # Gives you a table of how many of each level there is in f
+str(f) # Gives you the object class and how many levels
+
+library(datasets)
+head(airquality) 
+str(airquality) # Gives each column and what kind of classes it contains.
+m <- matrix(rnorm(100),10,10)
+str(m) # Gives us dimensions of matrix
+m[,1]
+
+s <- split(airquality, airquality$Month) # Using split to create list separated by levels
+str(s) # Using str() on s gives a highly detailed break-down of the list created in split()
+```
+
+# Simulation: Generating Random Numbers
+* Functions for probability distributions in R
+- rnorm: Generate random Normal variates with a given mean and SD
+- dnorm: Evaluate Normal probability density (with a given mean/SD) at point (or vector of
+  points)
+- pnorm: Evaluate the cumulative distribution function for a Normal distribution
+- rpois: Generate random Poisson variates with a given rate
+
+* Probability distribution functions usually have four functions associated with them.
+* They are prefixed with a
+        - d for density
+        - r for random number generation
+        - p for cumulative distribution
+        - q for quantile function
+```{r}
+str(dnorm) # See what arguments these take
+str(pnorm)
+str(qnorm)
+str(rnorm)
+```
+
+* Anytime you generate random numbers, you must set a seed, which will ensure your work
+  is reproducible.
+```{r}
+set.seed(1)
+rnorm(5)
+# The seed is now unset and must be reset again.
+set.seed(1)
+rnorm(5) # And you get the same numbers.
+```
+
+* Generating poisson data
+```{r}
+str(rpois)
+rpois(10,1)
+ppois(2,2) # Cumulative distribution, output is Pr(x <= 2)
+
+```
+

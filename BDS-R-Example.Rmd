@@ -240,10 +240,34 @@ ggplot(d) + geom_histogram(aes(x=Pi), binwidth=2) +    # Oversmoothing
 ```{r}
 # Simple Operation to check if some a vector's values are in another vector: %in%
 c(4,3,-1) %in% c(1,3,4,8) # Outputs a logical vector with equal length as left vector
+setwd("/Users/jdarias/Desktop/grunt-work/bds-files/chapter-08-r/")
 reps <- read.delim("chrX_rmsk.txt.gz",header=TRUE)
 head(reps,3)
+class(reps$repClass) # This is a factor column
+levels(reps$repClass)
 
+# It would be tedious to construct a statement to select these values using logical 
+# operators; instead we create a vector and use %in%
+
+common_repclass <- c("SINE","LINE","LTR","DNA","Simple_repeat")
+reps[reps$repClass %in% common_repclass, ]
+# This gives us all rows that have the 5 rep classes we want.
+
+# Creating logical vectors programmatically by calculating the five most common repeat 
+# classes:
+sort(table(reps$repClass), decreasing=TRUE)[1:5] # Gives top five common rep classes
+top5_repclass <- names(sort(table(reps$repClass), decreasing=TRUE)[1:5]) # Vectorizes
 ```
 
+* %in% is just a simplified version of another function called match()
+- x %in% y returns TRUE/FALSE for each value in x depending on whether it is in y
+- match(x,y) returns first occurence of each of x's values in y.
+```{r}
+# A match() example:
+match(c("A","C","E","A"),c("A","B","A","E"))
+# x[1] is found in the y[1], so 1 is printed. x[2] is not found in y, so NA is produced.
+# And so on.
 
-
+```
+* match()'s output can be used to join 2 dataframes together by a shared column
+- We can use this to replicate an important finding in human recombination bio
