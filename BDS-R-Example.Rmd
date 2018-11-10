@@ -271,3 +271,68 @@ match(c("A","C","E","A"),c("A","B","A","E"))
 ```
 * match()'s output can be used to join 2 dataframes together by a shared column
 - We can use this to replicate an important finding in human recombination bio
+* First dataset contains estimates of the recomb rate for all windows within 40 kb of 
+  each motif. The second contains which repeat each motif occurs in.
+- Goal is to merge these datasets to look at the local effect of recombination of each 
+  motif on specific repeat backgrounds.
+```{r}
+setwd("/Users/jdarias/Desktop/grunt-work/bds-files/chapter-08-r/")
+mtfs <- read.delim("motif_recombrates.txt",header=TRUE)
+rpts <- read.delim("motif_repeats.txt", header=TRUE)
+head(mtfs, 3)
+head(rpts,3)
+```
+* To combine datasets, you must always consider the structure of both datasets
+- In mtfs, each motif is represented across multiples ROWS; each row gives the distance 
+  between a focal motif and a window over which recomb rate was estimated
+- Our goal is to merge the column "name" in the rpts datafarme into the mtfs column,
+  so we know which repeat each motif is contained in (if any)
+- The link between these datasets are the positions of each motif, identified by the
+  chromosome and motif start position columns chr and motif_start. 
+```{r}
+# Here we concatenate these columns into a single key string column to simplify merging
+mtfs$pos <- paste(mtfs$chr, mtfs$motif_start, sep="-")
+rpts$pos <- paste(rpts$chr, rpts$motif_start, sep="-")
+# This pos common is now the COMMON KEY between two datasets
+
+# Now we want to know how many mtfs motifs have a corresponding entry in rpts 
+table(mtfs$pos %in% rpts$pos) # 9218 TRUE.
+
+# Let's pull them out using match(), which tells us where each of the mtfs$pos keys
+# occur in rpts$pos
+i <- match(mtfs$pos, rpts$pos) # Creates indexing vector
+table(is.na(i)) # Number of NAs match the number of mts$pos elements NOT in rprts$pos
+
+# Now let's use that indexing vector to merge.
+mtfs$repeat_name <- reps$name[i]
+
+# You can do all the above in one line also:
+mtfs$repeat_name <- rpts$name[match(mtfs$pos, rpts$pos)]
+
+# The last step: Validation.
+head(mtfs[!is.na(mtfs$repeat_name), ], 3)
+
+# So we've combined rpts$name directly into our mtfs dataframe (left outer join)
+# Not all motifs have entires in rpts so some values in mtfs$repeat_name are NA
+# We can remove them like so:
+mtfs_inner <- mtfs[!is.na(mtfs$repeat_name), ]
+nrow(mtfs_inner) # Again confirming that there are 9218 motif matches
+```
+* match() is a general way to merge data in R, revealing the gritty details involved in
+  merging data necessary to avoid pitfalls, but there is another function: merge()
+```{r}
+# merge() can directly merge two datasets:
+recm <- merge(mtfs,rpts, by.x = "pos", by.y="pos") # An INNER join
+head(recm, 2)
+recm_left <- merge(mtfs,rpts,by.x="pos",by.y="pos",all.x=TRUE) # A left OUTER join
+head(recm_left, 3)
+```
+
+# Using ggplot2 Facets
+* Once merged, we can now explore the data with visualization
+
+
+
+
+
+
