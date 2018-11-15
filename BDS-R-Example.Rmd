@@ -6,6 +6,7 @@ output: html_notebook
 # Loading Data into R
 ```{r}
 # Get your working directory in order with getwd() and setwd("")
+setwd("/Users/jdarias/Desktop/bds-files/chapter-08-r/")
 d <- read.csv("Dataset_S1.txt") # Load data
 ```
 
@@ -276,7 +277,7 @@ match(c("A","C","E","A"),c("A","B","A","E"))
 - Goal is to merge these datasets to look at the local effect of recombination of each 
   motif on specific repeat backgrounds.
 ```{r}
-setwd("/Users/jdarias/Desktop/grunt-work/bds-files/chapter-08-r/")
+setwd("/Users/jdarias/Desktop/bds-files/chapter-08-r/")
 mtfs <- read.delim("motif_recombrates.txt",header=TRUE)
 rpts <- read.delim("motif_repeats.txt", header=TRUE)
 head(mtfs, 3)
@@ -304,7 +305,7 @@ i <- match(mtfs$pos, rpts$pos) # Creates indexing vector
 table(is.na(i)) # Number of NAs match the number of mts$pos elements NOT in rprts$pos
 
 # Now let's use that indexing vector to merge.
-mtfs$repeat_name <- reps$name[i]
+mtfs$repeat_name <- rpts$name[i]
 
 # You can do all the above in one line also:
 mtfs$repeat_name <- rpts$name[match(mtfs$pos, rpts$pos)]
@@ -329,10 +330,49 @@ head(recm_left, 3)
 ```
 
 # Using ggplot2 Facets
-* Once merged, we can now explore the data with visualization
+* Once merged, we can now explore the data with visualization using FACETS
+* Facets allow us to visualize grouped data with a series of separate adjacent plots
+  for each group
+```{r}
+p <- ggplot(mtfs, aes(x=dist, y=recom)) + geom_point(size=1) # Step 1
+p <- p + geom_smooth(method="loess",se=FALSE,span=1/10) # Step 2
+print(p) # Bringing it together
+```
 
+* There is a large amount of heterogeneity we're not accounting for, which could be
+  washing out signal; here we employ faceting to pick apart the data.
+```{r}
+# Lets see if any motifs have noticeably different effects on local recombination
+unique(mtfs$motif)
+# Let's group and color the loess curves by motif sequence
+ggplot(mtfs,aes(x=dist,y=recom)) +
+        geom_point(size=1) +
+        geom_smooth(aes(color=motif), method="loess",se=FALSE,span=1/10)
 
+# Alternatively, split motifs apart using facet_wrap()
+ggplot(mtfs,aes(x=dist,y=recom)) +
+        geom_point(size=1, color="grey") +
+        geom_smooth(method="loess",se=FALSE, span=1/10) +
+        facet_wrap(~ motif) # This creates a panel for each level and wraps around horiz
 
+```
 
+# More R Data Structures: Lists
+* Dataframes are lists. Lists can contain any combinations of classes
+```{r}
+# List Example
+adh <- list(chr="2L", start=1461555L, end=14618902L, name="Adh")
+adh[1:2] # Gives first two elements of list
+adh[[2]] # Returns only the second element, not as a list.
+is.list(adh[[2]]) # False.
 
+# We can create new elements in a list using the list position syntax $
+adh$id <- "FBgn0000055" # New ID element created
+adh$chr <- "chr2L" # Changing old element
+adh$id <- NULL # Removes ID element.
+```
+
+# Writing and Applying Functions to Lists with lapply() and sapply()
+* Mastering these is tricky, but will serve you well in R.
+# U
 
