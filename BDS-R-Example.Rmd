@@ -374,5 +374,75 @@ adh$id <- NULL # Removes ID element.
 
 # Writing and Applying Functions to Lists with lapply() and sapply()
 * Mastering these is tricky, but will serve you well in R.
-# U
+
+## Using laaply()
+```{r}
+# Generate list of numeric values:
+ll <- list(a=rnorm(6, mean=1),b=rnorm(6,mean=4),c=rnorm(6,mean=6))
+ll
+
+## Create an empty numeric vector for the means
+ll_means <- numeric(length(ll))
+ll_means
+
+# Loop over each list element and calculate mean
+for (i in seq_along(ll)) {
+        ll_means[i] <- mean(ll[[i]])
+}
+ll_means
+
+# This is not idiomatic R; the better approach is to use lapply:
+lapply(ll, mean) # One line! Generates a list of 3 numeric values
+
+# The parallelization of lapply() is possible with mclapply()
+# If one of your elements in ll had an NA, then mean would return NA unless we
+# ignore them by calling mean() with na.rm=TRUE
+
+ll$a[3] <- NA # Replaces index 3 with NA
+lapply(ll,mean) # :(
+lapply(ll,mean,na.rm=TRUE) # And we ignore the NA
+```
+
+## Writing Functions
+* We can also write a wrap function to run before lapply to remove NAs automatically
+```{r}
+meanRemoveNA <- function(x) mean(x,na.rm=TRUE)
+lapply(ll, meanRemoveNA)
+
+# Alternative, we don't even need to make a new function to do the same thing:
+lapply(ll, function(x) mean(x, na.rm=TRUE))
+
+# Let's create a more polished function that will warn the user when it encounters
+# and automatically removes missing values
+meanRemoveNAVerbose <- function(x, warn=TRUE) {
+        if (any(is.na(x)) && warn) {
+                warning("removing some missing values!")
+        }
+mean(x,na.rm=TRUE)
+}
+meanRemoveNAVerbose(ll)
+```
+
+## Digression: Debugging R Code
+* Your code will have bugs. Here are some tools to kill them.
+* browser(): Pauses execution at a specified point in your code and runs it line-by-line
+```{r}
+foo <- function(x) {
+        a <- 2
+        browser()
+        y <- x + a
+        return(y)
+}
+foo(1)
+
+# From the browser() work space, you can execute the next line (n), continue running 
+# (c), or quit (Q). We can check variable values with ls() or by calling them directly.
+
+```
+
+
+
+
+
+
 

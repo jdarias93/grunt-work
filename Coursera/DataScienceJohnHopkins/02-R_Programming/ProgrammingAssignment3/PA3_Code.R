@@ -18,15 +18,28 @@ best <- function(state, outcome) {
         names(o) <- c("name","state","heart attack","heart failure","pneumonia")
         
         # Check if state variable is valid
-        if (state %in% o$State == FALSE) {
+        if (state %in% o$state == FALSE) {
                 stop("invalid state")
         } else if (outcome %in% names(o) == FALSE) {
                 stop("invalid outcome")
         }
-        else
-                print("WOO")
-        ## Read outcome data
-        ## Check that state and outcome are valid
-        
-        ## Return hospital name in that state with lowest 30-day death rate
+        else {
+                p <- o[o$state == state,]
+                if (outcome == "heart attack") {
+                        q <- as.numeric(p$`heart attack`)
+                        r <- min(q,na.rm=TRUE)
+                        s <- match(r,q)
+                        p$name[s]
+                } else if (outcome == "heart failure") {
+                        q <- as.numeric(p$`heart failure`)
+                        r <- min(q,na.rm=TRUE)
+                        s <- match(r, q)
+                        p$name[s]
+                } else {
+                        q <- as.numeric(p$pneumonia)
+                        r <- min(q, na.rm=TRUE)
+                        s <- match(r, q)
+                        p$name[s]
+                }
+        }
 }
