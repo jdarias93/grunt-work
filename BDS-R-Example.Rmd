@@ -375,7 +375,7 @@ adh$id <- NULL # Removes ID element.
 # Writing and Applying Functions to Lists with lapply() and sapply()
 * Mastering these is tricky, but will serve you well in R.
 
-## Using laaply()
+## Using lapply()
 ```{r}
 # Generate list of numeric values:
 ll <- list(a=rnorm(6, mean=1),b=rnorm(6,mean=4),c=rnorm(6,mean=6))
@@ -425,7 +425,8 @@ meanRemoveNAVerbose(ll)
 
 ## Digression: Debugging R Code
 * Your code will have bugs. Here are some tools to kill them.
-* browser(): Pauses execution at a specified point in your code and runs it line-by-line
+* browser(): Pauses execution at a specified point in your code and runs it
+  line-by-line
 ```{r}
 foo <- function(x) {
         a <- 2
@@ -437,8 +438,36 @@ foo(1)
 
 # From the browser() work space, you can execute the next line (n), continue running 
 # (c), or quit (Q). We can check variable values with ls() or by calling them directly.
-
 ```
+
+* options(error=recover): Drops you into an interactive debugging session anytime an 
+  error is encountered
+```{r}
+# For instance, let's say you have a buggy funciton bar()
+bar <- function(x) x + "1"
+bar(2)
+# We can then check the error:
+options(error=recover)
+bar(2)
+options(error=NULL) # Turns it off
+```
+
+## More list apply functions: sapply() and mapply()
+* sapply() makes a simplified list out of what might be a more complex data structure
+```{r}
+sapply(ll, function(x) mean(x,na.rm=TRUE))
+# Usually gives more headaches than it's worth.
+```
+* mapply(): Multivariate version of sapply() the function you pass to mapply() can take in
+  and use multiple arguments
+```{r}
+ind_1 <- list(loci_1=c("T","T"),loci_2=c("T","G"),loci_3=c("C","G"))
+ind_2 <- list(loci_1=c("A","A"),loci_2=c("G","G"),loci_3=c("C","G"))
+mapply(function(a,b) length(intersect(a,b)), ind_1, ind_2)
+# mapply takes as many vectors are there are needed arguments in the function applied to
+# the data; the first argument is the function that you want to apply
+```
+  
 
 
 
