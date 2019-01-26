@@ -44,6 +44,8 @@ best <- function(state, outcome) {
         }
 }
 
+# 2. Ranking hospitals by outcome in a state
+
 rankhospital <- function(state, outcome, num="best") {
 # Clean outcome data
         o <- read.csv("outcome-of-care-measures.csv")
@@ -61,31 +63,32 @@ rankhospital <- function(state, outcome, num="best") {
                         p$`heart failure` <- NULL
                         p$pneumonia <- NULL
                         q <- split(p,p$`heart attack`,drop=TRUE)
-                        q$`Not Available` <- NULL
-                        q
                         }
                 } else if (outcome == "heart failure") {
                         p$`heart attack` <- NULL
                         p$pneumonia <- NULL
                         q <- split(p,p$`heart failure`,drop=TRUE)
-                        q$`Not Available` <- NULL
                 } else {
                         p$`heart attack` <- NULL
                         p$`heart failure` <- NULL
                         q <- split(p,p$pneumonia,drop=TRUE)
-                        q$`Not Available` <- NULL
+                        
+                }
+                q$`Not Available` <- NULL
+                for (i in 1:length(q)) {
+                        r <- as.data.frame(q[i])
+                        write.table(x=r,file="HosLs.csv",append=TRUE,col.names=FALSE,row.names=FALSE)
                 }
         }
-        
+        s <- read.csv("HosLs.csv",header=FALSE)
         
 # Pull out requested rank
         if (num == "best") {
-                num <- 1
+                s[1,]
         } else if (num == "worse") {
-                num <- length()
+                s[length(s[,1]),]
                 
+        } else {
+                s[num,]
         }
-
-        ## Return hospital name in that state with the given rank
-        ## 30-day death rate
 }
