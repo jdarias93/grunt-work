@@ -9,7 +9,7 @@ output: html_notebook
   dir()
 
   ## Change working directory
-  setwd("C:/Users/joshd/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
+  setwd("C:/Users/ariasjd/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
 
   ## Reference function
   myfunction()
@@ -58,7 +58,7 @@ output: html_notebook
 * Do:
   - Describe the Goal not the step
   - Be explicit about your question
-  - Provide minumum amount of info necessary
+  - Provide minimum amount of info necessary
   - Be courteous
   - Follow up with the solution if you find it
 * Don't:
@@ -195,6 +195,8 @@ output: html_notebook
 c <- list(a=1,b=2,c=3)
 d <- matrix(1:4,nrow=2,ncol=2)
 dimnames(d) <- list(c("a","b"),c("c","d"))
+c
+d
 ```
 
 # Summary
