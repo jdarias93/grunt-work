@@ -1,4 +1,5 @@
 # Let's write a function that adds any two numbers we want
+
 add2 <- function(x, y) { # Specify the arguments you'll take in function()
   x + y # Write the function
 } # End with curly bracket

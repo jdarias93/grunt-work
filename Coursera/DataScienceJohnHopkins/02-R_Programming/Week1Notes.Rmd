@@ -257,7 +257,7 @@ d
   dput(e) # Makes R code to make your data frame "e" reproducible.
   dput(e,file="e.R")
   new.e <- dget("e.R") 
-  # dget() allows you reconstruct an object made reporducible with dput()
+  # dget() allows you reconstruct an object made reproducible with dput()
   new.e
 ```
 

@@ -200,7 +200,7 @@ lm <- function(x) {x*x}
 ```{r}
 search() # Allows us to see the hierarchy of how R will match symbols
 ```
-* Global Enviornment is always number 1 and last is the BASE packages
+* Global Environment is always number 1 and last is the BASE packages
 * When you load a package with library, THE NAMESPACE OF THAT PACKAGE IS PUT IN POSITION 2
   OF THE SEARCH LIST; Everything else is shifted DOWN
 * Scoping rules are the main feature making R different from S; they determine how a value
