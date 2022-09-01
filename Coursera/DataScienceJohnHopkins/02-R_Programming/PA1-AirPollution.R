@@ -1,5 +1,5 @@
 pollutantmean <- function(directory, pollutant, id = 1:332) {
-  setwd("~/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
+  setwd("/Users/ariasjd/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
   num = 0
   denom = 0
   for (i in id) {
@@ -31,7 +31,7 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
 }
 
 complete <- function(directory, id = 1:332) {
-  setwd("~/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
+#  setwd("~/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
   nobs <- 0
   mat <- matrix(ncol=2,nrow=1)
   colnames(mat) <- c("id","nobs")
@@ -67,7 +67,7 @@ complete <- function(directory, id = 1:332) {
 }
 
 corr <- function(directory, threshold = 0) {
-  setwd("~/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
+#  setwd("~/Desktop/grunt-work/Coursera/DataScienceJohnHopkins/02-R_Programming/")
   nobs <- 0
   id <- 1:332
   mat <- matrix(ncol=1,nrow=1)
